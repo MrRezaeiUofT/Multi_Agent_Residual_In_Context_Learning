@@ -1,6 +1,6 @@
 # MARICL — Multi-Agent Residual In-Context Learning
 
-**Paper:** [From Residuals to Reasons: LLM-Guided Mechanism Inference from Tabular Data](https://arxiv.org/abs/2605.18742)  
+**Paper:** [From Residuals to Reasons: LLM-Guided Mechanism Inference from Tabular Data](https://arxiv.org/abs/2605.22897)  
 **arXiv:** `2605.18742` · **Submitted to NeurIPS 2026**
 
 ---
