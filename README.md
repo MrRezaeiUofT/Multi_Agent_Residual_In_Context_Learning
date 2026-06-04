@@ -135,14 +135,10 @@ Key design choices:
 ## Citation
 
 ```bibtex
-@misc{rezaei2026maricl,
-  title     = {From Residuals to Reasons: {LLM}-Guided Mechanism Inference from Tabular Data},
-  author    = {Rezaei, Mohammad R. and Krishnan, Rahul G.},
-  year      = {2026},
-  eprint    = {2605.18742},
-  archivePrefix = {arXiv},
-  primaryClass  = {stat.ML},
-  url       = {https://arxiv.org/abs/2605.18742},
-  note      = {Submitted to NeurIPS 2026},
+@article{rezaei2026residuals,
+  title={From Residuals to Reasons: LLM-Guided Mechanism Inference from Tabular Data},
+  author={Rezaei, Mohammad R and Krishnan, Rahul G},
+  journal={arXiv preprint arXiv:2605.22897},
+  year={2026}
 }
 ```
