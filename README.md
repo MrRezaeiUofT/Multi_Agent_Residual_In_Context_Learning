@@ -23,23 +23,7 @@ $$\hat{y}_{\text{MARICL}}(\mathbf{x}) = f_{\text{ML}}(\mathbf{x}) + \sum_{k=1}^{
 
 At inference time, only the frozen formulas run — **zero LLM calls**.
 
----
 
-## Results
-
-![MARICL vs baselines on regression and classification benchmarks](MA_RICL_Discovery_V2/Figures/results_figure.png)
-
-Performance across regression ($R^2$, MAE) and classification (accuracy, macro-F1) benchmarks (±1 std, 5 seeds). Selected highlights:
-
-| Benchmark | Base | MARICL | $\Delta$ |
-|---|---|---|---|
-| Cell-Free Protein (Linear base) | $R^2 = 0.35$ | $R^2 = 0.59$ | **+0.236** |
-| Cell-Free Protein (XGBoost base) | — | — | **+0.144** |
-| Adult Income (XGBoost base) | F1 = 0.692 | F1 = 0.800 | **+0.108 (+15.6%)** |
-
-MARICL outperforms all base models on every real benchmark, with gains strongest where the base model is weakest.
-
----
 
 ## Repository contents
 
