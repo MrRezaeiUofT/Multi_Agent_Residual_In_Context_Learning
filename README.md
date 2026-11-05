@@ -11,9 +11,14 @@
   <a href="examples/synthetic_data"><img alt="Examples replay with no API key" src="https://img.shields.io/badge/examples-no%20API%20key%20needed-2ea44f"></a>
 </p>
 
-A base model makes mistakes. MARICL hands those mistakes to an LLM, which writes a readable formula that fixes them. At prediction time only the formula runs, with no LLM calls.
+When software fails, we read the error, form a hypothesis, write a patch, and test it. When a tabular model fails, we usually retune it. MARICL does the first thing instead: a base model makes mistakes, LLM agents read the high-residual examples, and they write a readable, executable formula that fixes them. At prediction time only the formula runs, with no LLM calls.
 
 Code for [*From Residuals to Reasons: LLM-Guided Mechanism Hypotheses from Tabular Data*](https://arxiv.org/abs/2605.22897).
+
+<p align="center">
+  <img src="figures/headline_results.png" alt="MARICL's loop on a cell-free protein example, and its results on nine benchmarks" width="380"><br>
+  <sub><b>Figure 1.</b> MARICL's loop on a running example (steps 1 to 5; K agents run in parallel) and its results (step 6): test R², or accuracy where marked, of the MARICL variant against its base model. Means over 5 seeds (synthetic: two). MARICL leads the strongest other method on five of the eight real benchmarks, none significantly after BH correction. <a href="figures/headline_results.pdf">PDF</a></sub>
+</p>
 
 ## Results on synthetic data
 
@@ -93,12 +98,32 @@ The `maricl_headline` functions pick the best refinement step on validation data
 - About **half** of the gain survives with anonymized features, no domain context, and a small open model.
 - Fluent is not correct: with scrambled feature names, MARICL can still tell a convincing but wrong story.
 
-<details>
-<summary><b>Abstract</b></summary>
+## Abstract
 
-> When software fails, we read the error, form a hypothesis, write a patch, and test it. LLMs now do this for neural networks by editing weights; when a tabular model fails, we usually retune it. Most interpretability methods report which features matter rather than how they combine. Rather than asking an LLM to predict the target over the whole output space, we anchor the prediction with a base model and ask the LLM to debug it. We introduce **Multi-Agent Residual In-Context Learning (MARICL)**, in which LLM agents read high-residual examples, hypothesize the missing structure, and write executable correction terms that are then refined by multi-turn textual gradient optimization. The resulting corrections are readable, executable hypotheses about what the base model misses, rather than validated mechanisms. Across nine benchmarks covering scientific, biomedical, socioeconomic, and synthetic data, MARICL reliably repairs its base model's structured residuals, improving it on every dataset, and on synthetic data absent from pretraining it recovers the hidden structure (two seeds). Against the strongest competing baseline it leads on five of the eight real benchmarks and trails TabPFN on the other three, while adding an inspectable correction that black-box baselines do not provide.
+> When software fails, we read the error, form a hypothesis, write a patch, and test it. LLMs now do this for neural networks by editing weights ([Takehi et al., 2026](https://rikiyat.github.io/blog/weight-space-programming/)); when a tabular model fails, we usually retune it. Most interpretability methods report which features matter rather than how they combine. Rather than asking an LLM to predict the target over the whole output space, we anchor the prediction with a base model and ask the LLM to debug it. We introduce **Multi-Agent Residual In-Context Learning (MARICL)**, in which LLM agents read high-residual examples, hypothesize the missing structure, and write executable correction terms that are then refined by multi-turn textual gradient optimization. The resulting corrections are readable, executable hypotheses about what the base model misses, rather than validated mechanisms. Across nine benchmarks covering scientific, biomedical, socioeconomic, and synthetic data, MARICL reliably repairs its base model's structured residuals, improving it on every dataset, and on synthetic data absent from pretraining it recovers the hidden structure (two seeds). Against the strongest competing baseline it leads on five of the eight real benchmarks and trails TabPFN on the other three, while adding an inspectable correction that black-box baselines do not provide.
 
-</details>
+## Related work: weight-space programming
+
+[*Sparks of Weight-Space Programming*](https://rikiyat.github.io/blog/weight-space-programming/) (Takehi, Teoh, Zhang and Khattab, November 2026) shows that a general-purpose LLM can read a neural network's raw weights, guided by a natural-language spec, and write new weight values directly, with no optimizer. Their examples include fixing a reinforcement-learning policy by editing a small fraction of its weights and improving a small language model on math benchmarks. This is the closest published relative of MARICL's "LLM as debugger" idea, and it motivated the framing in our abstract. It is a blog post, not peer-reviewed work, and we have not run the two methods against each other: they solve different problems.
+
+| | Weight-space programming | **MARICL** |
+|---|---|---|
+| What the LLM reads | The network's raw weights as text | The base model's largest errors (residuals) on the data |
+| What the LLM writes | New numbers inside the network | A named, executable formula over the input features |
+| Works on | Neural networks whose weights fit in context | Any base model that outputs predictions: linear, XGBoost, neural, or a black box |
+| Base model | Edited in place | Left untouched; the correction is added on top and can be removed |
+| What you can audit | The edit is a set of changed weight values | The edit is a formula such as `0.5*NAD*sperm` that a domain expert can read, test and reject |
+| At prediction time | The edited network | Base model plus formula, with no LLM calls |
+| Checked by | Task benchmarks | A held-out validation split, 5 seeds, and a multiple-comparison correction |
+
+Where MARICL differs, and why it can be the better fit for tabular work:
+
+- **It does not need weights.** Gradient-boosted trees, linear models and proprietary predictors have no weight vector for an LLM to program. The residual exists for every model, so MARICL applies to all of them.
+- **The output can be read and argued with.** A formula over named features is a hypothesis about what the base model misses. A changed block of weights is not.
+- **The base model stays intact and the LLM is not in the serving path.** The correction is a small, separable term, so it is cheap to run and easy to switch off.
+- **The gain is gated.** A refinement step is kept only if it helps on validation data, and the paper reports where it does not help: no lead over the strongest baseline survives correction for multiple comparisons, and MARICL trails TabPFN on three of the eight real benchmarks.
+
+Where weight-space programming goes further: it changes what a network computes internally, covers reinforcement-learning policies and language models, and needs no base predictions at all. The two approaches are complementary. MARICL's corrections are readable hypotheses, not validated mechanisms.
 
 <details>
 <summary><b>Demo notebook (OpenAI)</b></summary>
@@ -120,6 +145,7 @@ Put `OPENAI_API_KEY=...` in a `.env` file in the project root (never commit it),
 ├── maricl_core.py           # The MARICL pipeline
 ├── maricl_headline.py       # Validation selection and the outer gate used in the paper
 ├── maricl_demo_v1.ipynb     # Demo notebook (OpenAI)
+├── figures/                 # Figure 1 (headline results)
 └── examples/
     └── synthetic_data/      # Regression and classification examples with Claude
 ```
