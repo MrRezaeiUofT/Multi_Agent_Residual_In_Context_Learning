@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Only one large failure remains, and in it both negative components stack at full strength. With x4 = 0.08 the Gaussian dip gives about -0.15, and with x2*x5 of about -1.87 the saturated interaction gives about -0.29, for a total of about -0.43. The implied base prediction is about 0.71 and the target 0.38, so only about -0.33 was needed and the correction overshoots by about 0.10. The form is right, but the combined downward correction is too large when x4 is near zero and the product is strongly negative, which is a scale or bound problem rather than a wrong shape.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Cap the combined negative correction and slightly soften the dip, keeping everything else the same: clip(0.1 - 0.22 * exp(-2 * x4**2) + 0.3 * tanh(x2 * x5), -0.35, 0.45). For this row the correction becomes about -0.35 instead of -0.43, bringing the error to about -0.02, while rows with moderate corrections are essentially unchanged."
+}

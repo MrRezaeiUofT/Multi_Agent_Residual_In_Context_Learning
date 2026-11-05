@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target shows a sign-independent step-like rise in |x4| around 0.5-0.55 that plateaus thereafter, which the base model does not capture.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "even smooth threshold, e.g. tanh(3*x4**2) or x4**2/(0.25+x4**2)",
+  "rationale": "Positive residuals (+0.22) occur at x4 = -1.04, +1.62, +1.87, +0.56, +0.69, -1.72, +1.32 while negative residuals occur at x4 = -0.51, -0.24, +0.50, so the residual sign flips between |x4| ~0.51 and ~0.56 independent of sign. Targets for |x4| from 0.56 to 1.87 are similar (0.66-0.78), indicating a plateau rather than continued quadratic growth."
+}

@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target increases sharply once |x4| passes about 1 (an even, threshold-like effect), which the base model underestimates at large |x4| and overestimates for moderate or small |x4|.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "even saturating step in |x4|, e.g. sigmoid(k*(x4**2 - 1)), with large positive x5 possibly lowering the target",
+  "rationale": "The three positive residuals have x4 = -2.17, -3.09 and -1.02, with targets up to 0.97, while all seven negative residuals have |x4| <= 0.89. The near-boundary contrast (x4 = -0.89 with x5 = 2.04 is negative; x4 = -1.02 with x5 = 1.16 is positive) suggests a steep transition around |x4| of about 1, possibly shifted by x5."
+}

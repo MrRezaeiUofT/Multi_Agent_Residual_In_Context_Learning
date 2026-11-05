@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The classes appear to compete through separate scores, with class_2 scoring on x4^2 and class_1 and class_0 scoring on +x2*x5 and -x2*x5, so class_2 wins when x4^2 exceeds |x2*x5| by a margin rather than at a fixed |x4| threshold.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = a*x4^2 - c; delta_class_1 = b*x2*x5; delta_class_0 = -b*x2*x5, passed through softmax with the base logits",
+  "rationale": "The eight true class_0 or class_1 rows here follow the x2*x5 sign rule, making 53 of 53, and this competition form explains the earlier exceptions: rows with |x4| of 1.35, 1.04 and 1.11 stay non-class_2 because |x2*x5| of about 2.5, 2.1 and 5.7 exceeds x4^2. Row 8 here is class_2 at |x4| of 0.75 with a product of only 0.07, which fits too, though one earlier row with x2 of -3.25 and x4 near -0.2 remains unexplained."
+}

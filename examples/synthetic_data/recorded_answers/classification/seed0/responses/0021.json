@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Target class is set by comparing x4^2 with |x2*x5|: class_2 when x4^2 dominates, otherwise class_1 for positive x2*x5 and class_0 for negative x2*x5.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "All ten examples fit the rule. The four class 2 samples (idx 2, 3, 6, 7) have x4^2 from about 1.2 to 5.2 with |x2*x5| of at most about 0.38. Idx 0 and 5 have positive x2*x5 and are class 1, while idx 1, 4, 8 and 9 have negative x2*x5 and are class 0, all with x4^2 too small to outweigh the product."
+}

@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Class_2 appears to win whenever x4^2 exceeds a multiple of |x2*x5|, not when |x4| passes a fixed threshold, and otherwise the sign of x2*x5 separates class_1 (positive) from class_0 (negative).",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "score_class_1 = a*x2*x5; score_class_0 = -a*x2*x5; score_class_2 = x4^2 - c with a around 1.6 to 2 and small c around 0.2, so class_2 wins when x4^2 - c > a*|x2*x5|",
+  "rationale": "All six class 0 or 1 errors follow the sign of x2*x5 (positive for idx 1, 3 and negative for idx 2, 5, 6, 7). Idx 6 stays class 0 at |x4| of 1.47 because |x2*x5| is about 1.21, while idx 9 is class 2 at |x4| of only 0.46 because |x2*x5| is about 0.05, and idx 8 is class 2 with |x4| of 1.51 and |x2*x5| of about 0.21. A relative comparison explains these cases and the earlier low-|x4| class 2 sample with x2*x5 near zero, which a fixed |x4| threshold cannot."
+}

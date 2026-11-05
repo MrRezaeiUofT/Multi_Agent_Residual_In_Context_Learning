@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target is driven by an even, saturating function of x4, about 0.54-0.72 for |x4| between 0.88 and 1.78 and about 0.22-0.33 for |x4| < 0.55, with x1 adding a modest positive shift.",
+  "implicated_features": [
+    "x4",
+    "x1"
+  ],
+  "functional_form_guess": "target ~ 0.22 + 0.5*(1 - exp(-x4**2)) + 0.07*x1",
+  "rationale": "Rows with x4 = 0.88, -0.88, 1.78 have targets of 0.54, 0.65 and 0.72, while rows with x4 = -0.001, -0.22, 0.11, 0.54, 0.20 have targets of only 0.22-0.33. The one small-x4 row with a higher target (0.485) has the largest x1 (1.04), and the x4 = -0.73 row (target 0.285) suggests the rise happens mostly beyond |x4| of about 0.8."
+}

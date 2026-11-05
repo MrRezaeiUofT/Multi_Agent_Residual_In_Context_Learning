@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model lacks both the x2*x5 product, which separates class_1 (positive) from class_0 (negative), and the x4^2 term, which beats that product and selects class_2 when x4^2 is large enough relative to |x2*x5|.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5; delta_class_2 = x4^2 - c, with a around 1.6 to 2.1 and c around 0.15",
+  "rationale": "All seven class 0 or 1 errors match the sign of x2*x5 (positive for idx 1, 4, 8, 9 and negative for idx 0, 2, 5). All three class 2 errors (idx 3, 6, 7) have |x4| of at least 1.08 and x4^2 well above |x2*x5|. Idx 7, with x4^2 of about 1.17 and |x2*x5| of about 0.47, suggests that a is no larger than about 2.1 given c near 0.15."
+}

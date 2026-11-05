@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction switches the even x4 term to a faster-saturating, lower-amplitude Gaussian-dip form: about -0.17 at x4 = 0, levelling off at about +0.23 once |x4| exceeds about 1.5, which reduces the over-prediction at large |x4|. The x2*x5 interaction is kept so that opposite-signed x2 and x5 lower the prediction and same-signed ones raise it, and the sum is clipped for stability.",
+  "f_k": "clip(0.4 * (1.0 - exp(-x4**2)) - 0.17 + 0.3 * tanh(0.5 * x2 * x5), -0.6, 0.6)"
+}

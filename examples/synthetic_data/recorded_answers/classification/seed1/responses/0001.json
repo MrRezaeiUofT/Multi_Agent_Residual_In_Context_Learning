@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model relies too heavily on the linear sign of x1 to split class_0 from class_2 and misses that x4 magnitude acts in both directions: large |x4| favours class_2 even at negative x1, while small |x4| favours class_0 even at high positive x1.",
+  "implicated_features": [
+    "x4",
+    "x1"
+  ],
+  "functional_form_guess": "delta_class_2 = a*(x4^2 - 1) and delta_class_0 = -a*(x4^2 - 1), optionally tapered by tanh(x1) so the correction is strongest where x1 pushes against x4 magnitude",
+  "rationale": "Eight of the ten errors are true class_2 predicted class_0; seven of those have x1 < 0 and |x4| >= 1.29 with both x4 signs, and the one with x4 near -0.2 has an extreme x2 of -3.25. The two opposite errors are true class_0 predicted class_2 with x1 near +1.5 and small |x4| (0.36 and 0.05), so the same even x4 term explains both error directions."
+}

@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Doubling the scale cut the loss from 0.4479 to 0.3359, and the remaining failures now look mostly like label noise or a soft boundary, not a missing form. Rows 3, 4, 6, 9 and 10 have |x4| from about 0.95 to 1.5 with small to moderate |x2*x5| where the rule favours class 2 or the wrong product sign, but they all have negative x4 and negative x1. I checked that pairing as a possible new term, but earlier batches have clear class 2 samples with the same signs, so it does not support one. Row 1 is the same strong outlier as before, and rows 2, 5, 7 and 8 sit close to the boundary or near the origin.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Keep the form and ratio and add no new feature terms. Test one modest 25 percent increase in scale, [clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)], and keep the current scale if the loss does not improve, because larger logits will be overconfident if the remaining errors are label noise."
+}

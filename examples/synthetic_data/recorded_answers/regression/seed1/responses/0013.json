@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model fails to capture a sign-dependent interaction between x2 and x5: residuals are positive when x2 and x5 have the same sign and negative when they have opposite signs.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "bilinear interaction c*x2*x5",
+  "rationale": "Every positive residual (+0.17 to +0.18) has x2*x5 > 0 (about 1.33, 0.70, 0.90, 0.24, 1.63), and every negative residual (about -0.175) has x2*x5 < 0 (about -0.39, -0.62, -1.79, -0.78, -1.10). Row 8 has only a small positive product but very large x4 (3.30), which suggests a smaller additional even effect of x4."
+}

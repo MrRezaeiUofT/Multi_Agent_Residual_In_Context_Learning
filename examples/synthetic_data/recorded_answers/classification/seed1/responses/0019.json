@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "Direct rule from the samples: any row with |x4| well above 1 is class_2 regardless of the sign of x4, and the values of x1 and x3 that the base model follows do not change this.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "if x4^2 > about 1.2 then class_2; as a smooth score, delta_class_2 = a*sigmoid(k*(x4^2 - 1.2))",
+  "rationale": "All ten rows are class_2 and have |x4| between 1.42 and 2.63 with both signs, so this one condition predicts every row here. The products x2*x5 are all below 1.0 in size, so the class_1 and class_0 interaction seen earlier has no strong competing signal in these rows."
+}

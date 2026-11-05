@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The restored form gives the best loss of 0.3202 again, with the same failure list as before, so no new failure mode has appeared. The remaining errors are the overlap near the class_2 boundary (class_0 or class_1 rows at |x4| of 1.09 to 1.74 such as rows 3, 6, 7, 8 and 10, and class_2 rows at |x4| of 0.62 to 0.76 such as rows 4 and 5) plus rows 1 and 2, which break the sign rule. Every change to the offset, slope, penalty shape and boost size tried in this session has moved loss up, not down.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "No further change: keep the current f_k as the final correction. The remaining errors look like label noise or class overlap that this family of closed-form gates cannot separate without overfitting a handful of rows."
+}

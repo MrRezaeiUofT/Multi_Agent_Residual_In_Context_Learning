@@ -1,0 +1,35 @@
+{
+  "id": "0058",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: Direct rule from the samples: any row with |x4| well above 1 is class_2 regardless of the sign of x4, and the values of x1 and x3 that the base model follows do not change this.\nCURRENT_T_k: This correction encodes the direct rule seen in the samples. A soft gate on x4**2 minus 0.4*abs(x2*x5), with a threshold near 1 that shifts slightly with x1, sends rows to class_2. Rows outside the gate go to class_1 or class_0 by the sign of x2*x5, and class_2 is lightly suppressed there.\nCURRENT_f_k: [-3*sign(x2*x5)*(1 - sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1))) - 2*sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1)), 3*sign(x2*x5)*(1 - sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1))) - 2*sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1)), 4*sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1)) - 1]\nTRAIN_LOSS: 0.4129\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -0.272    -3.248    +1.732    -0.199    -1.741    -0.059      +2.000      +0.705      +0.917\n  +0.952    +0.566    +1.183    +0.130    -1.298    -0.379      +1.000      +0.669      +0.832\n  -0.928    -1.267    -0.203    -1.741    -1.345    +0.467      +1.000      +0.555      +0.777\n  -0.685    +0.259    -1.913    +0.758    +0.847    +0.044      +2.000      +0.591      +0.768\n  +1.011    +1.696    -0.475    -0.615    +0.181    +1.111      +2.000      +0.611      +0.761\n  -0.023    -0.580    +1.032    +1.430    +1.244    +0.755      +0.000      +0.577      +0.757\n  +0.248    -0.833    +0.407    +1.385    -1.354    -0.214      +1.000      +0.572      +0.753\n  -2.445    -0.297    -0.785    +1.091    -0.056    -0.563      +1.000      +0.427      +0.749\n  -0.889    -0.466    -1.786    -0.749    +0.159    -0.084      +2.000      +0.534      +0.747\n  -1.724    -0.498    +0.159    +1.252    -0.417    +1.910      +1.000      +0.462      +0.745\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "e7152f4b1e287686e8529db14b262170aef1b591dea6d9bc9c4d753b21748c67"
+}

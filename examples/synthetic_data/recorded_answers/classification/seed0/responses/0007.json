@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model misses a quadratic x4 effect that raises class_2 for either sign of x4, and an x2*x5 interaction that shifts probability between class_1 (positive product) and class_0 (negative product).",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = b*(x4^2 - c) with c near 1.5; delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5, with a, b > 0",
+  "rationale": "All four class 1 errors (idx 0, 1, 2, 6) have positive x2*x5, including idx 1 where both factors are positive and idx 0, 2 and 6 where both are negative. Five of six class 2 errors (idx 3, 4, 5, 8, 9) have |x4| from about 1.4 to 3.1 with both signs. Idx 7 is an exception with |x4| of 0.70, but its x2*x5 is close to zero, so it may be noise or a weak additional effect."
+}

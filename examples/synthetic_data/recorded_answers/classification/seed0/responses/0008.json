@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model misses that x4^2 pushes samples into class_2 once |x4| exceeds about 1.1, and that the sign of x2*x5 otherwise separates class_1 (positive) from class_0 (negative).",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = b*(x4^2 - c) with c between 1.2 and 1.5; delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5, with a, b > 0",
+  "rationale": "This batch separates cleanly: the five class 2 errors (idx 2, 3, 6, 7, 9) have |x4| from about 1.15 to 1.50 with both signs, while the five class 0 or 1 errors have |x4| below 0.6. Among those five, positive x2*x5 gives class 1 (idx 1, 5) and negative x2*x5 gives class 0 (idx 0, 4, 8). The base model puts these class 0 or 1 samples in class 2, which suggests it uses linear terms and lacks both the quadratic and the product."
+}

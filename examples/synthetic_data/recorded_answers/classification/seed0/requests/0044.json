@@ -1,0 +1,35 @@
+{
+  "id": "0044",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The base model misses two pairwise interactions: a positive x3*x4 product pushes samples into class_2 and a positive x1*x5 product pushes samples into class_0, so it confuses classes 0 and 2 when these features act jointly.\nCURRENT_T_k: The correction keeps the x2*x5 term between class_1 and class_0 and the x4^2 term on class_2 at the current scale, since further scaling gave diminishing returns. It adds one small tentative term to class_1 for samples where x1 is strongly negative and x2 strongly positive, based on only three failures, so it should be dropped unless held-out loss improves. Outputs remain clipped for stability.\nCURRENT_f_k: [clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5 + 0.3*maximum(-x1*x2 - 1.0, 0.0), -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]\nTRAIN_LOSS: 0.3095\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -0.624    +1.235    -1.840    +1.639    -2.025    -0.041      +1.000      +0.715      +0.866\n  -0.371    +0.538    -0.592    +0.460    +0.086    -0.160      +2.000      +0.384      +0.760\n  -1.189    -0.904    +0.873    -0.947    -0.625    -1.117      +0.000      +0.582      +0.745\n  -0.473    +0.308    +0.613    -1.479    -0.533    -0.405      +0.000      +0.570      +0.744\n  -0.487    +0.898    +0.265    -0.978    +0.255    -0.635      +0.000      +0.399      +0.731\n  +0.487    -0.062    +0.873    +0.697    +1.378    +0.478      +2.000      +0.380      +0.718\n  +0.773    -1.111    -0.867    +1.537    -1.046    -0.656      +1.000      +0.581      +0.717\n  -2.207    +0.547    -0.465    -1.271    +0.359    -1.105      +1.000      +0.420      +0.715\n  +0.175    +0.642    -0.212    +1.515    -1.708    +0.642      +2.000      +0.549      +0.705\n  +1.038    -0.086    +0.357    -0.330    +0.281    +1.357      +0.000      +0.351      +0.685\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "4937cfe3023e486f13ed50a3b34d898223a1b1cff115676fc6b4c77b87b66d9d"
+}

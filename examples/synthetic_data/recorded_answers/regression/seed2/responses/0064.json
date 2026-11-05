@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Loosening the x5 damping slightly raised the overall loss (0.0290 -> 0.0293) and only nudged the targeted rows by about 0.01, so the change did not help. Only three rows still have errors above 0.1: two underpredictions at extreme |x4| and |x5| (x4 = 1.37 with x5 = -2.47, and x4 = 2.85 with x5 = 2.13), and one overprediction at x4 = -1.77 with same-sign x2/x5. They sit at the edges of the input space, and their errors point in opposite directions under the same structure. This looks like the residual noise floor or sparse tail behaviour rather than a systematic gap in the functional form.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Revert to the best-scoring iter-2 correction and stop tuning: clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.3*clip(x5**2, 0, 20)) + 0.22*tanh(1.5*x2*x5), -0.5, 0.5). Further coefficient changes driven by these three tail rows are likely to trade small gains on them for losses on the bulk of the data."
+}

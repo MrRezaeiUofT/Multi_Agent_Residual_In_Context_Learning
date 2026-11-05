@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Target class follows a direct rule: class_2 when x4^2 - 0.25 exceeds 2*|x2*x5|, otherwise class_1 for positive x2*x5 and class_0 for negative x2*x5.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "This rule correctly labels all ten examples. The class 2 samples (idx 0, 3, 5, 6, 8, 9) have x4^2 from about 2.2 to 9, including idx 0 where x2*x5 is about -0.66 and still loses to x4^2 of about 2.7. Idx 1, 4 and 7 have negative x2*x5 and are class 0, while idx 2 has positive x2*x5 of about 1.73 and is class 1."
+}

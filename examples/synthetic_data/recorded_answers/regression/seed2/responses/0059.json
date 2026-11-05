@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps a centred, saturating even x4 term at reduced amplitude, damped when |x5| is large so that it does not overshoot there. The separate x2 and x5 terms are replaced by a saturating x2*x5 interaction, which raises predictions when x2 and x5 share a sign and lowers them when the signs differ, the split seen in the remaining errors.",
+  "f_k": "clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.3*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5), -0.5, 0.5)"
+}

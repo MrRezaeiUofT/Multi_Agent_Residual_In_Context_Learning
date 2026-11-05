@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Rows with |x4| above about 1 are class_2 and remaining rows split by the sign of x2*x5 into class_1 (positive) and class_0 (negative).",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "if |x4| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0",
+  "rationale": "All eight class_2 rows have |x4| of at least 1.42, with x4 of both signs. The class_0 row has |x4| of 0.26 and x2*x5 of about -1.76, and the class_1 row has |x4| of 0.94 and x2*x5 of about 3.5, so both follow the sign split."
+}

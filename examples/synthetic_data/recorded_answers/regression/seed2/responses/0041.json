@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction is a centred, saturating even function of x4 that raises predictions when |x4| is large and lowers them near x4 = 0, damped by a Gaussian factor in x5 so that it fades when |x5| is large. The linear x1 term is dropped because the base model already appears to capture x1, and the amplitude is reduced to avoid overshooting at large |x4| and over-penalising near x4 = 0.",
+  "f_k": "clip(0.42*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)), -0.4, 0.4)"
+}

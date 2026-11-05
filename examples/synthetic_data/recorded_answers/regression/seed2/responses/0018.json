@@ -1,0 +1,4 @@
+{
+  "T_k": "Add a centred, saturating even term in x4 so that predictions go up when |x4| is large and down when x4 is near zero, with the plateau reached by |x4| of about 1.5. A small centred even penalty in x5 lowers predictions slightly when |x5| is large, matching the overpredictions seen at small x4 and large |x5|.",
+  "f_k": "clip(0.6*(0.58 - exp(-clip(x4**2, 0, 20))) - 0.08*(x5**2/(1 + x5**2) - 0.4), -0.5, 0.5)"
+}

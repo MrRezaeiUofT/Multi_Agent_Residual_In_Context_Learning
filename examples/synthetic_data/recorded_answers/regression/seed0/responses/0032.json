@@ -1,0 +1,11 @@
+{
+  "hypothesised_pattern": "Beyond the even x4 effect, the target appears to contain a positive x2*x5 interaction: rows where x2 and x5 share the same sign have high targets even at moderate |x4|, and rows with opposite signs have low targets.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4",
+    "x3"
+  ],
+  "functional_form_guess": "0.3 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 - 0.07*x3",
+  "rationale": "Rows 2, 4 and 9 have only moderate |x4| (0.44-0.58) yet targets of 0.56-0.71, and each has a positive x2*x5 product (+1.98, +1.23, +2.28); row 5 (x2*x5 = +0.98) is likewise high at 0.61. In contrast, rows 1, 7 and 8 have negative x2*x5 (-1.00, -0.22, -0.47) and low targets (0.18-0.34), with row 1 further lowered by its high x3 (+1.76)."
+}

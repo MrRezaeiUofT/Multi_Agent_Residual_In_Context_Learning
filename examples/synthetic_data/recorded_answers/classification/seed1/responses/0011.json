@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The label behaves like a competition among three scores, x4^2 for class_2, +x2*x5 for class_1 and -x2*x5 for class_0, none of which the base model captures with its linear terms.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = a*(x4^2 - c); delta_class_1 = b*x2*x5; delta_class_0 = -b*x2*x5, with a roughly equal to b",
+  "rationale": "All seven class_1 rows here have x2*x5 > 0, making 60 of 60 for the sign rule, and in rows 3 and 8 the product (3.16 and 1.79) exceeds x4^2 (1.57 and 1.60), so they remain class_1 despite |x4| above 1.2. The three class_2 rows have x4^2 clearly above the product (2.84 vs 1.03, 0.87 vs 0.18, 1.06 vs 0.10), and rows 5 and 7 sit about level, which suggests a and b are similar."
+}

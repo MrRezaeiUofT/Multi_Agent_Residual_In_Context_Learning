@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The errors fit a two-part rule: class_2 when |x4| exceeds a threshold near 1, and otherwise class_1 versus class_0 by the sign of x2*x5, while the base model wrongly leans on linear x1 for these decisions.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = a*sigmoid(k*(|x4| - 1)); delta_class_1 = (1 - sigmoid(k*(|x4| - 1)))*b*tanh(x2*x5); delta_class_0 = -delta_class_1",
+  "rationale": "The four true class_0 or class_1 rows here all follow the x2*x5 sign rule, bringing the count to 17 of 17, and all have |x4| <= 1.003. The six true class_2 rows here all have |x4| >= 1.199 with both signs, and row 7 (|x4| about 1.0, true class_0) suggests the boundary sits close to 1."
+}

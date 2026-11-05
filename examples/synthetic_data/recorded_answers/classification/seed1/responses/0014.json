@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model misses the x2*x5 sign interaction separating class_1 (positive) from class_0 (negative) and the even x4 effect that raises class_2 once |x4| passes about 1.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "delta_class_1 = b*x2*x5; delta_class_0 = -b*x2*x5; delta_class_2 = a*max(x4^2 - 1, 0)",
+  "rationale": "All eight true class_0 or class_1 rows here follow the sign rule, making 83 of 83, including row 0 with a product of only 0.08, and all have |x4| below 0.8. The two class_2 rows have |x4| of 1.48 and 1.09 with products of about 0.42 and 0.39, matching the x4 term."
+}

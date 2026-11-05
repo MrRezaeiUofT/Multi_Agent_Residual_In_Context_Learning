@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Class_2 wins when x4^2 - 0.25 exceeds about 1.85*|x2*x5|, and otherwise the sign of x2*x5 picks class_1 or class_0.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "With a coefficient of 2 the rule fits nine of ten examples and misses idx 7, which is class 2 with x4^2 of about 2.30 and |x2*x5| of about 1.10. Idx 4 is class 1 with almost the same values, x4^2 of about 2.36 and |x2*x5| of about 1.16, so both lie on the boundary and they place the coefficient near 1.85. At that value all ten examples fit, though two nearly identical points cannot fix it precisely."
+}

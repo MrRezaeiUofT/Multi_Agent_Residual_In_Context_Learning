@@ -1,0 +1,44 @@
+{
+  "id": "0011",
+  "schema": "Hypothesis",
+  "role": "encoder",
+  "json_schema": {
+    "description": "Structured hypothesis z_k produced by the encoder.",
+    "properties": {
+      "hypothesised_pattern": {
+        "description": "One-sentence statement of the pattern the base model misses.",
+        "title": "Hypothesised Pattern",
+        "type": "string"
+      },
+      "implicated_features": {
+        "description": "Feature names involved in the pattern. Must match provided names.",
+        "items": {
+          "type": "string"
+        },
+        "title": "Implicated Features",
+        "type": "array"
+      },
+      "functional_form_guess": {
+        "description": "A guess at the functional form (e.g. 'saturating x1*x2/(1+x1*x2)').",
+        "title": "Functional Form Guess",
+        "type": "string"
+      },
+      "rationale": {
+        "description": "2-3 sentence explanation grounded in the residual evidence.",
+        "title": "Rationale",
+        "type": "string"
+      }
+    },
+    "required": [
+      "hypothesised_pattern",
+      "implicated_features",
+      "functional_form_guess",
+      "rationale"
+    ],
+    "title": "Hypothesis",
+    "type": "object"
+  },
+  "system": "You are an expert ML diagnostician. Given evidence of where a base model fails, you hypothesise the structural pattern it misses, in a form that could be expressed as a closed-form correction.",
+  "user": "You are analysing the systematic prediction errors of a base ML model to discover what it misses.\n\nFocus on ERROR PATTERNS: which feature combinations drive large residuals, and what nonlinearities the base model fails to capture. Distinguish interactions, thresholds, saturations, and inverse-U shapes.\n\nDOMAIN CONTEXT: Synthetic regression benchmark with standardised inputs. Feature semantics are unknown and no domain knowledge applies.\n\nTASK: regression\n\nFEATURES:\n\n  - x1: standardised input feature (semantics unknown)\n  - x2: standardised input feature (semantics unknown)\n  - x3: standardised input feature (semantics unknown)\n  - x4: standardised input feature (semantics unknown)\n  - x5: standardised input feature (semantics unknown)\n  - x6: standardised input feature (semantics unknown)\n\nHIGH-RESIDUAL EXAMPLES (sorted by |residual|):\n\nidx        x1        x2        x3        x4        x5        x6      target   base_pred    residual\n  0    +1.862    +0.664    +0.097    -0.383    -0.591    -1.022      +0.447      +0.665      -0.218\n  1    +0.882    -0.871    -0.672    -0.645    +1.332    +1.668      +0.383      +0.600      -0.217\n  2    +0.466    -0.856    +1.853    -0.023    +0.524    +0.119      +0.215      +0.433      -0.217\n  3    +1.438    -2.098    +0.664    +0.533    +0.316    +0.395      +0.359      +0.576      -0.217\n  4    -1.669    -0.852    -0.539    +2.294    -0.294    +0.459      +0.593      +0.376      +0.217\n  5    +0.413    -1.754    +0.282    -0.796    -1.803    -0.265      +0.734      +0.518      +0.217\n  6    +0.437    -1.207    +0.647    -0.779    +1.918    -0.485      +0.259      +0.474      -0.215\n  7    -0.316    +0.329    -0.025    -0.784    -2.498    -1.115      +0.271      +0.486      -0.215\n  8    +1.061    -0.439    +0.943    -1.165    -1.522    +1.092      +0.770      +0.556      +0.214\n  9    +0.577    +1.550    -0.449    -0.638    -1.003    +0.366      +0.379      +0.593      -0.213",
+  "sha256": "2411e73557c7d5f0432ed3c8fa04a0810845305e1f47ee369cdeee3550508ced"
+}

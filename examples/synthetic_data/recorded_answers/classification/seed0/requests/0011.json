@@ -1,0 +1,44 @@
+{
+  "id": "0011",
+  "schema": "Hypothesis",
+  "role": "encoder",
+  "json_schema": {
+    "description": "Structured hypothesis z_k produced by the encoder.",
+    "properties": {
+      "hypothesised_pattern": {
+        "description": "One-sentence statement of the pattern the base model misses.",
+        "title": "Hypothesised Pattern",
+        "type": "string"
+      },
+      "implicated_features": {
+        "description": "Feature names involved in the pattern. Must match provided names.",
+        "items": {
+          "type": "string"
+        },
+        "title": "Implicated Features",
+        "type": "array"
+      },
+      "functional_form_guess": {
+        "description": "A guess at the functional form (e.g. 'saturating x1*x2/(1+x1*x2)').",
+        "title": "Functional Form Guess",
+        "type": "string"
+      },
+      "rationale": {
+        "description": "2-3 sentence explanation grounded in the residual evidence.",
+        "title": "Rationale",
+        "type": "string"
+      }
+    },
+    "required": [
+      "hypothesised_pattern",
+      "implicated_features",
+      "functional_form_guess",
+      "rationale"
+    ],
+    "title": "Hypothesis",
+    "type": "object"
+  },
+  "system": "You are an expert ML diagnostician. Given evidence of where a base model fails, you hypothesise the structural pattern it misses, in a form that could be expressed as a closed-form correction.",
+  "user": "You are analysing the systematic prediction errors of a base ML model to discover what it misses.\n\nFocus on ERROR PATTERNS: which feature combinations drive large residuals, and what nonlinearities the base model fails to capture. Distinguish interactions, thresholds, saturations, and inverse-U shapes.\n\nDOMAIN CONTEXT: Synthetic 3-class classification benchmark with standardised inputs. Feature semantics are unknown and no domain knowledge applies.\n\nTASK: classification   CLASSES: ['class_0', 'class_1', 'class_2']\n\nFEATURES:\n\n  - x1: standardised input feature (semantics unknown)\n  - x2: standardised input feature (semantics unknown)\n  - x3: standardised input feature (semantics unknown)\n  - x4: standardised input feature (semantics unknown)\n  - x5: standardised input feature (semantics unknown)\n  - x6: standardised input feature (semantics unknown)\n\nHIGH-RESIDUAL EXAMPLES (sorted by |residual|):\n\nidx        x1        x2        x3        x4        x5        x6      target    pred_cls     P(true)    residual\n  0    +0.731    +0.097    -0.802    +0.436    +1.922    -2.017           1           2       0.270      +0.730\n  1    -0.069    +0.211    -0.825    +1.846    -0.351    +1.120           2           0       0.271      +0.729\n  2    -0.876    -0.774    -1.653    -0.277    +1.398    +0.421           0           2       0.273      +0.727\n  3    +1.058    +0.922    -0.563    +0.297    +1.081    -1.335           1           2       0.274      +0.726\n  4    +0.192    +0.012    +0.863    -1.165    -0.086    -0.936           2           0       0.275      +0.725\n  5    +1.538    -0.018    +0.522    -0.092    -1.674    +1.112           1           2       0.275      +0.725\n  6    +1.114    +0.337    +0.631    -0.541    +0.283    -1.867           1           2       0.276      +0.724\n  7    +1.038    -0.086    +0.357    -0.330    +0.281    +1.357           0           2       0.276      +0.724\n  8    +0.725    -0.669    -0.197    +0.423    +0.501    -1.134           0           2       0.279      +0.721\n  9    +0.945    -0.740    +0.714    +0.684    +0.762    +1.636           0           1       0.279      +0.721\n\nNOTE: this is a 3-class classification problem. The correction will output a vector of per-class score deltas.",
+  "sha256": "7a347ffd72be3c891296f25060b3534de2bfbfb3becf03c1f5b4c63ef488937d"
+}

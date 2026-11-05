@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction raises predictions when x2 and x5 share a sign and lowers them when they differ, and adds an even x4 term that is negative near x4 = 0 and positive for large |x4|. Both terms are passed through tanh so the correction saturates, matching the bounded (0, 1) targets and the fact that extreme products such as -4.6 produce residuals no larger than moderate ones.",
+  "f_k": "clip(0.15 * tanh(x2 * x5) + 0.12 * tanh(x4**2 - 1), -0.5, 0.5)"
+}

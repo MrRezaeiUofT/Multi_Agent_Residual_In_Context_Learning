@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target has a U-shaped (even) dependence on x4 that the base model cannot represent, so it underpredicts at larger |x4| and overpredicts when x4 is small.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "saturating even term such as 1 - exp(-x4**2)",
+  "rationale": "Four of the six positive residuals have |x4| >= 0.94 with both signs (1.02, -0.94, -1.61, -1.42), while three of the four negative residuals have |x4| <= 0.38. The exceptions (x4 = -0.92 negative, x4 = 0.23 positive) suggest the curvature is smooth and other features contribute some noise."
+}

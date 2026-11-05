@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model over-predicts when x4 is near zero and under-predicts when |x4| is large, consistent with a missing convex U-shaped term in x4.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (possibly saturating)",
+  "rationale": "Most negative residuals cluster at small |x4| (-0.16, +0.33, -0.11, +0.30, -0.24, +0.17), while the largest positive residual sits at x4 = +1.50. The over-prediction of small-|x4| points of both signs suggests curvature in x4 rather than a linear slope, though x4 = +0.86 (negative) and +0.77 (positive) show some overlap, possibly from other features."
+}

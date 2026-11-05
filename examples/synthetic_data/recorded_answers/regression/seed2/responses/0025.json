@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target combines an even saturating effect of x4 (large |x4| raises it) with an additive positive effect of x1, so rows with small |x4| sit around 0.25-0.44 depending on x1, and large-|x4| rows reach 0.53-0.62 even when x1 is strongly negative.",
+  "implicated_features": [
+    "x4",
+    "x1"
+  ],
+  "functional_form_guess": "target ~ 0.3 + 0.45*(1 - exp(-x4**2)) + 0.08*x1",
+  "rationale": "The eight rows with |x4| <= 0.66 have targets of 0.06-0.44 that order largely by x1 (x1 = -2.98 -> 0.06, about 0.3-0.7 -> 0.25-0.36, 1.46 -> 0.44). The two rows with |x4| of 1.00 and 2.12 reach 0.62 and 0.53 despite x1 of -1.91 and -1.13, so x4 magnitude adds roughly 0.4-0.5 on top of the x1 effect."
+}

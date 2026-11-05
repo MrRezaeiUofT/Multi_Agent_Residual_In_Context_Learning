@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Class_2 follows |x4| above about 1, and otherwise class_1 versus class_0 follows the sign of x2*x5, a boundary the base model replaces with a misleading linear x1 effect.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "gate = sigmoid(k*(|x4| - 1)); delta_class_2 = a*gate; delta_class_1 = (1 - gate)*b*tanh(c*x2*x5); delta_class_0 = -delta_class_1",
+  "rationale": "All seven true class_0 or class_1 rows here follow the x2*x5 sign rule, making 38 of 38, even with products as small as about 0.07 in magnitude, so the boundary is the sign rather than a size threshold. The three true class_2 rows have |x4| of at least 1.02, and row 4 with |x4| of 1.02 and a small product suggests the threshold sits near 1."
+}

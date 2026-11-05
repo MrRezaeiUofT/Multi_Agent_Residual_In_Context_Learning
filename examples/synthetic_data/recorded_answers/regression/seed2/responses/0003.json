@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target increases with |x4| regardless of sign (an even, saturating effect), possibly amplified when |x5| is also large, and the base model underestimates this magnitude effect.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "even saturating term such as 1 - exp(-x4**2), or a magnitude interaction like tanh(abs(x4*x5))",
+  "rationale": "Eight positive residuals have |x4| between 0.75 and 2.23 with mixed signs, while the two negative residuals have x4 = -0.02 and 0.37. Many positive cases also have large |x5| (2.34, 1.73, 1.94, 2.30), suggesting the magnitude of x4 and perhaps x5 jointly drive the target, with saturation near 1.0 (idx 4)."
+}

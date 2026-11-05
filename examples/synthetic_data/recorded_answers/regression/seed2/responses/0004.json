@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target has a sign-symmetric dependence on x4, high when |x4| is large (above about 0.85) and low when |x4| is small, and the base model misses it; large positive x5 combined with small |x4| gives especially low targets.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "even saturating term like 1 - exp(-x4**2), possibly with an x5-dependent offset for small |x4|",
+  "rationale": "All six positive residuals have |x4| between 0.86 and 2.17 with both signs, while all four negative residuals have |x4| <= 0.49. Every negative residual also has x5 > 1.1, which suggests x5 lowers the target when x4 does not dominate."
+}

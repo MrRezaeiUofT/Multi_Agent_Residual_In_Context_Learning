@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a symmetric U-shaped term in x4: the target is higher than predicted when |x4| is near or above 1 and lower than predicted when |x4| is below about 0.5.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (possibly saturating x4**2/(1+x4**2))",
+  "rationale": "The four positive residuals have x4 = +1.04, +0.98, -1.41, +1.31, whereas the six negative residuals have x4 in [-0.49, +0.47]. Because large-magnitude x4 of either sign gives positive residuals and small-magnitude x4 gives negative residuals, an even function of x4 is missing."
+}

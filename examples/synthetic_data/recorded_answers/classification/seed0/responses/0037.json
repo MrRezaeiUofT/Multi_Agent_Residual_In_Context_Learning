@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction encodes the rule directly as class scores: class_1 gets +1.8*x2*x5, class_0 gets -1.8*x2*x5, and class_2 gets x4^2 - 0.3, so the largest score reproduces the class_2 versus sign-of-product decision. All three scores are multiplied by 2 so they can outweigh the base model's logits without changing the boundary between them. Outputs are clipped to keep large feature values stable.",
+  "f_k": "[clip(-3.6*x2*x5, -8.0, 8.0), clip(3.6*x2*x5, -8.0, 8.0), clip(2.0*x4**2 - 0.6, -2.0, 8.0)]"
+}

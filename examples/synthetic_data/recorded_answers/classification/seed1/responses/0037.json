@@ -1,0 +1,4 @@
+{
+  "T_k": "This correction encodes the direct rule seen in the samples. A soft gate on x4**2 minus 0.4*abs(x2*x5), with a threshold near 1 that shifts slightly with x1, sends rows to class_2. Rows outside the gate go to class_1 or class_0 by the sign of x2*x5, and class_2 is lightly suppressed there.",
+  "f_k": "[-3*sign(x2*x5)*(1 - sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1))) - 2*sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1)), 3*sign(x2*x5)*(1 - sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1))) - 2*sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1)), 4*sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1)) - 1]"
+}

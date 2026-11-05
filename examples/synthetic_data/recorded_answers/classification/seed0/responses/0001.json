@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model misses a symmetric, even effect of x4 where large |x4| of either sign favours class_2, along with an x1*x5 interaction whose sign separates class_0 (positive) from class_1 (negative).",
+  "implicated_features": [
+    "x1",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = a*(x4^2 - 1) or a threshold a*max(|x4| - 1, 0); delta_class_0 = b*x1*x5; delta_class_1 = -b*x1*x5, with a, b > 0",
+  "rationale": "True class 2 samples mispredicted as class 0 (idx 0, 3, 5, 8, 9) have |x4| from about 1.5 to 3.0 with both signs of x4, and idx 3 and 9 show negative x4 behaving like positive x4, which a linear term cannot represent. With x1 strongly positive, positive x5 gives class 0 (idx 1, 4) while negative x5 gives class 1 (idx 2), so the sign of x1*x5 determines the class. Both patterns are conditional or even-order effects that an additive linear score would miss."
+}

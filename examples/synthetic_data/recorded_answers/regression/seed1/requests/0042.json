@@ -1,0 +1,35 @@
+{
+  "id": "0042",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The base model misses a symmetric U-shaped (quadratic) effect of x4: target is underpredicted when |x4| is large and overpredicted when x4 is near zero.\nCURRENT_T_k: The correction keeps the saturating even x4 term, about -0.09 at x4 = 0 and levelling off near +0.2 for |x4| > 2, and doubles the amplitude of the tanh-bounded x2*x5 interaction. Same-sign x2/x5 pairs now add about +0.2 at x2*x5 = 1, and opposite-sign pairs subtract a similar amount, which offsets the x4 boost when |x4| is large but the product is negative.\nCURRENT_f_k: clip(0.2 * tanh(0.5 * (x4**2 - 1)) + 0.3 * tanh(0.8 * x2 * x5), -0.5, 0.5)\nTRAIN_LOSS: 0.0417\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  +2.118    -1.112    -0.378    +2.043    +0.647    +0.663      +0.612      +0.731      +0.119\n  -1.179    +1.052    +0.865    -0.720    +0.903    +0.121      +0.562      +0.445      -0.117\n  +1.262    +0.574    -1.479    +1.909    -0.714    +0.511      +0.655      +0.768      +0.113\n  +0.594    +0.891    +0.321    -0.818    +0.732    -0.501      +0.708      +0.597      -0.112\n  +0.231    -0.147    -0.214    +1.752    +1.267    +0.833      +0.530      +0.635      +0.105\n  -0.596    +0.628    +2.153    -0.805    +0.156    -0.385      +0.402      +0.298      -0.104\n  +0.135    +0.263    -0.783    +0.668    +1.785    -0.310      +0.682      +0.578      -0.103\n  +0.578    -1.054    +0.858    +2.160    +0.703    +0.027      +0.428      +0.531      +0.103\n  +0.994    -0.552    -0.391    -2.059    +0.733    -0.208      +0.567      +0.669      +0.102\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "4705b54c3f664e369e955983d16186aab2d4eaa3d06cb45a3fa80abe3bd4c9d3"
+}

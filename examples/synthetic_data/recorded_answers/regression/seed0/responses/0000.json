@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target contains an even (U-shaped) effect of x4: it rises when |x4| is large and is lower when x4 is near zero, which the base model fits as roughly flat or linear.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (possibly saturating, e.g. x4**2/(1+x4**2))",
+  "rationale": "All five positive residuals have |x4| >= 1.66 (2.38, 1.70, 1.99, -1.83, 1.66) regardless of the sign of x4, while all five negative residuals have x4 within 0.3 of zero. This symmetric sign pattern in x4 points to a missed quadratic or absolute-value term rather than a linear one."
+}

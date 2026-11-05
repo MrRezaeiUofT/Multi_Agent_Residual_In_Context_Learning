@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps the even x4 effect and the sign-agreement x2*x5 interaction but makes both saturate. The x4 term behaves like 0.1*(x4**2 - 1) near the centre (about -0.09 at x4 = 0) but levels off at about +0.2 for |x4| > 2, which fixes the overprediction at extreme x4. The x2*x5 term is tanh-bounded to about \u00b10.15 so that opposite-sign pairs can still pull predictions down when |x4| is large.",
+  "f_k": "clip(0.2 * tanh(0.5 * (x4**2 - 1)) + 0.15 * tanh(0.8 * x2 * x5), -0.4, 0.4)"
+}

@@ -1,0 +1,11 @@
+{
+  "hypothesised_pattern": "The sign rule on x2*x5 and a soft x4^2 threshold near 1 explain these rows, but the threshold band from about 0.9 to 1.2 in |x4| is not fully resolved by x1 or |x2*x5|.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5",
+    "x1"
+  ],
+  "functional_form_guess": "class_2 score = sigmoid(k*(x4^2 - 0.4*|x2*x5| - 1 - 0.2*x1)) with moderate k; class_1 versus class_0 by tanh(c*x2*x5)",
+  "rationale": "All six non-class_2 rows follow the sign rule, and row 5 (|x4| of 1.08, x1 of 0.89) staying class_1 fits the x1 shift. However, row 7 is class_2 at |x4| of 1.03 with x1 of 0.53 and row 6 at 1.02 with x1 of -0.08, both near the boundary, so the x1 coefficient should stay small and the gate soft."
+}

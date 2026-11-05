@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps the centred, saturating even x4 term and the moderate x2*x5 interaction that gave the best loss, and only loosens the x5 damping of the x4 term from 0.3 to 0.2. This lets the x4 boost stay a little stronger for rows with large |x4| and large |x5|, which were still slightly underpredicted.",
+  "f_k": "clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.22*tanh(1.5*x2*x5), -0.5, 0.5)"
+}

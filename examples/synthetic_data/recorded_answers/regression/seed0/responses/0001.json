@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target has a symmetric U-shaped dependence on x4 (higher when |x4| is large, lower near x4=0) that the base model under-fits.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (or saturating x4**2/(1+x4**2))",
+  "rationale": "Every positive residual has |x4| >= 1.5 with both signs present (-2.02, -2.23, +1.50, -2.40, -1.75, +1.54), while every negative residual has |x4| <= 0.38. The sign-independence of the effect indicates a missed even function of x4 rather than a linear slope."
+}

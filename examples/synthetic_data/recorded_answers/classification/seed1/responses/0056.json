@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The restored iter 7 form reproduces the best loss of 0.3202 and the same failure list. Six of the ten remaining failures (rows 3, 5, 6, 9, 10 and, less clearly, 1) are true class_2 with small |x4| and small products, against only three gate-open class_0 or class_1 rows (4, 7, 8), so the imbalance now favours a slightly earlier gate. The one offset not yet tried with the current slope and suppression is a value just below 1.1; the earlier failed attempt at a low offset also added an x1 shift, which was the main cause of that regression.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "As a last small test, lower the offset from 1.1 to 1.0 while keeping slope 2.5 and product weight 0.7: G = sigmoid(2.5*(x4**2 - 1.0 - 0.7*abs(x2*x5))). Keep all other terms. If loss does not go below 0.3202, keep iter 7 as final."
+}

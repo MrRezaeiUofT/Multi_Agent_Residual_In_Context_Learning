@@ -1,0 +1,4 @@
+{
+  "T_k": "The gate compares x4**2 with 1.1 plus 0.7*abs(x2*x5) with a further softened slope of 2, to reduce over-confidence in the overlap band near the class_2 boundary. Where the gate is closed, tanh(4*x2*x5) splits class_1 from class_0 and class_2 takes a partial suppression of 0.5 plus half of abs(tanh(4*x2*x5)).",
+  "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]"
+}

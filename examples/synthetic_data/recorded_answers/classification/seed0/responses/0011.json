@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "An XOR-like rule on the signs of x2 and x5 splits class_1 (same signs) from class_0 (opposite signs), while x4^2 above a small offset moves samples to class_2.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_1 = a*x2*x5, or a*tanh(k*x2*x5) if the effect depends mainly on sign; delta_class_0 = the negative of that term; delta_class_2 = x4^2 - c with c around 0.15",
+  "rationale": "All eight class 0 or 1 errors match the sign of x2*x5, even when the product is tiny, such as about +0.03 at idx 5 and -0.02 at idx 7, which hints that the sign may matter more than the magnitude. Both class 2 errors (idx 1, 4) have |x4| of about 1.2 to 1.8 and x2*x5 near zero. Idx 5 and 7 have x4^2 of at most about 0.11 and are not class 2, which together with an earlier class 2 sample at x4^2 of about 0.21 suggests an offset between those values."
+}

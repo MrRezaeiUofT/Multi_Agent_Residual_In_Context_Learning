@@ -1,0 +1,35 @@
+{
+  "id": "0038",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The target contains an even (U-shaped) effect of x4: it rises when |x4| is large and is lower when x4 is near zero, which the base model fits as roughly flat or linear.\nCURRENT_T_k: The correction adds a saturating even function of x4 that is negative near x4 = 0 (about -0.24) and rises to about +0.3 to +0.45 for |x4| of 2 or more, matching residuals of roughly -0.3 near zero and +0.3 at large |x4|. The offset is chosen so the term is roughly mean-zero for a standardised x4, and the output is clipped for stability.\nCURRENT_f_k: clip(0.7 * x4**2 / (1.0 + x4**2) - 0.24, -0.5, 0.5)\nTRAIN_LOSS: 0.1437\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -1.133    -1.373    -0.625    -2.377    +2.310    +0.914      +0.313      +0.708      +0.394\n  +1.060    -2.058    +0.124    -2.830    +1.124    -2.169      +0.476      +0.854      +0.377\n  +0.227    +1.162    -1.088    -1.479    -0.867    +0.123      +0.399      +0.770      +0.372\n  +0.745    -0.801    -0.776    -1.609    +0.933    +0.271      +0.500      +0.860      +0.360\n  -0.472    -1.005    -0.700    -1.473    +1.204    +1.591      +0.361      +0.716      +0.354\n  +0.858    -0.887    -0.153    +2.647    +0.670    +1.316      +0.537      +0.874      +0.337\n  +0.980    +1.337    +1.897    -2.360    -0.459    -0.647      +0.415      +0.741      +0.326\n  -0.458    -0.774    +0.390    +1.635    +0.856    -0.449      +0.324      +0.646      +0.322\n  -1.039    +0.893    -0.059    +1.629    -1.808    +1.156      +0.240      +0.561      +0.321\n  +0.800    +0.605    -0.060    -1.610    -1.060    +0.442      +0.478      +0.793      +0.315\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "db9f27e29a94344c929bd4816366881bf1e9caabc2cd95f89760d4fe1415408f"
+}

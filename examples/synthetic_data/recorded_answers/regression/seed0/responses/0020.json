@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target behaves like a saturating even function of x4 (about x4**2/(1+x4**2)) plus a positive, possibly saturating, effect of x1 and a mild negative effect of x3.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "x4**2/(1+x4**2) + 0.15*tanh(x1) - 0.08*x3",
+  "rationale": "Rows with |x4| of 1.5-2.4 have targets of 0.69-1.00, close to x4**2/(1+x4**2) of 0.69-0.85, and the highest (1.00, 0.89) also have negative x3 and non-negative x1. Rows with x4 near 0 still reach 0.39-0.43 when x1 is large and positive (2.15, 1.86, 1.61), showing an additive x1 effect, while row 3 (x1 = -2.55) sits well below what its |x4| = 1.5 alone would suggest."
+}

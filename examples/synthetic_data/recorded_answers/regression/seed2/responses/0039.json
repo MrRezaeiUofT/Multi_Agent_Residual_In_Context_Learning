@@ -1,0 +1,4 @@
+{
+  "T_k": "The centred, saturating even term in x4 is kept (it raises predictions at large |x4| and lowers them near x4 = 0), but it is now damped by a Gaussian factor in x5, so the x4 effect fades when |x5| is large, where the previous correction overshot in both directions. A small linear x1 term accounts for the many failures where negative x1 went with overprediction.",
+  "f_k": "clip(0.55*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.05*x1, -0.5, 0.5)"
+}

@@ -1,0 +1,202 @@
+{
+  "seed": 0,
+  "T": 10,
+  "target_range": [
+    -0.8008902652535734,
+    3.8719111871727376
+  ],
+  "fit_seconds": 0.0,
+  "linear": {
+    "r2": 0.34719611400011763,
+    "mae": 0.11726585985248807
+  },
+  "xgboost": {
+    "r2": 0.8332824973067918,
+    "mae": 0.0570731470065202
+  },
+  "oracle": {
+    "r2": 0.9856476028784652,
+    "mae": 0.017157555615818446
+  },
+  "maricl_gated": {
+    "r2": 0.9399736588251575,
+    "mae": 0.03373359049273002
+  },
+  "maricl_ungated": {
+    "r2": 0.9515271140774689,
+    "mae": 0.030845192425065022
+  },
+  "corrections": [
+    {
+      "k": 1,
+      "p_k": 0.8604265001735408,
+      "retained_t": 9,
+      "hypothesis": "The target contains an even (U-shaped) effect of x4: it rises when |x4| is large and is lower when x4 is near zero, which the base model fits as roughly flat or linear.",
+      "form_guess": "quadratic x4**2 (possibly saturating, e.g. x4**2/(1+x4**2)) || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2, possibly saturating as x4**2/(1+x4**2) || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2, or saturating x4**2/(1+x4**2) || quadratic x4**2 (possibly saturating x4**2/(1+x4**2)) || quadratic x4**2 or saturating x4**2/(1+x4**2) || quadratic x4**2 (possibly saturating x4**2/(1+x4**2)) || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2 (convex in x4, possibly saturating) || quadratic x4**2 or saturating x4**2/(1+x4**2) || quadratic x4**2 (possibly saturating) || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2 plus a smaller even term in x5 (e.g. a*x4**2 + b*x5**2) || quadratic x4**2, possibly modulated as x4**2/(1+exp(x3)) || shifted quadratic (x4 - 0.3)**2, or x4**2 plus a small negative linear term in x4 || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2 with a smaller x4-x5 interaction, e.g. a*x4**2 + b*x4*x5",
+      "T_k": "The correction trims the plateau of the symmetric, mean-centred even x4 term once more (about -0.115 at x4 = 0 and about +0.09 to +0.12 for |x4| >= 1.5), since large-|x4| rows are still slightly over-predicted. It keeps the steep, low-cap x2*x5 interaction that acts like a scaled sign of the product, saturating at +/-0.25. The total is clipped for stability.",
+      "f_k": "clip(0.25 * x4**2 / (0.5 + x4**2) - 0.115 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)",
+      "flags": {
+        "interaction_x2x5": true,
+        "nonlinear_x4": true,
+        "uses_x6": false,
+        "spurious_x1x2": false,
+        "features_used": [
+          "x2",
+          "x4",
+          "x5"
+        ]
+      },
+      "history": [
+        {
+          "t": 0,
+          "f_k": "clip(0.7 * x4**2 / (1.0 + x4**2) - 0.24, -0.5, 0.5)",
+          "train_mae": 0.14367145690263694
+        },
+        {
+          "t": 1,
+          "f_k": "clip(0.6 * x4**2 / (1.0 + x4**2) - 0.21 + 0.25 * tanh(0.4 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.09371125373185035
+        },
+        {
+          "t": 2,
+          "f_k": "clip(0.5 * x4**2 / (1.0 + x4**2) - 0.17 + 0.3 * tanh(0.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.06843395026133882
+        },
+        {
+          "t": 3,
+          "f_k": "clip(0.4 * (1.0 - exp(-x4**2)) - 0.17 + 0.3 * tanh(0.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.07097882568839455
+        },
+        {
+          "t": 4,
+          "f_k": "clip(0.5 * x4**2 / (1.0 + x4**2) - 0.17 + 0.4 * tanh(0.7 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.07547976668310954
+        },
+        {
+          "t": 5,
+          "f_k": "clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.3 * tanh(0.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.05300137353752436
+        },
+        {
+          "t": 6,
+          "f_k": "clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.04412230117081524
+        },
+        {
+          "t": 7,
+          "f_k": "clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.06 * x4 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.059000886630492674
+        },
+        {
+          "t": 8,
+          "f_k": "clip(0.3 * x4**2 / (0.5 + x4**2) - 0.14 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.035291012756253244
+        },
+        {
+          "t": 9,
+          "f_k": "clip(0.25 * x4**2 / (0.5 + x4**2) - 0.115 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.03006541644661787
+        },
+        {
+          "t": 10,
+          "f_k": "clip(0.2 * x4**2 / (0.5 + x4**2) - 0.09 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.02947996961800381
+        }
+      ]
+    },
+    {
+      "k": 2,
+      "p_k": 0.8142591825100859,
+      "retained_t": 1,
+      "hypothesis": "The target is dominated by a saturating even function of x4, close to x4**2/(1+x4**2), giving targets near 0 when x4 is near 0 and about 0.7-0.85 when |x4| is about 1.7 or more, with a smaller negative linear contribution from x3.",
+      "form_guess": "x4**2/(1+x4**2) - 0.08*x3 (plus small offsets) || x4**2/(1+x4**2) + 0.15*tanh(x1) - 0.08*x3 || 0.8*(1 - exp(-x4**2)) + 0.1*x1 - 0.08*x3 || 0.15 + 0.55*x4**2/(0.5 + x4**2) + 0.08*x1 - 0.07*x3 || 0.1 + 0.7*(1 - exp(-x4**2)) - 0.08*x3 + 0.08*x1 || 0.2 + 0.5*(1 - exp(-x4**2)) + 0.09*x1 - 0.07*x3 || 0.15 + 0.6*(1 - exp(-x4**2)) + 0.08*x1 || 0.2 + 0.6*(1 - exp(-x4**2)) + 0.08*x1 - 0.07*x3 || 0.2 + 0.55*(1 - exp(-x4**2)) + 0.08*x1 || 0.2 + 0.55*(1 - exp(-x4**2)) + 0.1*x1 - 0.07*x3 || 0.2 + 0.5*(1 - exp(-x4**2)) + 0.1*x1 - 0.07*x3 || 0.2 + 0.5*(1 - exp(-x4**2)) + 0.07*x1 - 0.05*x5 || 0.2 + 0.5*sigmoid(4*(abs(x4) - 0.9)) + 0.08*x1 - 0.07*x3 || 0.3 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 - 0.07*x3 || 0.25 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 + 0.08*x1 - 0.07*x3 || 0.25 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 + 0.08*x1 - 0.07*x3 || 0.25 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 + 0.08*x1 - 0.07*x3 || 0.25 + 0.4*(1 - exp(-x4**2)) + 0.3*tanh(0.4*x2*x5) + 0.08*x1 - 0.07*x3",
+      "T_k": "The correction keeps a mean-centred, fast-saturating even term in x4 but roughly halves its amplitude, so it runs from about -0.13 at x4 = 0 to about +0.17 at large |x4|, since the earlier version overshot at both ends. The x2*x5 interaction is made steeper but keeps a low cap of +/-0.25, so a moderately positive product (about +0.6) adds about +0.18 and opposite-signed x2 and x5 subtract a similar amount. The total is clipped for stability.",
+      "f_k": "clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)",
+      "flags": {
+        "interaction_x2x5": true,
+        "nonlinear_x4": true,
+        "uses_x6": false,
+        "spurious_x1x2": false,
+        "features_used": [
+          "x2",
+          "x4",
+          "x5"
+        ]
+      },
+      "history": [
+        {
+          "t": 0,
+          "f_k": "clip(0.55 * (1.0 - exp(-x4**2) - 0.42) + 0.25 * tanh(0.4 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.11493962524728601
+        },
+        {
+          "t": 1,
+          "f_k": "clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.041095311525598616
+        },
+        {
+          "t": 2,
+          "f_k": "clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.15 * tanh(1.5 * x2 * x5), -0.6, 0.6)",
+          "train_mae": 0.04705487058067604
+        }
+      ]
+    }
+  ],
+  "budget_curve": [
+    {
+      "T": 0,
+      "gated": 0.553002440909722,
+      "ungated": 0.17606723998999885
+    },
+    {
+      "T": 1,
+      "gated": 0.8628569206530876,
+      "ungated": 0.8638042522756368
+    },
+    {
+      "T": 2,
+      "gated": 0.8891780291259658,
+      "ungated": 0.9037607444013146
+    },
+    {
+      "T": 3,
+      "gated": 0.8891780291259658,
+      "ungated": 0.9037607444013146
+    },
+    {
+      "T": 4,
+      "gated": 0.8891780291259658,
+      "ungated": 0.9037607444013146
+    },
+    {
+      "T": 5,
+      "gated": 0.8861814629968271,
+      "ungated": 0.9361899768891654
+    },
+    {
+      "T": 6,
+      "gated": 0.9310251624662287,
+      "ungated": 0.932424139521246
+    },
+    {
+      "T": 7,
+      "gated": 0.9310251624662287,
+      "ungated": 0.932424139521246
+    },
+    {
+      "T": 8,
+      "gated": 0.9363890639597006,
+      "ungated": 0.9435526156180865
+    },
+    {
+      "T": 9,
+      "gated": 0.9399736588251575,
+      "ungated": 0.9515271140774689
+    },
+    {
+      "T": 10,
+      "gated": 0.9399736588251575,
+      "ungated": 0.9515271140774689
+    }
+  ]
+}

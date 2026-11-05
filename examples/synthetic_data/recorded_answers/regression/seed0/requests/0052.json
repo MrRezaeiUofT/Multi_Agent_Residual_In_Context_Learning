@@ -1,0 +1,35 @@
+{
+  "id": "0052",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The target contains an even (U-shaped) effect of x4: it rises when |x4| is large and is lower when x4 is near zero, which the base model fits as roughly flat or linear.\nCURRENT_T_k: The correction keeps the flattened, mean-centred even x4 term and the steep, low-cap x2*x5 interaction that gave the best loss so far. It adds a small mean-zero linear x4 tilt, so large negative x4 gets about 0.12 less lift than before and large positive x4 a little more, targeting the over-predictions that now cluster at negative x4. The total is clipped for stability.\nCURRENT_f_k: clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.06 * x4 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)\nTRAIN_LOSS: 0.0590\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  +0.858    -0.887    -0.153    +2.647    +0.670    +1.316      +0.537      +0.761      +0.224\n  -0.739    -0.529    +0.086    +2.983    +0.471    -0.041      +0.440      +0.662      +0.222\n  -0.458    -0.774    +0.390    +1.635    +0.856    -0.449      +0.324      +0.533      +0.209\n  -0.420    -0.212    +0.542    +1.610    +1.321    +1.274      +0.393      +0.600      +0.207\n  -1.867    +0.335    +0.837    +1.737    -0.161    +0.956      +0.300      +0.497      +0.197\n  -1.157    -1.365    -0.231    +2.278    +0.278    +0.763      +0.414      +0.607      +0.193\n  -0.165    -1.383    +0.669    +2.487    +0.459    -1.043      +0.398      +0.589      +0.192\n  +0.035    -0.744    -1.287    +1.422    +0.452    -0.375      +0.524      +0.711      +0.187\n  -0.250    -0.782    -1.638    +1.380    +0.978    -0.043      +0.465      +0.647      +0.182\n  -1.204    +1.858    -1.061    +1.651    -0.355    +0.725      +0.371      +0.551      +0.180\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "f845d16ea9e4995ca8a082df61c3776c9f38dde779d7f423ecc3196bb1466185"
+}

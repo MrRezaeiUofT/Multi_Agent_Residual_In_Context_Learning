@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Class_2 is set by |x4| above a soft threshold near 1 to 1.2, and the sign of x2*x5 picks class_1 or class_0 below it, with a very large |x2*x5| possibly able to override a borderline x4.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = a*sigmoid(k*(x4^2 - 1.2) ) - d*|x2*x5|; delta_class_1 = b*tanh(c*x2*x5); delta_class_0 = -delta_class_1",
+  "rationale": "All seven true class_0 or class_1 rows here follow the x2*x5 sign rule, making 31 of 31. Row 0 has |x4| of 1.11 yet is class_0 with x2*x5 near -5.7, the first borderline exception, so the x4 threshold may be soft or compete with the interaction, while the three true class_2 rows all have |x4| of at least 1.22."
+}

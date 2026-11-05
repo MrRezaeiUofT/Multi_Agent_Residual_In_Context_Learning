@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a saturating x2*x5 interaction whose sign determines the residual: positive when x2 and x5 agree in sign, negative when they disagree.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "c*tanh(k*x2*x5) with c around 0.21",
+  "rationale": "Every row obeys sign(residual) = sign(x2*x5): rows 0,1,2,3,4,6,8 have negative products (-0.44 to -3.1) with residuals of -0.21 to -0.215, and rows 5,7,9 have positive products (+0.64 to +1.26) with residuals of about +0.21. The constant residual magnitude across very different product sizes points to a bounded, sign-like interaction."
+}

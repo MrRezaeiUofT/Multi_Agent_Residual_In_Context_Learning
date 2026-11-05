@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a bounded x2*x5 interaction: residual is about +0.2 when x2 and x5 have the same sign and about -0.2 when they have opposite signs.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "c*tanh(k*x2*x5), c around 0.2, k large",
+  "rationale": "All ten residuals match sign(x2*x5): rows 1,2,3,4,6,9 have positive products (+0.29 to +3.1) and residuals of +0.203 to +0.208, while rows 0,5,7,8 have negative products (-0.72 to -2.9) and residuals of about -0.204. The residual size is essentially independent of product magnitude (row 4 with product 0.29 matches row 3 with 3.1), so the term saturates quickly."
+}

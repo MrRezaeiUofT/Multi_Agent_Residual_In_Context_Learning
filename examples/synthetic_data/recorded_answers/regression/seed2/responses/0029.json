@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target is the sum of a roughly linear positive x1 effect and an even, saturating x4 effect: rows with x4 near zero range from 0.13 to 0.46 in step with x1, and larger |x4| adds about 0.3-0.4.",
+  "implicated_features": [
+    "x1",
+    "x4"
+  ],
+  "functional_form_guess": "target ~ 0.29 + 0.09*x1 + 0.45*(1 - exp(-x4**2))",
+  "rationale": "For the seven rows with |x4| <= 0.34, the target orders by x1 (x1 = -1.63 -> 0.22, -1.36 -> 0.18, -1.30 -> 0.20, -0.91 -> 0.13, 0.98 -> 0.355, 1.28 -> 0.46, 1.47 -> 0.41), a slope of about 0.09 per unit. Rows with larger |x4| sit above that line: x4 = 1.35 with x1 = 1.23 gives 0.83, and x4 = -0.93 with x1 = -2.37 still gives 0.59."
+}

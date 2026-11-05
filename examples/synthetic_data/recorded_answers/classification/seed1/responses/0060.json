@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Switching to the smooth form cut train loss from 0.4129 to 0.3202, matching the best result found in this session, so the hard sign, steep gate, small product weight and x1 term were the problems. What is left is the boundary overlap seen before: class_0 or class_1 rows with x4**2 of 1.2 to 3.0 and moderate products (rows 3, 6, 7, 8, 10) that the gate sends to class_2, class_2 rows with |x4| of 0.62 to 0.76 and small products (rows 4, 5), and rows 1 and 2, which break the sign rule. Rows 6 and 8 would need a product weight above about 1.3 to stay out of class_2, which would wrongly close the gate for many true class_2 rows, so these errors look irreducible for this family of forms.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Keep the current f_k as final; repeated tests of the offset, slope and penalty shape in this session have not beaten 0.3202. If one more step is allowed, the only low-risk change is a slightly weaker class_2 boost, 2.5*G instead of 3*G, to reduce confidence on the gate-open class_0 and class_1 rows, keeping everything else unchanged."
+}

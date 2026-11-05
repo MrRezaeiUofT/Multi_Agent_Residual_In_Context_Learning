@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "A sample maps to class_2 when x4^2 is large relative to |x2*x5|, and otherwise to class_0 when x2*x5 is negative or class_1 when it is positive.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "Idx 0-3 and 7-9 are class 2 and all have |x4| of at least about 1.25 and x4^2 far above twice |x2*x5|, including idx 8 with negative x4. Idx 4-6 are class 0 with small |x4| and x2*x5 between about -1.9 and -0.96. These ten examples are also consistent with the rule that held across the later batches."
+}

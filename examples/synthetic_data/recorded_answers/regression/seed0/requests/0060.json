@@ -1,0 +1,35 @@
+{
+  "id": "0060",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The target is dominated by a saturating even function of x4, close to x4**2/(1+x4**2), giving targets near 0 when x4 is near 0 and about 0.7-0.85 when |x4| is about 1.7 or more, with a smaller negative linear contribution from x3.\nCURRENT_T_k: The correction keeps a mean-centred, fast-saturating even term in x4 but roughly halves its amplitude, so it runs from about -0.13 at x4 = 0 to about +0.17 at large |x4|, since the earlier version overshot at both ends. The x2*x5 interaction is made steeper but keeps a low cap of +/-0.25, so a moderately positive product (about +0.6) adds about +0.18 and opposite-signed x2 and x5 subtract a similar amount. The total is clipped for stability.\nCURRENT_f_k: clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)\nTRAIN_LOSS: 0.0411\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -0.728    +1.017    +0.403    -0.239    -1.663    -1.287      +0.147      +0.018      -0.129\n  +0.004    +1.941    -0.152    +0.132    -1.192    -1.501      +0.219      +0.101      -0.118\n  +0.381    +1.164    -0.336    +1.047    +1.721    +1.587      +0.745      +0.854      +0.109\n  +0.795    +0.621    +2.221    -0.080    -0.975    -1.161      +0.189      +0.086      -0.103\n  -1.188    -1.529    +0.996    -1.658    -1.996    -0.613      +0.566      +0.668      +0.102\n  +1.952    +1.089    -1.543    +0.859    +1.536    +0.443      +0.933      +1.035      +0.101\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "f08507ac03ac80dcb419268ec78690936bdd1751d7463c102e0bb0bb5638c5c5"
+}

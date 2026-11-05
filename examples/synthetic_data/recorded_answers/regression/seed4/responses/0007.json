@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target has a sign-symmetric dependence on x4 with a steep rise once |x4| exceeds roughly 0.5-0.6 and a plateau beyond, which the base model fails to model.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "smooth even threshold such as tanh(2*x4**2) or x4**2/(0.3+x4**2)",
+  "rationale": "All eight positive residuals (+0.24 to +0.25) have |x4| >= 0.62 with both signs (+0.62, -0.79, -0.74, +2.16, +1.98, -1.83, +0.87, +1.10), while the two negative residuals have |x4| = 0.47 and 0.20. Targets for moderate |x4| (~0.6-0.9) are already as high as for |x4| ~2 (about 0.64-0.77 vs 0.69-0.72), suggesting a quickly saturating even function rather than an unbounded quadratic."
+}

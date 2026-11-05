@@ -1,128 +1,143 @@
-# MARICL — Multi-Agent Residual In-Context Learning
+<h1 align="center">MARICL</h1>
 
-**Paper:** [From Residuals to Reasons: LLM-Guided Mechanism Inference from Tabular Data](https://arxiv.org/abs/2605.22897)  
-**arXiv:** `2605.18742` · **Submitted to NeurIPS 2026**
+<p align="center">
+  <b>Multi-Agent Residual In-Context Learning</b><br>
+  Ask the LLM to debug a model rather than be one.
+</p>
 
----
+<p align="center">
+  <a href="https://arxiv.org/abs/2605.22897"><img alt="arXiv 2605.22897" src="https://img.shields.io/badge/arXiv-2605.22897-b31b1b"></a>
+  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="examples/synthetic_data"><img alt="Examples replay with no API key" src="https://img.shields.io/badge/examples-no%20API%20key%20needed-2ea44f"></a>
+</p>
 
-## Abstract
+A base model makes mistakes. MARICL hands those mistakes to an LLM, which writes a readable formula that fixes them. At prediction time only the formula runs, with no LLM calls.
 
-> A persistent challenge in machine learning for scientific applications is jointly achieving prediction and understanding. Statistical models excel on structured data but operate as black boxes, while existing interpretability methods are largely *inspective*: they answer "which features matter?" but do not articulate how features interact or refine explanations iteratively alongside human understanding. End-to-end LLM agents must search the full output domain; we instead target the smaller, structured space of base-model residuals. We introduce **Multi-Agent Residual In-Context Learning (MARICL)**, an agentic framework in which LLM agents analyze where a base model fails, hypothesize missing structure from high-residual examples provided in context, and produce explicit correction terms refined through multi-turn textual gradient optimization. Across nine benchmarks spanning scientific, biomedical, socioeconomic, and synthetic settings, MARICL improves consistently over its base model on all datasets. A cross-plate transfer experiment on the Cell-Free Protein dataset further validates that the inferred formulas capture real structure rather than batch-specific noise: correction formulas frozen from one plate and applied directly to separate plates improve predictions in over 92% of cases within the same reagent cohort, but fail systematically on plates from a different reagent regime — evidence of mechanistic generalization rather than overfitting.
+Code for [*From Residuals to Reasons: LLM-Guided Mechanism Hypotheses from Tabular Data*](https://arxiv.org/abs/2605.22897).
 
----
+## Results on synthetic data
 
-## Overview
+Claude Opus 5.5 fixes the residuals of a linear model (regression) and a logistic model (classification). It is told nothing about the data.
 
-![MARICL framework overview](MA_RICL_Discovery_V2/Figures/figure1_maricl_schematic_v2.png)
+![Results on synthetic data](examples/synthetic_data/figures/synthetic_results.png)
 
-**(1–2)** A base ML model produces initial predictions. **(3)** Residual analysis selects high-error examples $\mathcal{D}_{\text{high-res}}$. **(4–5)** An LLM encoder produces structured hypotheses $z_k$; a decoder converts each into a natural-language explanation $T_k$ and an executable correction formula $f_k$. **(6)** Textual gradient optimization refines corrections through multi-turn critique feedback $g_k^{(t)}$. **(7–8)** Query-aware aggregation combines the base prediction with weighted corrections $\alpha_k(\mathbf{x})$.
+| | Base model | XGBoost | **MARICL** | Best possible |
+|---|---:|---:|---:|---:|
+| Regression, test R² | 0.370 | 0.787 | **0.914** | 0.987 |
+| Classification, test accuracy | 0.448 | 0.900 | **0.938** | 0.990 |
 
-**Prediction rule (regression):**
+Means over two seeds. Both examples replay with no API key:
 
-$$\hat{y}_{\text{MARICL}}(\mathbf{x}) = f_{\text{ML}}(\mathbf{x}) + \sum_{k=1}^{K} \alpha_k(\mathbf{x})\, f_k(\mathbf{x})$$
-
-At inference time, only the frozen formulas run — **zero LLM calls**.
-
-
-
-## Repository contents
-
-```
-.
-├── maricl_core.py                        # MARICL framework (sandbox, models, prompts, pipeline)
-├── maricl_demo_v1.ipynb                  # Experiments notebook (imports maricl_core)
-└── MA_RICL_Discovery_V2/
-    └── Figures/
-        ├── figure1_maricl_schematic_v2.png
-        └── results_figure.png
+```bash
+cd examples/synthetic_data
+pip install -r requirements.txt
+python agent_step.py --task regression --seed 0
+python agent_step.py --task classification --seed 0
 ```
 
-`maricl_core.py` contains everything that is not experiment-specific: the `ast`-sandboxed formula executor, Pydantic structured-output models (`Hypothesis`, `Correction`, `Critique`), encoder/decoder/critique prompts and functions, `CorrectionState`, and the `MARICL` class. The notebook imports the module and calls `maricl_core.configure_llms(llm, llm_creative)` once after initializing the LLM clients.
+The [examples README](examples/synthetic_data/README.md) shows the formulas Claude wrote.
 
----
+## How it works
 
-## Quickstart
+1. **Fit** a base model, such as linear regression or XGBoost.
+2. **Read.** LLM agents look at the examples with the largest errors and say what the model is missing.
+3. **Write.** Each idea becomes a sandboxed Python formula.
+4. **Refine.** The LLM critiques each formula where it still fails and rewrites it.
+5. **Predict** with the base model plus the weighted formulas. No LLM is called.
 
-### 1. Install dependencies
+$$\hat{y}(\mathbf{x}) = f_{\text{ML}}(\mathbf{x}) + \lambda(\mathbf{x}) \sum_{k} \alpha_k(\mathbf{x})\, f_k(\mathbf{x})$$
+
+The formulas are readable, executable hypotheses, not validated mechanisms. Check them with a domain expert before relying on them.
+
+## Use it on your data
+
+Pass in LangChain-style chat models, or the Claude adapter in [`examples/synthetic_data/claude_backend.py`](examples/synthetic_data/claude_backend.py).
+
+**Regression** (scale the target to [0, 1]):
+
+```python
+import maricl_core as mc
+from maricl_headline import select, maricl_predict
+
+mc.configure_llms(llm, llm_creative)
+model = mc.MARICL(task="regression", K=2, kappa=0.3, T=10, tau_fail=0.1)
+model.fit(X_train, y_train, base_model=base, feature_names=names,
+          feature_descs=descs, domain_context="What this data is about")
+
+chosen, scores, _ = select(model, X_train, y_train, X_val, y_val,
+                           base.predict(X_train), base.predict(X_val))
+y_hat = maricl_predict(model, X_test, base.predict(X_test), chosen, scores)
+```
+
+**Classification** (integer labels 0 to C−1):
+
+```python
+from maricl_headline import select_classification, select_beta, maricl_predict_proba
+
+model = mc.MARICL(task="classification", K=2, kappa=0.3, T=10)
+model.fit(X_train, y_train, base_model=base, feature_names=names,
+          feature_descs=descs, domain_context="What this data is about", n_classes=C)
+
+P_tr, P_va, P_te = (base.predict_proba(X) for X in (X_train, X_val, X_test))
+chosen, scores, _ = select_classification(model, X_train, y_train, X_val, y_val, P_tr, P_va)
+beta = select_beta(model, X_val, y_val, P_va, chosen, scores)
+proba = maricl_predict_proba(model, X_test, P_te, chosen, scores, beta)
+```
+
+The `maricl_headline` functions pick the best refinement step on validation data, as in the paper, and make no LLM calls.
+
+## What the paper found
+
+- MARICL improves its base model on **all nine** benchmarks.
+- It leads the strongest baseline on **five of eight** real benchmarks and trails TabPFN on the other three. After correction for multiple comparisons, none of the leads is significant.
+- About **half** of the gain survives with anonymized features, no domain context, and a small open model.
+- Fluent is not correct: with scrambled feature names, MARICL can still tell a convincing but wrong story.
+
+<details>
+<summary><b>Abstract</b></summary>
+
+> When software fails, we read the error, form a hypothesis, write a patch, and test it. LLMs now do this for neural networks by editing weights; when a tabular model fails, we usually retune it. Most interpretability methods report which features matter rather than how they combine. Rather than asking an LLM to predict the target over the whole output space, we anchor the prediction with a base model and ask the LLM to debug it. We introduce **Multi-Agent Residual In-Context Learning (MARICL)**, in which LLM agents read high-residual examples, hypothesize the missing structure, and write executable correction terms that are then refined by multi-turn textual gradient optimization. The resulting corrections are readable, executable hypotheses about what the base model misses, rather than validated mechanisms. Across nine benchmarks covering scientific, biomedical, socioeconomic, and synthetic data, MARICL reliably repairs its base model's structured residuals, improving it on every dataset, and on synthetic data absent from pretraining it recovers the hidden structure (two seeds). Against the strongest competing baseline it leads on five of the eight real benchmarks and trails TabPFN on the other three, while adding an inspectable correction that black-box baselines do not provide.
+
+</details>
+
+<details>
+<summary><b>Demo notebook (OpenAI)</b></summary>
+
+[`maricl_demo_v1.ipynb`](maricl_demo_v1.ipynb) runs a small regression and classification demo with an OpenAI model. It carries its own copy of the pipeline.
 
 ```bash
 pip install langchain langchain-openai openai pydantic numpy scikit-learn matplotlib python-dotenv
 ```
 
-### 2. Set your API key
+Put `OPENAI_API_KEY=...` in a `.env` file in the project root (never commit it), then run the cells in order. `MAICL_MODEL_NAME` (default `gpt-5.4-mini`) and `OPENAI_REASONING_EFFORT` (default `low`) can be overridden.
 
-Create a `.env` file in the project root:
+</details>
 
-```
-OPENAI_API_KEY=sk-...
-```
-
-The notebook also accepts `API_KEY` as an alias. **Do not commit this file.**
-
-### 3. Run the notebook
-
-Open [`maricl_demo_v1.ipynb`](maricl_demo_v1.ipynb) and execute cells sequentially.
-
-Optional environment overrides:
-
-| Variable | Default | Description |
-|---|---|---|
-| `MAICL_MODEL_NAME` | `gpt-5.4-mini` | Model passed to LangChain/OpenAI |
-| `OPENAI_REASONING_EFFORT` | `low` | Reasoning effort for GPT-5 family (`none` to disable) |
-
-> Expect OpenAI API usage charges. Results vary slightly due to nonzero temperature.
-
----
-
-## Synthetic demo scenarios
-
-The notebook contains two self-contained experiments that require no external data.
-
-### Experiment 1 — Synthetic regression
-
-A linear base model is fit on a 4-feature dataset whose true generating process contains structure it cannot capture:
-
-$$y = 0.5\,x_1 - 0.3\,x_2 + 0.2\,x_3 + 1.8\cdot\sigma(2\,x_1 x_2) + 0.4\,x_3^2 + \varepsilon, \quad \varepsilon \sim \mathcal{N}(0, 0.1)$$
-
-The linear model fits only the first three linear terms; the **sigmoid interaction** ($x_1 \times x_2$) and the **quadratic term** ($x_3^2$) become residual signal. MARICL's encoder agents hypothesize these missing structures from the high-residual examples, the decoder compiles them into executable formulas, and textual gradient refinement iterates toward the true form.
-
-**Setup:** 300 samples · 60/20/20 train/val/test split · `K=2` agents · `T=8` refinement steps
-
-### Experiment 2 — Synthetic 3-class classification
-
-A logistic regression base model is fit on a 4-feature dataset with a nonlinear decision boundary:
-
-$$\text{class} = \begin{cases} 0 & x_1 x_2 < -0.5 \\ 2 & x_1 x_2 > +0.5 \\ 1 & \text{otherwise} \end{cases} \quad \text{(with } 0.5\,(x_3^2 - 1) \text{ perturbation and 2\% label noise)}$$
-
-A logistic model captures only marginal effects and misses the interaction boundary. MARICL's correction agents discover the $x_1 \times x_2$ interaction and apply class-conditional correction probabilities.
-
-**Setup:** 500 samples · 60/20/20 split · `K=3` agents · `T=8` refinement steps · `beta=0.3` · `kappa=0.4`
-
----
-
-## How it works
+## Repository layout
 
 ```
-Base model → high-residual examples → Encoder agents (hypothesize) →
-Decoder agents (compile to formulas) → Critique & refine (T rounds) →
-Query-aware aggregation → Final prediction
+.
+├── maricl_core.py           # The MARICL pipeline
+├── maricl_headline.py       # Validation selection and the outer gate used in the paper
+├── maricl_demo_v1.ipynb     # Demo notebook (OpenAI)
+└── examples/
+    └── synthetic_data/      # Regression and classification examples with Claude
 ```
-
-Key design choices:
-- **Residual targeting** — LLMs explain *what the base model misses*, not the full label.
-- **Executable corrections** — Each $f_k$ is a sandboxed Python expression validated by `ast` at fit time. Only arithmetic runs at inference.
-- **Textual gradients** — Critique feedback ($g_k^{(t)}$) drives iterative refinement of both the explanation $T_k$ and formula $f_k$.
-- **Query-aware gating** — $\alpha_k(\mathbf{x})$ down-weights a correction when the query lies far from the residual cluster it was inferred from.
-
----
 
 ## Citation
 
 ```bibtex
-@article{rezaei2026residuals,
-  title={From Residuals to Reasons: LLM-Guided Mechanism Inference from Tabular Data},
-  author={Rezaei, Mohammad R and Krishnan, Rahul G},
-  journal={arXiv preprint arXiv:2605.22897},
-  year={2026}
+@misc{rezaei2026residualsreasonsllmguidedmechanism,
+      title={From Residuals to Reasons: LLM-Guided Mechanism Inference from Tabular Data}, 
+      author={Mohammad R. Rezaei and Rahul G. Krishnan},
+      year={2026},
+      eprint={2605.22897},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2605.22897}, 
 }
 ```
+
+## License
+
+MIT. See [LICENSE](LICENSE).

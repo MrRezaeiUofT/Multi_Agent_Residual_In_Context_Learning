@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model underfits a sign-symmetric x4 effect (higher target for larger |x4|), and it also seems to underfit a nonlinear rise in the target when x5 is strongly negative.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "a*(1 - exp(-x4**2)) plus a saturating decreasing x5 term such as -b*tanh(x5)",
+  "rationale": "Positive residuals mostly have sizeable |x4| (0.58, -1.10, 1.51, 0.96, 0.83), while two of the negative residuals have x4 near zero (-0.06, 0.29). The positive residual at x4 = 0.01 has x5 = -2.61 (target 0.67), so very negative x5 can raise the target on its own, beyond what the linear base model captures."
+}

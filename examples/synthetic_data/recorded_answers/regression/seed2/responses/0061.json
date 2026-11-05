@@ -1,0 +1,4 @@
+{
+  "T_k": "The centred, saturating even x4 term (damped when |x5| is large) is kept, and the x2*x5 interaction is made slightly weaker and gentler. This stops small products from being pushed almost to the ceiling and trims the overshoot in both directions, raising predictions when x2 and x5 share a sign and lowering them when they differ, but less aggressively than before.",
+  "f_k": "clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.3*clip(x5**2, 0, 20)) + 0.22*tanh(1.5*x2*x5), -0.5, 0.5)"
+}

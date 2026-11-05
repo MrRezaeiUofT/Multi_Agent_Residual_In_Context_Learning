@@ -1,0 +1,4 @@
+{
+  "T_k": "The centred, saturating even x4 term (damped when |x5| is large) is kept, and a saturating x2*x5 interaction is added. The new term raises predictions when x2 and x5 share a sign and lowers them when the signs differ, the dominant pattern among the remaining errors. The interaction is bounded by tanh so that extreme products cannot dominate.",
+  "f_k": "clip(0.42*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.2*tanh(0.8*x2*x5), -0.5, 0.5)"
+}

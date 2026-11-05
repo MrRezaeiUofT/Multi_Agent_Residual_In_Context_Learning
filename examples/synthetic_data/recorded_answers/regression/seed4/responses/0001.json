@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target rises with the magnitude of x4 regardless of its sign (an even, likely quadratic or saturating effect), which the base model under-represents.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "even function of x4, e.g. x4**2 or saturating x4**2/(1+x4**2)",
+  "rationale": "All four positive residuals (+0.31 to +0.32) have |x4| between 1.26 and 1.53 with both signs (-1.26, -1.36, +1.53, +1.44), while all six negative residuals have |x4| <= 0.53 (-0.30, +0.53, -0.18, -0.16, +0.35, -0.14). No other feature splits positive and negative residuals this cleanly (x5 is positive in both groups), so the missing term is a symmetric function of x4."
+}

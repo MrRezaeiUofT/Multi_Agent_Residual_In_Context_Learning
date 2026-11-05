@@ -1,0 +1,35 @@
+{
+  "id": "0038",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The base model misses two pairwise interactions: a positive x3*x4 product pushes samples into class_2 and a positive x1*x5 product pushes samples into class_0, so it confuses classes 0 and 2 when these features act jointly.\nCURRENT_T_k: The correction adds an antisymmetric x2*x5 term that raises class_1 when the product is positive and class_0 when it is negative, replacing the earlier x1*x5 and x3*x5 guesses that later batches contradicted. It also adds an even x4^2 term to class_2, so that large |x4| of either sign favours class_2 when it outweighs about twice |x2*x5|. All terms are clipped to keep the scores numerically stable.\nCURRENT_f_k: [clip(-2.0*x2*x5, -6.0, 6.0), clip(2.0*x2*x5, -6.0, 6.0), clip(x4**2 - 0.25, -1.0, 6.0)]\nTRAIN_LOSS: 0.4479\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -0.624    +1.235    -1.840    +1.639    -2.025    -0.041      +1.000      +0.721      +0.866\n  -0.371    +0.538    -0.592    +0.460    +0.086    -0.160      +2.000      +0.383      +0.752\n  +0.487    -0.062    +0.873    +0.697    +1.378    +0.478      +2.000      +0.368      +0.728\n  -1.189    -0.904    +0.873    -0.947    -0.625    -1.117      +0.000      +0.542      +0.720\n  +0.175    +0.642    -0.212    +1.515    -1.708    +0.642      +2.000      +0.559      +0.717\n  +1.195    -0.061    +0.077    -0.430    +1.775    -1.508      +0.000      +0.465      +0.714\n  +0.773    -1.111    -0.867    +1.537    -1.046    -0.656      +1.000      +0.573      +0.709\n  -0.284    +0.139    +1.147    +1.246    +0.858    +1.995      +2.000      +0.419      +0.703\n  +1.038    -0.086    +0.357    -0.330    +0.281    +1.357      +0.000      +0.352      +0.699\n  -0.487    +0.898    +0.265    -0.978    +0.255    -0.635      +0.000      +0.398      +0.693\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "be2ef581922e0b7d065575303ef9428fb4b7baf7126fae7d6c47c24cd247f9ff"
+}

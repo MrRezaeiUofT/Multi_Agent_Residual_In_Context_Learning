@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model still misses the x2*x5 product, whose sign separates class_1 from class_0, and the x4^2 term that gives class_2 when it dominates about twice |x2*x5|.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_1 = 2*x2*x5; delta_class_0 = -2*x2*x5; delta_class_2 = x4^2 - 0.25",
+  "rationale": "All eight class 0 or 1 errors match the sign of x2*x5 (positive for idx 1, 2, 3, 5, 7, 8 and negative for idx 0, 4). Both class 2 errors (idx 6, 9) have x4^2 of about 1.8 to 3.8 against |x2*x5| of at most about 0.35. Idx 8 is close to the boundary, with x4^2 - 0.25 of about 0.23 and 2*x2*x5 of about 0.22, and its uncertain label is consistent with that."
+}

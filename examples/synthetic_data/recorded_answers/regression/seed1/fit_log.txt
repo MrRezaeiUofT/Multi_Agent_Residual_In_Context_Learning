@@ -1,0 +1,22 @@
+  high-residual pool: 180 / 600 examples (|r| range 0.154..0.336)
+  [correction 0] encoder variant = error_patterns
+    hypothesis: The base model misses a symmetric U-shaped (quadratic) effect of x4: target is underpredicted when |x4| is large and overpredicted when x4 is near zero.
+    form guess: quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || bilinear interaction a*x2*x5 plus smaller b*x4**2 || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5
+    f_k_0: clip(0.1 * (x4**2 - 1) + 0.1 * x2 * x5, -0.5, 0.5)
+    loss_0: 0.0725
+  [correction 1] encoder variant = sample_patterns
+    hypothesis: High targets (about 0.7-0.87) occur when x2 and x5 share a sign and |x4| is large, while low targets (about 0.14-0.23) occur when x2 and x5 have opposite signs and x4 is near zero, a combined interaction-plus-quadratic effect the base model flattens.
+    form guess: bounded additive: sigmoid(a*x2*x5 + b*x4**2 + const), approximated as a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1), possibly inside a sigmoid since targets lie in (0, 1) || a*x2*x5 + b*(x4**2 - 1), possibly saturating via sigmoid || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || bilinear interaction c*x2*x5 || a*x2*x5 + b*(x4**2 - 1) || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5
+    f_k_0: clip(0.15 * tanh(x2 * x5) + 0.12 * tanh(x4**2 - 1), -0.5, 0.5)
+    loss_0: 0.0473
+  [correction 0] refining for T=10 iterations
+    iter 1: loss 0.0725 -> 0.0544  f_k = clip(0.2 * tanh(0.5 * (x4**2 - 1)) + 0.15 * tanh(0.8 * x2 * x5), -0.4, 0.4)
+    iter 2: loss 0.0544 -> 0.0417  f_k = clip(0.2 * tanh(0.5 * (x4**2 - 1)) + 0.3 * tanh(0.8 * x2 * x5), -0.5, 0.5)
+    iter 3: loss 0.0417 -> 0.0451  f_k = clip(0.1 - 0.25 * exp(-2 * x4**2) + 0.3 * tanh(x2 * x5), -0.5, 0.5)
+    iter 4: loss 0.0451 -> 0.0350  f_k = clip(0.12 - 0.22 * exp(-1.5 * x4**2) + 0.3 * tanh(0.9 * x2 * x5), -0.35, 0.45)
+    iter 5: no failures above tau_fail; stopping early
+  [correction 0] best loss = 0.0350 at t=4
+  [correction 1] refining for T=10 iterations
+    iter 1: no failures above tau_fail; stopping early
+  [correction 1] best loss = 0.0473 at t=0
+  global scores p_k = ['0.839', '0.790']

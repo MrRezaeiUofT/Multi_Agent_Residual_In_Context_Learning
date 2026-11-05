@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Train loss improved to 0.3267, the best so far, so the linear penalty with weight 0.7 and offset 1.1 is the better gate. The largest remaining group is rows 3, 4, 6, 7, 8 and 10: true class_2 with |x4| between 0.62 and 0.93 and small products (0.03 to 0.31). In the closed gate, class_2 takes a fixed suppression of about -1 even where tanh(4*x2*x5) is small and the sign evidence for class_0 or class_1 is weak, so these rows are penalised without any real competing signal. Rows 5 and 9 are remaining gate-open errors, and rows 1 and 2 look like noise.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Keep the gate G = sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))) and the class_0 and class_1 terms, but tie the class_2 suppression to the strength of the sign evidence: use delta_class_2 = 3*G - (1 - G)*abs(tanh(4*x2*x5)) instead of 4*G - 1. Class_2 is then only suppressed where the product is informative, and the fixed penalty disappears when x2*x5 is near zero."
+}

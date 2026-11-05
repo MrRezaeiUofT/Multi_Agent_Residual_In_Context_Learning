@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target rises with |x4| independent of sign and saturates toward 1 at large magnitudes, an even saturating effect the base model only partly captures.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "saturating even function, e.g. 1 - exp(-x4**2) or tanh(x4**2)",
+  "rationale": "Positive residuals (+0.26 to +0.27) occur at x4 = +2.16, +1.31, -1.24, +1.37, -3.91, with the extreme x4 = -3.91 giving target 0.986, near an apparent ceiling of 1. Negative residuals occur at |x4| <= 0.82 with targets 0.02-0.28, so the missing structure is a sign-independent, bounded function of x4 that the near-flat base predictions (0.29-0.73) do not reproduce."
+}

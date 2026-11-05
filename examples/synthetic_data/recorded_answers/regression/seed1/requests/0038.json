@@ -1,0 +1,35 @@
+{
+  "id": "0038",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The base model misses a symmetric U-shaped (quadratic) effect of x4: target is underpredicted when |x4| is large and overpredicted when x4 is near zero.\nCURRENT_T_k: The correction adds a centred quadratic term in x4, raising predictions when |x4| is large and lowering them near x4 = 0, plus a bilinear x2*x5 term whose sign follows whether x2 and x5 agree in sign. Coefficients are moderate (about 0.1 each) to match residual magnitudes of roughly 0.15-0.3, and the result is clipped for stability.\nCURRENT_f_k: clip(0.1 * (x4**2 - 1) + 0.1 * x2 * x5, -0.5, 0.5)\nTRAIN_LOSS: 0.0725\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -1.073    +0.974    +0.128    +2.534    -1.017    +0.947      +0.354      +0.644      +0.290\n  -0.234    -1.255    +0.212    +2.363    +0.710    +1.044      +0.417      +0.672      +0.255\n  +0.148    -0.554    +1.313    +2.341    +0.631    -1.716      +0.439      +0.676      +0.237\n  -0.626    +0.333    -2.458    +3.100    -0.699    -0.730      +0.661      +0.897      +0.236\n  +0.578    -1.054    +0.858    +2.160    +0.703    +0.027      +0.428      +0.662      +0.234\n  +2.118    -1.112    -0.378    +2.043    +0.647    +0.663      +0.612      +0.839      +0.227\n  -0.991    -1.143    +0.743    +2.211    +0.512    -0.912      +0.362      +0.566      +0.205\n  +0.994    -0.552    -0.391    -2.059    +0.733    -0.208      +0.567      +0.765      +0.198\n  +1.262    +0.574    -1.479    +1.909    -0.714    +0.511      +0.655      +0.841      +0.186\n  +1.499    -0.776    +1.915    +2.186    +2.173    -0.133      +0.428      +0.602      +0.174\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "03a8e047240d35f4ca3aa8865664057863faf83a27995fcd694a482284f56ed3"
+}

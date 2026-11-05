@@ -1,0 +1,262 @@
+{
+  "seed": 0,
+  "T": 10,
+  "fit_seconds": 0.1,
+  "class_counts": [
+    372,
+    326,
+    302
+  ],
+  "logistic": {
+    "accuracy": 0.425,
+    "macro_f1": 0.4036668507609229,
+    "log_loss": 1.0534210899999943
+  },
+  "xgboost": {
+    "accuracy": 0.9,
+    "macro_f1": 0.8997050944373157,
+    "log_loss": 0.31100407242774963
+  },
+  "oracle": {
+    "accuracy": 0.99,
+    "macro_f1": 0.9900449240850517
+  },
+  "maricl": {
+    "accuracy": 0.94,
+    "macro_f1": 0.9396950414458796,
+    "log_loss": 0.4207228132649226
+  },
+  "beta": 0.3,
+  "corrections": [
+    {
+      "k": 1,
+      "p_k": 0.9284900622419873,
+      "retained_t": 2,
+      "hypothesis": "The base model misses two pairwise interactions: a positive x3*x4 product pushes samples into class_2 and a positive x1*x5 product pushes samples into class_0, so it confuses classes 0 and 2 when these features act jointly.",
+      "form_guess": "delta_class_2 = a*x3*x4 (possibly saturating, x3*x4/(1+|x3*x4|)); delta_class_0 = b*x1*x5, with a, b > 0 || delta_class_2 = a*(x4^2 - 1) or a threshold a*max(|x4| - 1, 0); delta_class_0 = b*x1*x5; delta_class_1 = -b*x1*x5, with a, b > 0 || delta_class_0 = -a*x3*x5; delta_class_1 = +a*x3*x5; delta_class_2 = b*(x4^2 - 1), with a, b > 0 || delta_class_2 = a*max(|x4| - 1.2, 0) or a*x4^2; delta_class_0 = -b*x3*x5; delta_class_1 = +b*x3*x5, with a, b > 0 || delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5; delta_class_2 = b*(x4^2 - 1), with a, b > 0 || delta_class_2 = a*max(|x4| - 1.1, 0) or a*x4^2; delta_class_1 = b*x2*x5*g(x4); delta_class_0 = -b*x2*x5*g(x4), where g(x4) = 1 for |x4| < 1.1 and is small otherwise || delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5; delta_class_2 = b*(x4^2 - c) with c near 1.5 and a, b > 0 || delta_class_2 = b*(x4^2 - c) with c near 1.5; delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5, with a, b > 0 || delta_class_2 = b*(x4^2 - c) with c between 1.2 and 1.5; delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5, with a, b > 0 || score_class_1 = a*x2*x5; score_class_0 = -a*x2*x5; score_class_2 = x4^2 - c with a around 1.6 to 2 and small c around 0.2, so class_2 wins when x4^2 - c > a*|x2*x5| || delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5; delta_class_2 = x4^2 - c, with a around 1.6 to 2 and c around 0.2 || delta_class_1 = a*x2*x5, or a*tanh(k*x2*x5) if the effect depends mainly on sign; delta_class_0 = the negative of that term; delta_class_2 = x4^2 - c with c around 0.15 || delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5; delta_class_2 = x4^2 - c, with a around 1.6 to 2 and c around 0.15, so class_2 wins when x4^2 - c > a*|x2*x5| || delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5; delta_class_2 = x4^2 - c, with a around 1.6 to 2.1 and c around 0.15 || delta_class_1 = 2*x2*x5; delta_class_0 = -2*x2*x5; delta_class_2 = x4^2 - 0.15, with the coefficient on x2*x5 plausibly between 1.6 and 2.1 || delta_class_1 = 2*x2*x5; delta_class_0 = -2*x2*x5; delta_class_2 = x4^2 - c with c around 0.2 to 0.3 || delta_class_1 = 2*x2*x5; delta_class_0 = -2*x2*x5; delta_class_2 = x4^2 - 0.25 || delta_class_1 = 2*x2*x5; delta_class_0 = -2*x2*x5; delta_class_2 = x4^2 - 0.25",
+      "T_k": "The correction keeps the antisymmetric x2*x5 term between class_1 and class_0 and the x4^2 term on class_2, with the same 1.8 ratio and 0.3 offset. This iteration tests a 25 percent higher overall scale, since the previous doubling lowered the loss substantially. Outputs remain clipped so that large feature values cannot produce extreme logits.",
+      "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+      "flags": {
+        "interaction_x2x5": true,
+        "nonlinear_x4": true,
+        "uses_x6": false,
+        "spurious_x1x2": false,
+        "features_used": [
+          "x2",
+          "x4",
+          "x5"
+        ]
+      },
+      "structure": {
+        "r_interaction_x2x5": 0.954824410305715,
+        "r_even_x4": 0.9049385666283417
+      },
+      "history": [
+        {
+          "t": 0,
+          "f_k": "[clip(-2.0*x2*x5, -6.0, 6.0), clip(2.0*x2*x5, -6.0, 6.0), clip(x4**2 - 0.25, -1.0, 6.0)]",
+          "train_log_loss": 0.44794971497684166
+        },
+        {
+          "t": 1,
+          "f_k": "[clip(-3.6*x2*x5, -8.0, 8.0), clip(3.6*x2*x5, -8.0, 8.0), clip(2.0*x4**2 - 0.6, -2.0, 8.0)]",
+          "train_log_loss": 0.33588957448720247
+        },
+        {
+          "t": 2,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 3,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5 + 0.3*maximum(-x1*x2 - 1.0, 0.0), -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3095483844447973
+        },
+        {
+          "t": 4,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 5,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 6,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 7,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 8,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 9,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 10,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        }
+      ]
+    },
+    {
+      "k": 2,
+      "p_k": 0.9284900622419873,
+      "retained_t": 1,
+      "hypothesis": "A sample maps to class_2 when x4^2 is large relative to |x2*x5|, and otherwise to class_0 when x2*x5 is negative or class_1 when it is positive.",
+      "form_guess": "predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0 || predict class_2 if x4^2 - 0.3 > 1.8*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+      "T_k": "The correction encodes the rule as class scores: class_1 gets +x2*x5, class_0 gets -x2*x5, and class_2 gets x4^2 - 0.3 divided by 1.8, all multiplied by 4.5, so the largest score reproduces the class_2 versus sign-of-product decision. This scale is 25 percent higher than the previous iteration, which in an earlier chain lowered the loss from 0.3359 to 0.3102. Outputs are clipped for stability.",
+      "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+      "flags": {
+        "interaction_x2x5": true,
+        "nonlinear_x4": true,
+        "uses_x6": false,
+        "spurious_x1x2": false,
+        "features_used": [
+          "x2",
+          "x4",
+          "x5"
+        ]
+      },
+      "structure": {
+        "r_interaction_x2x5": 0.954824410305715,
+        "r_even_x4": 0.9049385666283417
+      },
+      "history": [
+        {
+          "t": 0,
+          "f_k": "[clip(-3.6*x2*x5, -8.0, 8.0), clip(3.6*x2*x5, -8.0, 8.0), clip(2.0*x4**2 - 0.6, -2.0, 8.0)]",
+          "train_log_loss": 0.33588957448720247
+        },
+        {
+          "t": 1,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 2,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 3,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 4,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 5,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 6,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 7,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 8,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 9,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        },
+        {
+          "t": 10,
+          "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]",
+          "train_log_loss": 0.3102285427569988
+        }
+      ]
+    }
+  ],
+  "budget_curve": [
+    {
+      "T": 0,
+      "accuracy": 0.93,
+      "macro_f1": 0.9297809742298738,
+      "log_loss": 0.4934933333351536
+    },
+    {
+      "T": 1,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.43155563695112603
+    },
+    {
+      "T": 2,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.4207228132649226
+    },
+    {
+      "T": 3,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.4207228132649226
+    },
+    {
+      "T": 4,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.4207228132649226
+    },
+    {
+      "T": 5,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.4207228132649226
+    },
+    {
+      "T": 6,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.4207228132649226
+    },
+    {
+      "T": 7,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.4207228132649226
+    },
+    {
+      "T": 8,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.4207228132649226
+    },
+    {
+      "T": 9,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.4207228132649226
+    },
+    {
+      "T": 10,
+      "accuracy": 0.94,
+      "macro_f1": 0.9396950414458796,
+      "log_loss": 0.4207228132649226
+    }
+  ]
+}

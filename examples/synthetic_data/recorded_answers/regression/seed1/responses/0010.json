@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model still under-captures a convex, even effect of x4: the target is underpredicted for large |x4| and overpredicted for small-to-moderate |x4|.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "Four of the five positive residuals (+0.19 to +0.20) have |x4| of at least 1.17 (-1.484, -2.373, -1.828, -1.173), while four of the five negative residuals have |x4| below 0.8 (-0.190, -0.379, -0.663, +0.778). The exceptions (row 0 at -0.752 positive, row 8 at -0.913 negative) sit in the transition zone, which fits a smooth quadratic plus noise."
+}

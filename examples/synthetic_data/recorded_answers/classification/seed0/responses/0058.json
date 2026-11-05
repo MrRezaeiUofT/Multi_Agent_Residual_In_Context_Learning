@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The form matches the hypothesis and fits almost every sample seen, so the remaining loss is mostly a scale issue plus probable noise. In the earlier chain this exact form at 25 percent higher scale (4.5 on x2*x5, 2.5*x4^2 - 0.75) cut the loss from 0.3359 to 0.3102. The worst rows here are the same set that remained at that higher scale: one strong outlier (row 1, class 1 at x2*x5 of about -2.5), near-boundary class 2 samples (rows 2 and 7), and a few class 0 or 1 samples that disagree with the rule. Those look like label noise or a soft boundary, and in that chain neither further scaling nor an extra x1*x2 term helped.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Raise the scale by 25 percent, keeping the 1.8 ratio and 0.3 offset: [clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]. Do not add terms for the remaining outliers."
+}

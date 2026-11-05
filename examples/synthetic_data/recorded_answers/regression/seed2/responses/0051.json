@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction returns to the best-scoring iter-4 structure, a centred, even x4 term plus a steep saturating x2*x5 interaction, and drops the one-sided quadrant term that raised the loss. The x4 term is now damped more strongly by |x5|, so it fades faster when |x5| is large, where large-|x4| rows were still overpredicted, and stays nearly unchanged for small |x5|.",
+  "f_k": "clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.4*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5), -0.5, 0.5)"
+}

@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a convex, symmetric effect of x4: the target rises with |x4| more than predicted, so residuals are positive at large |x4| and negative near x4 = 0.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "Six of the seven positive residuals (+0.22) have |x4| near or above 0.94 with both signs (-1.416, +2.375, +1.151), while the negative residuals cluster at small |x4| (0.103, 0.164). The overlap around |x4| of about 0.7 (rows 2 and 6) is consistent with noise or a smooth quadratic rather than a sharp threshold."
+}

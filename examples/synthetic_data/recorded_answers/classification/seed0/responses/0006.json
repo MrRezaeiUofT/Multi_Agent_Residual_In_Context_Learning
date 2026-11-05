@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Class scores behave like additive competing nonlinear terms: x2*x5 raises class_1 and lowers class_0, while x4^2 raises class_2, so a strong x2*x5 can outweigh a moderately large |x4| instead of a hard |x4| threshold deciding class_2.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5; delta_class_2 = b*(x4^2 - c) with c near 1.5 and a, b > 0",
+  "rationale": "All seven class 0 or 1 errors follow the sign of x2*x5 (positive for idx 0, 4, 8, 9 and negative for idx 1, 3, 6), which extends this rule across five consecutive batches. The class 2 errors (idx 2, 5, 7) have |x4| of about 1.5 to 1.8 with both signs. Idx 4 is class 1 despite |x4| of 1.54 because x2*x5 is about 1.16, which argues against the hard hierarchical threshold I proposed in the previous batch and favours an additive competition between the two terms."
+}

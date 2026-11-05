@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The direct mapping is class_2 when x4^2 - 0.25 exceeds 2*|x2*x5|, otherwise class_1 for positive x2*x5 and class_0 for negative x2*x5.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "All ten examples fit the rule. Idx 1 is class 2 even with x2*x5 of about 1.66 because x4^2 is about 5.7, whereas idx 0 has a similar product but x4^2 of about 0.74 and is class 1. Idx 8 and 9 have moderate x4^2 of about 0.5 to 0.7 and negative x2*x5 of about -0.5, and both are class 0."
+}

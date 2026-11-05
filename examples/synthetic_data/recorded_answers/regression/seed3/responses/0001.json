@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model under-captures a sign-dependent x2*x5 interaction: residuals are positive when x2 and x5 share a sign and negative when they differ, with saturating magnitude.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "saturating interaction c*tanh(x2*x5)",
+  "rationale": "All ten rows have residual sign equal to sign(x2*x5): products of -1.14, -1.62, -2.25, -2.66, -1.54, -1.86, -1.94 give residuals of about -0.30, and products of +1.08, +0.91, +0.66 give about +0.29 to +0.31. The residual magnitude is nearly constant (~0.29-0.31) across product magnitudes from 0.66 to 2.66, so the effect looks bounded, like tanh, rather than linear in the product."
+}

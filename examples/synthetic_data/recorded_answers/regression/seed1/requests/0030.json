@@ -1,0 +1,44 @@
+{
+  "id": "0030",
+  "schema": "Hypothesis",
+  "role": "encoder",
+  "json_schema": {
+    "description": "Structured hypothesis z_k produced by the encoder.",
+    "properties": {
+      "hypothesised_pattern": {
+        "description": "One-sentence statement of the pattern the base model misses.",
+        "title": "Hypothesised Pattern",
+        "type": "string"
+      },
+      "implicated_features": {
+        "description": "Feature names involved in the pattern. Must match provided names.",
+        "items": {
+          "type": "string"
+        },
+        "title": "Implicated Features",
+        "type": "array"
+      },
+      "functional_form_guess": {
+        "description": "A guess at the functional form (e.g. 'saturating x1*x2/(1+x1*x2)').",
+        "title": "Functional Form Guess",
+        "type": "string"
+      },
+      "rationale": {
+        "description": "2-3 sentence explanation grounded in the residual evidence.",
+        "title": "Rationale",
+        "type": "string"
+      }
+    },
+    "required": [
+      "hypothesised_pattern",
+      "implicated_features",
+      "functional_form_guess",
+      "rationale"
+    ],
+    "title": "Hypothesis",
+    "type": "object"
+  },
+  "system": "You are an expert ML diagnostician. Given evidence of where a base model fails, you hypothesise the structural pattern it misses, in a form that could be expressed as a closed-form correction.",
+  "user": "You are analysing high-residual training examples to learn the TRUE underlying input->target relationship that the base model misses.\n\nFocus on SAMPLE PATTERNS: what direct mappings between feature values and target values are visible in these examples? What rules would predict well from the sample patterns alone?\n\nDOMAIN CONTEXT: Synthetic regression benchmark with standardised inputs. Feature semantics are unknown and no domain knowledge applies.\n\nTASK: regression\n\nFEATURES:\n\n  - x1: standardised input feature (semantics unknown)\n  - x2: standardised input feature (semantics unknown)\n  - x3: standardised input feature (semantics unknown)\n  - x4: standardised input feature (semantics unknown)\n  - x5: standardised input feature (semantics unknown)\n  - x6: standardised input feature (semantics unknown)\n\nHIGH-RESIDUAL EXAMPLES (sorted by |residual|):\n\nidx        x1        x2        x3        x4        x5        x6      target   base_pred    residual\n  0    +1.374    +1.401    +1.890    +0.415    -0.407    +0.329      +0.306      +0.499      -0.193\n  1    +0.712    -2.831    -1.328    +0.711    +1.613    +0.107      +0.448      +0.639      -0.192\n  2    +0.594    +0.891    +0.321    -0.818    +0.732    -0.501      +0.708      +0.517      +0.191\n  3    +1.128    +0.570    +0.771    +0.718    +2.004    -0.634      +0.725      +0.535      +0.190\n  4    -0.475    +1.988    -1.599    +0.563    +0.942    +0.378      +0.738      +0.548      +0.190\n  5    +1.174    +0.823    +0.154    +0.255    -0.742    -1.937      +0.393      +0.579      -0.186\n  6    -1.424    +1.271    +0.871    +0.282    -0.426    -1.103      +0.142      +0.327      -0.185\n  7    -0.126    +0.669    +1.219    +0.383    -0.876    -1.514      +0.229      +0.414      -0.185\n  8    +0.132    -0.714    -0.834    +0.678    +1.777    -0.789      +0.369      +0.553      -0.184\n  9    -0.861    +0.824    +0.998    -1.090    +0.568    -0.141      +0.545      +0.361      +0.184",
+  "sha256": "fb29e36bde4ebb22968bf026fd46598bbcb2efecec4ad1b537114ab89b1bad67"
+}

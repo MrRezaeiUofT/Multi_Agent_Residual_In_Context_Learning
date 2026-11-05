@@ -1,0 +1,35 @@
+{
+  "id": "0040",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The base model misses a symmetric effect of x4: when |x4| is large (about >1.4) and x1 is negative, the true class is class_2 even though the linear evidence points to class_0, with positive x3 strengthening the shift.\nCURRENT_T_k: A soft gate compares x4**2 with 0.8 plus 0.7*abs(x2*x5) plus a small x1 shift, so a large interaction can hold a row out of class_2 and negative x1 opens the gate earlier. Where the gate is open class_2 is boosted, and where it is closed tanh(4*x2*x5) splits class_1 from class_0 and class_2 is lightly suppressed.\nCURRENT_f_k: [-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1))) - 2*sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1))) - 2*sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)), 4*sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)) - 1]\nTRAIN_LOSS: 0.4099\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -0.272    -3.248    +1.732    -0.199    -1.741    -0.059      +2.000      +0.705      +0.917\n  +0.952    +0.566    +1.183    +0.130    -1.298    -0.379      +1.000      +0.669      +0.832\n  -1.207    +0.580    -0.855    +1.313    +1.662    -0.133      +1.000      +0.559      +0.802\n  +0.248    -0.833    +0.407    +1.385    -1.354    -0.214      +1.000      +0.603      +0.782\n  -0.928    -1.267    -0.203    -1.741    -1.345    +0.467      +1.000      +0.561      +0.782\n  -2.445    -0.297    -0.785    +1.091    -0.056    -0.563      +1.000      +0.488      +0.778\n  -1.724    -0.498    +0.159    +1.252    -0.417    +1.910      +1.000      +0.499      +0.774\n  -1.308    -0.612    +1.673    -1.291    -0.832    -0.162      +1.000      +0.465      +0.770\n  -0.023    -0.580    +1.032    +1.430    +1.244    +0.755      +0.000      +0.586      +0.766\n  +1.011    +1.696    -0.475    -0.615    +0.181    +1.111      +2.000      +0.612      +0.763\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "6f38e58ed618bfad66a3290a9234d295498db108813218c95c4499c419d538f8"
+}

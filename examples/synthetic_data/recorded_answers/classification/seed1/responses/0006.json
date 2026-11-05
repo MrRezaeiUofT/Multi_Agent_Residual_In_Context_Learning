@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model misses a two-part rule: large |x4| gives class_2, and below that threshold the sign of x2*x5 decides class_1 (positive) versus class_0 (negative).",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "gate = sigmoid(k*(|x4| - 1)); delta_class_2 = a*gate; delta_class_1 = (1 - gate)*b*tanh(c*x2*x5); delta_class_0 = -delta_class_1",
+  "rationale": "All seven true class_0 or class_1 rows here follow the x2*x5 sign rule, making 24 of 24 so far, and all have |x4| below 0.88. The three true class_2 rows here all have |x4| above 2.3, and the sign of x4 varies, which rules out a linear x4 term."
+}

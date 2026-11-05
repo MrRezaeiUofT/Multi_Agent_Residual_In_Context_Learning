@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps a mean-centred, fast-saturating even term in x4 but roughly halves its amplitude, so it runs from about -0.13 at x4 = 0 to about +0.17 at large |x4|, since the earlier version overshot at both ends. The x2*x5 interaction is made steeper but keeps a low cap of +/-0.25, so a moderately positive product (about +0.6) adds about +0.18 and opposite-signed x2 and x5 subtract a similar amount. The total is clipped for stability.",
+  "f_k": "clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)"
+}

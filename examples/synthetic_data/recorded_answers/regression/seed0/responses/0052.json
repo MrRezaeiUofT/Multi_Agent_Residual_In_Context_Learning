@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The linear x4 tilt was a mistake: loss rose from 0.044 to 0.059, and the worst failures simply moved to the positive side. All ten are now over-predictions of 0.18-0.22 at x4 between +1.38 and +2.98, where the tilt adds +0.08 to +0.18 on top of the plateau. The earlier clustering at negative x4 was therefore an artefact of which rows happened to be worst, not a real asymmetry. Over-prediction at large |x4| on either side remains the dominant error, which means the plateau of the even x4 term is still slightly too high.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Remove the linear x4 term and lower the x4 plateau a little more, keeping the steep interaction: clip(0.3 * x4**2 / (0.5 + x4**2) - 0.14 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6). This restores symmetry, gives about -0.14 at x4 = 0 and about +0.11 to +0.14 for |x4| >= 1.5 (versus +0.13 to +0.17 in the best iteration), and stays mean-zero."
+}

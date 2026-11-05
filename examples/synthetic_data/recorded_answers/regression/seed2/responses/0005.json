@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses an even (U-shaped) effect of x4: targets are higher than predicted when |x4| is large (about 0.96 or more, either sign) and lower than predicted when |x4| is small.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "saturating even term such as x4**2/(1 + x4**2) or 1 - exp(-x4**2)",
+  "rationale": "The four positive residuals have x4 = -1.19, 0.96, -1.39 and 1.75, while all six negative residuals have |x4| <= 0.56 (several near 0). Large x4 of either sign raises the target, so the effect depends on magnitude, and targets top out near 0.78, which suggests saturation."
+}

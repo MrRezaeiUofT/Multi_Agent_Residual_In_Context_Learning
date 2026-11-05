@@ -1,0 +1,4 @@
+{
+  "T_k": "The gate compares x4**2 with 1.1 plus 0.7*abs(x2*x5), and tanh(4*x2*x5) splits class_1 from class_0 where the gate is closed. Class_2 is boosted where the gate is open and is suppressed only in proportion to abs(tanh(4*x2*x5)), so rows with a near-zero product no longer take a fixed penalty.",
+  "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*abs(tanh(4*x2*x5))]"
+}

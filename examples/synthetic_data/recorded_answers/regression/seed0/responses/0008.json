@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "An even, U-shaped function of x4 is missing from the base model, which under-predicts when |x4| exceeds about 1 and over-predicts when |x4| is around 0.6 or less.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (or saturating x4**2/(1+x4**2))",
+  "rationale": "Positive residuals coincide with x4 = +1.60, -1.12, -1.26, -1.07, while negative residuals coincide with x4 = +0.57, +0.51, -0.38, -0.32, -0.47, +0.13. Both signs of x4 appear in each group, so the residual tracks |x4|, consistent with an unmodelled x4 squared term."
+}

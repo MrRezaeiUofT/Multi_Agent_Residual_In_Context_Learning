@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target combines an even, saturating x4 effect with a positive x1 effect and a negative x2 effect, so small-|x4| rows can still be high when x1 is large and x2 is negative, and large-|x4| rows can be low when x1 is negative and x2 positive.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x2"
+  ],
+  "functional_form_guess": "target ~ 0.3 + 0.4*(1 - exp(-x4**2)) + 0.08*x1 - 0.07*x2",
+  "rationale": "The row with x4 = 0.23 reaches 0.93 with x1 = 1.78 and x2 = -1.62, while x4 = 0.33 with x1 = 1.09 but x2 = 0.54 gives only 0.29, and x1 = -2.34 with x2 = 1.08 gives 0.08. Among large-|x4| rows, x4 = -1.42 with x1 = 2.23 gives 0.87, while x4 = -0.92 with x1 = -1.08 and x2 = 0.89 gives 0.32, consistent with additive x1 and x2 shifts on top of the x4 magnitude term."
+}

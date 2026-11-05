@@ -1,0 +1,4 @@
+{
+  "T_k": "A soft gate compares x4**2 with 0.8 plus 0.7*abs(x2*x5) plus a small x1 shift, so a large interaction can hold a row out of class_2 and negative x1 opens the gate earlier. Where the gate is open class_2 is boosted, and where it is closed tanh(4*x2*x5) splits class_1 from class_0 and class_2 is lightly suppressed.",
+  "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1))) - 2*sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1))) - 2*sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)), 4*sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)) - 1]"
+}

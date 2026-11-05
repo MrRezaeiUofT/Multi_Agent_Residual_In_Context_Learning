@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a symmetric U-shaped (quadratic) effect of x4: target is underpredicted when |x4| is large and overpredicted when x4 is near zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "All seven positive residuals (+0.28 to +0.34) have |x4| between 1.26 and 2.85 with both signs (e.g. +2.849 and -2.458), while the three negative residuals (-0.28 to -0.29) all have x4 within 0.15 of zero. Because the sign of x4 does not matter, this points to an even function such as x4**2 rather than a linear term or an interaction."
+}

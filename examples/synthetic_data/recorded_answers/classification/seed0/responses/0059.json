@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction encodes the rule as class scores: class_1 gets +x2*x5, class_0 gets -x2*x5, and class_2 gets x4^2 - 0.3 divided by 1.8, all multiplied by 4.5, so the largest score reproduces the class_2 versus sign-of-product decision. This scale is 25 percent higher than the previous iteration, which in an earlier chain lowered the loss from 0.3359 to 0.3102. Outputs are clipped for stability.",
+  "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]"
+}

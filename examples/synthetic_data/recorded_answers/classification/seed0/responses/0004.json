@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model misses an x2*x5 interaction whose sign separates class_1 (positive) from class_0 (negative), plus an even effect where large |x4| favours class_2.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5; delta_class_2 = b*(x4^2 - 1), with a, b > 0",
+  "rationale": "All six class 0 or 1 errors here follow the sign of x2*x5: positive for class 1 (idx 0, 1, 6, 7) and negative for class 0 (idx 3, 5). Idx 0 is decisive because x2 is positive there and class 1 occurs with positive x5, whereas x3*x5 misclassifies idx 0, 1 and 3, so x2*x5 replaces my earlier x3*x5 and x1*x5 guesses. The class 2 errors (idx 2, 4, 8, 9) have |x4| from about 1.1 to 2.5 with both signs, consistent with the even effect seen in earlier batches."
+}

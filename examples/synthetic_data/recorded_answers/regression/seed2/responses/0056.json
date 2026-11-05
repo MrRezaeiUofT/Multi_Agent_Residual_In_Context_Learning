@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The best correction (loss 0.0466) leaves the same balanced failure band as before, and in both groups of hard rows the x4 term pushes the wrong way. Eight underpredictions have small |x4| (<= 0.35) with same-sign x2/x5. There the saturated interaction gives about +0.24, but the x4 term subtracts about 0.10-0.12 because these rows sit near x4 = 0 with modest |x5| (little damping). The two overpredictions have large |x4| (1.33-1.92), where the x4 term still adds about +0.05-0.16. Because the x4 amplitude works against both groups, it is the single coefficient most likely to be slightly too large; the interaction term is already saturated and adding new terms has repeatedly hurt the overall loss.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Change only the x4 amplitude, from 0.3 to 0.25, and keep everything else fixed: clip(0.25*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.4*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5), -0.5, 0.5). This cuts the near-zero penalty by about 0.02 and the large-|x4| boost by about 0.01-0.03, a small isolated change whose effect on the overall loss can be read off directly."
+}

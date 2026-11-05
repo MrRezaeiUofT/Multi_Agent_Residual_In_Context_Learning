@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction trims the plateau of the symmetric, mean-centred even x4 term once more (about -0.115 at x4 = 0 and about +0.09 to +0.12 for |x4| >= 1.5), since large-|x4| rows are still slightly over-predicted. It keeps the steep, low-cap x2*x5 interaction that acts like a scaled sign of the product, saturating at +/-0.25. The total is clipped for stability.",
+  "f_k": "clip(0.25 * x4**2 / (0.5 + x4**2) - 0.115 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)"
+}

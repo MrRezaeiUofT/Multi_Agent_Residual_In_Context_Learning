@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target rises when x4 and x5 differ strongly (opposite signs or a large |x4|), which points to a missing x4-x5 interaction or squared-difference term; the base model underpredicts those cases and overpredicts when x4 and x5 are similar.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "saturating squared difference such as 1 - exp(-(x4 - x5)**2 / 2), i.e. an even x4 effect plus a negative x4*x5 interaction",
+  "rationale": "Positive residuals include (x4, x5) = (0.56, -1.99), (-1.63, 1.35), (-2.36, 0.17) and (-0.78, 0.79), all with (x4 - x5)**2 > 2. Negative residuals such as (0.65, 0.74), (0.71, 0.40) and (-0.06, 0.16) have nearly equal x4 and x5. One exception (idx 5, positive with x4 and x5 similar) has large x1 and x2, suggesting an extra smaller effect."
+}

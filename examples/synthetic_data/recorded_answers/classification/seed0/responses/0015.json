@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The sign of x2*x5 separates class_1 from class_0 across the whole range of the product, with class_2 taking over only when x4^2 clearly exceeds about twice |x2*x5|.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_1 = 2*x2*x5; delta_class_0 = -2*x2*x5; delta_class_2 = x4^2 - c with c around 0.2 to 0.3",
+  "rationale": "All nine class 0 or 1 errors match the sign of x2*x5 (positive for idx 0, 2, 5, 6, 8 and negative for idx 3, 4, 7, 9), with products ranging from about 0.02 to 1.1 in magnitude. The single class 2 error (idx 1) has x4^2 of about 5.8 against |x2*x5| of about 0.7. Idx 9 stays class 0 with x4^2 of about 0.29 and |x2*x5| of about 0.02, which pushes the offset towards 0.25, though it conflicts slightly with an earlier class 2 sample at x4^2 of about 0.21, so the boundary is probably noisy there."
+}
