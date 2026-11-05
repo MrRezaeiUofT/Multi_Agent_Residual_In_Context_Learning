@@ -1,13 +1,13 @@
 # MARICL — Multi-Agent Residual In-Context Learning
 
-**Paper:** [From Residuals to Reasons: LLM-Guided Mechanism Inference from Tabular Data](https://arxiv.org/abs/2605.22897)  
-**arXiv:** `2605.18742` · **Submitted to NeurIPS 2026**
+**Paper:** [From Residuals to Reasons: LLM-Guided Mechanism Hypotheses from Tabular Data](https://arxiv.org/abs/2605.22897)  
+**arXiv:** [`2605.22897`](https://arxiv.org/abs/2605.22897) (v1 appeared under the earlier title *LLM-Guided Mechanism Inference from Tabular Data*)
 
 ---
 
 ## Abstract
 
-> A persistent challenge in machine learning for scientific applications is jointly achieving prediction and understanding. Statistical models excel on structured data but operate as black boxes, while existing interpretability methods are largely *inspective*: they answer "which features matter?" but do not articulate how features interact or refine explanations iteratively alongside human understanding. End-to-end LLM agents must search the full output domain; we instead target the smaller, structured space of base-model residuals. We introduce **Multi-Agent Residual In-Context Learning (MARICL)**, an agentic framework in which LLM agents analyze where a base model fails, hypothesize missing structure from high-residual examples provided in context, and produce explicit correction terms refined through multi-turn textual gradient optimization. Across nine benchmarks spanning scientific, biomedical, socioeconomic, and synthetic settings, MARICL improves consistently over its base model on all datasets. A cross-plate transfer experiment on the Cell-Free Protein dataset further validates that the inferred formulas capture real structure rather than batch-specific noise: correction formulas frozen from one plate and applied directly to separate plates improve predictions in over 92% of cases within the same reagent cohort, but fail systematically on plates from a different reagent regime — evidence of mechanistic generalization rather than overfitting.
+> When software fails, we read the error, form a hypothesis, write a patch, and test it. When a tabular model fails, we usually retune it. Most interpretability methods report which features matter rather than how they combine. Asking an LLM to predict the target directly forces it to search the whole output space; instead, we anchor the prediction with a base model and ask the LLM to debug it. We introduce **Multi-Agent Residual In-Context Learning (MARICL)**, in which LLM agents read high-residual examples, hypothesize the missing structure, and write executable correction terms that are then refined by multi-turn textual gradient optimization. The resulting corrections are readable, executable hypotheses about what the base model misses, rather than validated mechanisms. Across nine benchmarks covering scientific, biomedical, socioeconomic, and synthetic data, MARICL reliably repairs its base model's structured residuals, improving it on every dataset, and it recovers the form of both nonlinear terms planted in a function absent from pretraining data (two seeds). Against the strongest competing baseline it leads on five of the eight real benchmarks and trails TabPFN on the other three, while adding an inspectable correction that black-box baselines do not provide.
 
 ---
 
@@ -19,9 +19,11 @@
 
 **Prediction rule (regression):**
 
-$$\hat{y}_{\text{MARICL}}(\mathbf{x}) = f_{\text{ML}}(\mathbf{x}) + \sum_{k=1}^{K} \alpha_k(\mathbf{x})\, f_k(\mathbf{x})$$
+$$\hat{y}_{\text{MARICL}}(\mathbf{x}) = f_{\text{ML}}(\mathbf{x}) + \lambda(\mathbf{x}) \sum_{k=1}^{K} \alpha_k(\mathbf{x})\, f_k(\mathbf{x})$$
 
-At inference time, only the frozen formulas run — **zero LLM calls**.
+The weights $\alpha_k(\mathbf{x})$ decide which correction dominates at $\mathbf{x}$. The outer gate $\lambda(\mathbf{x}) \in [0,1]$ shrinks the summed correction, more strongly when no correction is both high-quality and close to the high-residual pool. Without the gate ($\lambda \equiv 1$), this is the rule that `MARICL.predict` applies.
+
+At inference time, only the frozen formulas and nearest-neighbour lookups run — **zero LLM calls**.
 
 
 
@@ -29,8 +31,10 @@ At inference time, only the frozen formulas run — **zero LLM calls**.
 
 ```
 .
+├── LICENSE                               # MIT
 ├── maricl_core.py                        # MARICL framework (sandbox, models, prompts, pipeline)
-├── maricl_demo_v1.ipynb                  # Experiments notebook (imports maricl_core)
+├── maricl_headline.py                    # Headline configuration: validation selection and outer gate
+├── maricl_demo_v1.ipynb                  # Demo notebook (self-contained copy of the pipeline)
 ├── examples/
 │   └── synthetic_claude/                 # Planted-ground-truth benchmark with Claude (replays offline)
 └── MA_RICL_Discovery_V2/
@@ -39,7 +43,17 @@ At inference time, only the frozen formulas run — **zero LLM calls**.
         └── results_figure.png
 ```
 
-`maricl_core.py` contains everything that is not experiment-specific: the `ast`-sandboxed formula executor, Pydantic structured-output models (`Hypothesis`, `Correction`, `Critique`), encoder/decoder/critique prompts and functions, `CorrectionState`, and the `MARICL` class. The notebook imports the module and calls `maricl_core.configure_llms(llm, llm_creative)` once after initializing the LLM clients.
+`maricl_core.py` contains everything that is not experiment-specific: the `ast`-sandboxed formula executor, Pydantic structured-output models (`Hypothesis`, `Correction`, `Critique`), encoder/decoder/critique prompts and functions, `CorrectionState`, and the `MARICL` class. To use it, call `maricl_core.configure_llms(llm, llm_creative)` once after initializing the LLM clients. The notebook carries its own copy of the pipeline, so it does not import this module.
+
+`MARICL.predict` applies the ungated rule and keeps the iterate with the lowest training loss. For the paper's headline configuration on regression tasks, `maricl_headline.py` selects the retained iterate on validation data and applies the outer gate, with no further LLM calls:
+
+```python
+from maricl_headline import maricl_predict, select
+
+chosen, scores, _ = select(model, X_train, y_train, X_val, y_val,
+                           base.predict(X_train), base.predict(X_val))
+y_hat = maricl_predict(model, X_test, base.predict(X_test), chosen, scores)
+```
 
 ---
 
@@ -139,9 +153,10 @@ Query-aware aggregation → Final prediction
 
 Key design choices:
 - **Residual targeting** — LLMs explain *what the base model misses*, not the full label.
-- **Executable corrections** — Each $f_k$ is a sandboxed Python expression validated by `ast` at fit time. Only arithmetic runs at inference.
-- **Textual gradients** — Critique feedback ($g_k^{(t)}$) drives iterative refinement of both the explanation $T_k$ and formula $f_k$.
-- **Query-aware gating** — $\alpha_k(\mathbf{x})$ down-weights a correction when the query lies far from the residual cluster it was inferred from.
+- **Executable corrections** — Each $f_k$ is a sandboxed Python expression validated by `ast` at fit time. Inference needs only arithmetic and nearest-neighbour lookups.
+- **Textual gradients** — Critique feedback ($g_k^{(t)}$) drives iterative refinement of both the explanation $T_k$ and formula $f_k$. The term is an analogy: no derivative is computed.
+- **Query-aware aggregation** — $\alpha_k(\mathbf{x})$ decides which correction dominates at a query, and the outer gate $\lambda(\mathbf{x})$ shrinks the total correction when no correction is both high-quality and near the high-residual pool.
+- **Hypotheses, not validated mechanisms** — Corrections are selected by residual-prediction performance and read against the literature afterwards. They need expert review before use in a new domain.
 
 ---
 
@@ -149,9 +164,15 @@ Key design choices:
 
 ```bibtex
 @article{rezaei2026residuals,
-  title={From Residuals to Reasons: LLM-Guided Mechanism Inference from Tabular Data},
+  title={From Residuals to Reasons: LLM-Guided Mechanism Hypotheses from Tabular Data},
   author={Rezaei, Mohammad R and Krishnan, Rahul G},
   journal={arXiv preprint arXiv:2605.22897},
   year={2026}
 }
 ```
+
+---
+
+## License
+
+MIT. See [LICENSE](LICENSE).
