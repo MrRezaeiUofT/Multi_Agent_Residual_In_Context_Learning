@@ -6,7 +6,7 @@ $$y = 0.4\,x_1 - 0.3\,x_3 + 2\,\sigma(3\,x_2 x_5) + 1.2\,\frac{x_4^2}{1+x_4^2} +
 
 Here $\mathbf{x} \sim \mathcal{N}(\mathbf{0}, I_6)$, $\varepsilon \sim \mathcal{N}(0, 0.1^2)$, and $N=1000$ (600/200/200 train/validation/test). Feature $x_6$ is irrelevant. Both nonlinear terms are uncorrelated with every individual feature, so a linear base model sees almost none of them. The prompts state that feature semantics are unknown.
 
-This is the benchmark from Section 4.2 and Appendix E of the paper. MARICL runs with `K=2`, `T=10`, and Claude Opus 5.5 as the LLM. `maricl_core.py` at the repository root is used unmodified.
+This is the benchmark from Section 4.2 and Appendix E of the paper. MARICL runs with `K=2`, `T=10`, and Claude Opus 5.5 as the LLM. `maricl_core.py` at the repository root is used unmodified. Validation selection and the outer gate come from `maricl_headline.py`, also at the root.
 
 ## Results
 
@@ -87,7 +87,7 @@ To answer requests with your own agent, run `python agent_step.py --seed S` to p
 
 | Path | Purpose |
 |---|---|
-| `run_synthetic.py` | Benchmark definition, selection, metrics, and the API and mock entry points |
+| `run_synthetic.py` | Benchmark definition, metrics, and the API and mock entry points |
 | `agent_step.py` | One step of an agent-answered run, and the replay command |
 | `bridge.py` | File-based bridge that records requests and replays answers |
 | `claude_backend.py` | Anthropic SDK adapter that lets `maricl_core.py` run unmodified |

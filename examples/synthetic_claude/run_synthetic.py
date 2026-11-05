@@ -30,6 +30,7 @@ from claude_backend import ClaudeLLM, install_import_shims
 
 install_import_shims()
 import maricl_core as mc  # noqa: E402  (released MARICL implementation, unmodified)
+from maricl_headline import maricl_predict, select  # noqa: E402
 
 FEATURES = [f"x{i}" for i in range(1, 7)]
 FEATURE_DESCS = ["standardised input feature (semantics unknown)"] * len(FEATURES)
@@ -85,49 +86,6 @@ def term_flags(expr: str) -> dict:
     used = sorted(_names(tree) & set(FEATURES))
     return {"interaction_x2x5": inter, "nonlinear_x4": sat4, "uses_x6": "x6" in used,
             "spurious_x1x2": spurious12, "features_used": used}
-
-
-# ---------------------------------------------------------------- prediction
-def pool_distance(model, X):
-    Xs = (X - model._mu) / model._sd
-    dmin = np.linalg.norm(Xs[:, None, :] - model._X_hr_std[None, :, :], axis=-1).min(axis=1)
-    return np.minimum(dmin / model._D95, 1.0)
-
-
-def maricl_predict(model, X, base_pred, corrections, scores, gated):
-    active = [(c, p) for c, p in zip(corrections, scores) if c is not None and p > model.p_min]
-    if not active:
-        return base_pred
-    deltas = np.stack([model._apply_single(c, X, model.feature_names) for c, _ in active], axis=1)
-    p = np.array([p for _, p in active])
-    corr = deltas @ (p / p.sum())            # shared c(x) cancels in alpha_k (Eq. 19)
-    if not gated:
-        return base_pred + corr
-    c = sigmoid(model.gamma * (1.0 - 2.0 * pool_distance(model, X)))   # steeper profile
-    lam = np.minimum(p.max() * c, 1.0)                                  # Eq. 20
-    return base_pred + lam * corr
-
-
-def select(model, X_tr, y_tr, X_va, y_va, b_tr, b_va, t_max):
-    """Per correction: argmin validation MAE over iterates t <= t_max; p_k on train."""
-    chosen, scores, ts = [], [], []
-    for s in model.states_:
-        best = None
-        for e in s.history:
-            if e["t"] > t_max:
-                continue
-            try:
-                mae = mean_absolute_error(y_va, b_va + model._apply_single(e["correction"], X_va, FEATURES))
-            except Exception:
-                continue
-            if best is None or mae < best[0] - 1e-12:
-                best = (mae, e)
-        if best is None:
-            chosen.append(None); scores.append(0.0); ts.append(None); continue
-        corr = best[1]["correction"]
-        mae_tr = mean_absolute_error(y_tr, b_tr + model._apply_single(corr, X_tr, FEATURES))
-        chosen.append(corr); scores.append(float(np.exp(-mae_tr / model.tau_reg))); ts.append(best[1]["t"])
-    return chosen, scores, ts
 
 
 # ---------------------------------------------------------------- offline stand-in
