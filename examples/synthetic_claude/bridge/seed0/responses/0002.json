@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses an even, U-shaped contribution of x4: targets are systematically higher than predicted when |x4| is large and lower when x4 is close to zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2, possibly saturating as x4**2/(1+x4**2)",
+  "rationale": "All seven positive residuals have |x4| between 1.30 and 2.17 with both signs (+1.77, -2.17, -1.32, +1.73, -1.30, -1.70, +1.35), while the three negative residuals have |x4| <= 0.36. Because the residual sign tracks the magnitude of x4 and not its sign, the missing term is an even function of x4."
+}

@@ -31,6 +31,8 @@ At inference time, only the frozen formulas run — **zero LLM calls**.
 .
 ├── maricl_core.py                        # MARICL framework (sandbox, models, prompts, pipeline)
 ├── maricl_demo_v1.ipynb                  # Experiments notebook (imports maricl_core)
+├── examples/
+│   └── synthetic_claude/                 # Planted-ground-truth benchmark with Claude (replays offline)
 └── MA_RICL_Discovery_V2/
     └── Figures/
         ├── figure1_maricl_schematic_v2.png
@@ -97,6 +99,33 @@ $$\text{class} = \begin{cases} 0 & x_1 x_2 < -0.5 \\ 2 & x_1 x_2 > +0.5 \\ 1 & \
 A logistic model captures only marginal effects and misses the interaction boundary. MARICL's correction agents discover the $x_1 \times x_2$ interaction and apply class-conditional correction probabilities.
 
 **Setup:** 500 samples · 60/20/20 split · `K=3` agents · `T=8` refinement steps · `beta=0.3` · `kappa=0.4`
+
+---
+
+## Planted-ground-truth example with Claude
+
+Did MARICL reason from the data, or just remember the domain? [`examples/synthetic_claude/`](examples/synthetic_claude/) tests this with a function that cannot appear in any LLM's pretraining data. Its prompts state that the features have unknown meaning, and Claude Opus 5.5 serves as the LLM.
+
+| Test $R^2$ (mean of 2 seeds) | |
+|---|---|
+| Linear base | 0.370 |
+| XGBoost | 0.787 |
+| **MARICL** | **0.914** |
+| MARICL without the outer gate | 0.958 |
+| Oracle (noise-free) | 0.987 |
+
+All four retained corrections contain both planted nonlinear terms as explicit components, and none uses the irrelevant feature. Recovery is not complete: the forms come back more faithfully than the constants, and only two of five started seeds finished.
+
+Every prompt and answer is recorded, so the run replays with **no API key**:
+
+```bash
+cd examples/synthetic_claude
+pip install -r requirements.txt
+python agent_step.py --seed 0
+python agent_step.py --seed 1
+```
+
+See the [example README](examples/synthetic_claude/README.md) for the full setup, its limits, and how to run it with your own Anthropic credentials.
 
 ---
 

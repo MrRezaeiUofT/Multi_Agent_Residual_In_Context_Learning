@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model fails to capture a symmetric U-shaped effect of x4, over-predicting when x4 is near zero and under-predicting when |x4| is large.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (or saturating x4**2/(1+x4**2))",
+  "rationale": "The seven negative residuals all have |x4| <= 0.46 (e.g. -0.21, -0.32, -0.27, +0.16, -0.20), while the three positive residuals have |x4| of 1.36, 1.23 and 1.96 with mixed signs. The residual sign depends on the magnitude of x4 and not its direction, consistent with a missing even term in x4."
+}

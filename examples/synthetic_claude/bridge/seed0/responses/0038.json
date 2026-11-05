@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Every worst failure has large |x4| (1.47-2.83), where the correction adds close to its maximum, yet the true target is 0.24-0.54, so the prediction overshoots by 0.31-0.39. All ten of these rows also have a negative x2*x5 product (-3.17, -2.31, -1.01, -0.75, -1.21, -0.59, -0.61, -0.66, -1.61, -0.64). That points to a missing x2*x5 interaction that pulls the target down and cancels part of the x4 lift, not to the x4 term itself being wrong.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Add a saturating x2*x5 interaction and slightly shrink the x4 amplitude, e.g. clip(0.6 * x4**2 / (1.0 + x4**2) - 0.21 + 0.25 * tanh(0.4 * x2 * x5), -0.6, 0.6). For the worst row (x2*x5 = -3.17) this subtracts about 0.21, and for typical rows (product of about -0.7) about 0.07, while it stays near zero on average because x2 and x5 are independent."
+}

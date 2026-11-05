@@ -1,0 +1,35 @@
+{
+  "id": "0056",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The target contains an even (U-shaped) effect of x4: it rises when |x4| is large and is lower when x4 is near zero, which the base model fits as roughly flat or linear.\nCURRENT_T_k: The correction trims the plateau of the symmetric, mean-centred even x4 term once more (about -0.115 at x4 = 0 and about +0.09 to +0.12 for |x4| >= 1.5), since large-|x4| rows are still slightly over-predicted. It keeps the steep, low-cap x2*x5 interaction that acts like a scaled sign of the product, saturating at +/-0.25. The total is clipped for stability.\nCURRENT_f_k: clip(0.25 * x4**2 / (0.5 + x4**2) - 0.115 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)\nTRAIN_LOSS: 0.0301\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  +0.227    +1.162    -1.088    -1.479    -0.867    +0.123      +0.399      +0.581      +0.182\n  +0.745    -0.801    -0.776    -1.609    +0.933    +0.271      +0.500      +0.674      +0.174\n  -0.472    -1.005    -0.700    -1.473    +1.204    +1.591      +0.361      +0.522      +0.160\n  +0.301    -0.106    -1.186    -2.398    +0.513    -0.298      +0.658      +0.813      +0.155\n  -1.188    -1.529    +0.996    -1.658    -1.996    -0.613      +0.566      +0.721      +0.155\n  +1.024    -0.593    +0.559    -1.882    +0.504    +1.428      +0.545      +0.698      +0.153\n  +2.490    -0.092    -0.414    -2.507    +1.710    +0.308      +0.796      +0.946      +0.150\n  +0.069    -0.497    -1.147    -0.138    -1.160    +0.803      +0.660      +0.510      -0.150\n  -1.133    -1.373    -0.625    -2.377    +2.310    +0.914      +0.313      +0.463      +0.149\n  +0.663    +1.622    +1.589    +0.315    +0.373    -1.936      +0.546      +0.397      -0.149\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "6ac88b528f133bb10d5080085a3bee6be756f19ce54edbdfb0140f8777535c8a"
+}

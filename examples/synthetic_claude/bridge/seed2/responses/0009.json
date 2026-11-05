@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a sign-symmetric effect of x4: it underpredicts when |x4| is large and overpredicts when x4 is near zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "even saturating term such as 1 - exp(-x4**2)",
+  "rationale": "The three positive residuals have x4 = 0.88, -0.88 and 1.78, so both signs raise the target. Six of the seven negative residuals have |x4| <= 0.54 (e.g. -0.001, 0.105, 0.122), which is what a U-shaped x4 term predicts when the base model fits only a linear trend."
+}

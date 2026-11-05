@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target contains a U-shaped (even) term in x4 that the base model misses, giving under-prediction for |x4| around 0.8 or more and over-prediction when x4 is near zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 or saturating x4**2/(1+x4**2)",
+  "rationale": "Seven positive residuals occur at x4 = -1.93, -0.98, +1.62, -1.01, -1.92, -0.77, -1.20, including both signs, while the three negative residuals occur at x4 = -0.35, +0.04, -0.12. The residual sign is governed by |x4|, not its direction, indicating a missed even function of x4."
+}

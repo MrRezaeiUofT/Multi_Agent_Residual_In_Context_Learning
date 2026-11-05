@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a symmetric U-shaped effect of x4, underpredicting whenever |x4| is moderately large regardless of sign.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "All eight positive residuals (+0.21 to +0.22) have |x4| between 0.87 and 1.73, split roughly evenly between positive and negative x4. The two negative residuals have smaller |x4| (0.761, -0.445), and both also have strongly negative x2 (-2.38, -1.97), which may lower the target further, but the dominant signal is an even function of x4."
+}

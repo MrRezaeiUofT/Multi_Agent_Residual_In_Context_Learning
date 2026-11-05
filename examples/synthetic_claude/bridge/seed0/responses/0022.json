@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target maps to a saturating even function of x4 (low, about 0.15-0.3, when |x4| < 0.5 and about 0.65-0.75 when |x4| > 1.2), shifted up by positive x1 and down by positive x3.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "0.15 + 0.55*x4**2/(0.5 + x4**2) + 0.08*x1 - 0.07*x3",
+  "rationale": "All three rows with |x4| >= 1.23 have targets of 0.63-0.73 even though x1 is negative for each, while the seven rows with |x4| <= 0.46 have targets of only 0.15-0.46. Among the small-x4 rows, the highest targets come with large x1 or negative x3 (row 9 x1 = +2.37 -> 0.46; row 5 x3 = -1.49 -> 0.37) and the lowest with x1 or x3 working against (row 6 -> 0.15, row 1 x1 = -1.55 -> 0.17)."
+}

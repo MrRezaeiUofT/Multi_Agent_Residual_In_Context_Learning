@@ -1,0 +1,12 @@
+{
+  "hypothesised_pattern": "High targets require large |x4| and/or a positive x2*x5 product, while low targets occur when x4 is near zero and x2*x5 is negative, with x1 adding and x3 subtracting linearly.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "0.25 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 + 0.08*x1 - 0.07*x3",
+  "rationale": "Every row with a positive x2*x5 (rows 1, 2, 3, 5, 8) has a target of 0.43-0.69 and |x4| >= 0.87, whereas every row with negative x2*x5 (rows 0, 4, 6, 7, 9) has a target of 0.09-0.39 and |x4| <= 0.66. Within these groups, x1 = -2.02 depresses rows 8 and 9 (0.43 and 0.09) and x3 = +1.74 depresses row 7 (0.15), matching additive x1 and x3 terms."
+}

@@ -1,0 +1,4 @@
+{
+  "T_k": "The main driver is now a saturating x2*x5 interaction with a higher ceiling (up to plus or minus 0.3), which raises predictions when x2 and x5 share a sign and lowers them when the signs differ. A reduced, centred, even x4 term (damped by |x5|) keeps a smaller U-shaped adjustment in x4, so it no longer fights the interaction on the hardest rows.",
+  "f_k": "clip(0.2*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.3*tanh(1.5*x2*x5), -0.5, 0.5)"
+}

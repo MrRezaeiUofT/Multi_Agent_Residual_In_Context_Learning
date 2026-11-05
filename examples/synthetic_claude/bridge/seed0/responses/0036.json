@@ -1,0 +1,12 @@
+{
+  "hypothesised_pattern": "A strong x2*x5 interaction drives the target alongside the even x4 effect: a large positive x2*x5 lifts the target even when x4 is near zero, and a large negative x2*x5 suppresses it even when |x4| is large.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "0.25 + 0.4*(1 - exp(-x4**2)) + 0.3*tanh(0.4*x2*x5) + 0.08*x1 - 0.07*x3",
+  "rationale": "Row 9 has x4 = 0.23 but target 0.73 with x2*x5 = +2.91, and row 7 (x4 = 0.45, x2*x5 = +0.91) reaches 0.63, while row 6 has |x4| = 1.02 yet only 0.10 because x2*x5 = -4.09. The effect looks sub-linear at extreme products (a -4.1 product only costs about as much as +2.9 adds), suggesting saturation, and the top target 0.93 (row 2) combines x2*x5 = +1.67 with x1 = +1.95 and x3 = -1.54."
+}

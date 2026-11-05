@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model under-represents a U-shaped (even) effect of x4, underpredicting for large |x4| and overpredicting for small |x4|.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "The four positive residuals (+0.23) have |x4| of 1.04 to 2.00 (-1.999, +1.218, +1.039, +1.298), while the six negative residuals (-0.22 to -0.23) have |x4| at most 0.64. The split depends on the magnitude of x4 rather than its sign, which points to a missing x4**2 term."
+}

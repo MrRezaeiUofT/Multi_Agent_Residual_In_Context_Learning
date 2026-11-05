@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The residuals are consistent with a remaining even (U-shaped) effect of x4, under-predicting at moderately large |x4| and over-predicting near x4 = 0, possibly damped when x3 is high.",
+  "implicated_features": [
+    "x4",
+    "x3"
+  ],
+  "functional_form_guess": "quadratic x4**2, possibly modulated as x4**2/(1+exp(x3))",
+  "rationale": "Positive residuals occur at x4 = +1.08, -0.95, -0.78 (large magnitude, both signs), while several negative residuals sit near x4 = 0 (-0.24, -0.13, +0.04). The main exception, row 0 with x4 = +1.06 but a negative residual, has high x3 (+1.43), as do other strong negatives (rows 2, 3), suggesting x3 partly suppresses the x4 effect."
+}

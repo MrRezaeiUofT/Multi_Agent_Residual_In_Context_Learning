@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target is roughly 0.22-0.35 when |x4| is small (< 0.55) and 0.63-0.82 when |x4| > 1.15 for either sign, with x1 giving a mild positive shift; the base model instead tracks x2, which has little effect on the target.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x2"
+  ],
+  "functional_form_guess": "target ~ 0.25 + 0.55*(1 - exp(-x4**2)) + 0.05*x1",
+  "rationale": "The six low-target rows all have |x4| <= 0.54 but are predicted at 0.49-0.62, and most of them have large positive x2 (0.97-1.75), so the base model apparently over-credits x2. The four rows with |x4| of 1.16-1.50 have targets of 0.64-0.82, with the higher values at higher x1 (0.84 -> 0.82, -1.94 -> 0.635)."
+}

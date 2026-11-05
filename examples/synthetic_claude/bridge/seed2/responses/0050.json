@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The one-sided (+,+) term made the overall loss worse (0.0468 -> 0.0564): it fixed a few hard rows but raised predictions across the whole positive quadrant, where most rows did not need it. Eight of the ten worst failures are now overpredictions at large |x4| (1.29-1.92), and seven of those also have |x5| > 1 (1.07-2.67); their targets are low to mid (0.13-0.58). In these rows the x4 boost is still about +0.05-0.10 after damping, even though the base prediction is already too high. This suggests the x4 effect should fade faster as |x5| grows. The two remaining underpredictions have small |x4| and look like the irreducible spread around the fit.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Drop the one-sided term and go back to the iter-4 interaction, but damp the x4 term more strongly with |x5|: clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.4*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5), -0.5, 0.5). At |x5| of about 1.7 the x4 contribution falls by roughly half (damping factor 0.56 -> 0.31), while rows with small |x5|, where the x4 signal is clearest, are almost unaffected."
+}

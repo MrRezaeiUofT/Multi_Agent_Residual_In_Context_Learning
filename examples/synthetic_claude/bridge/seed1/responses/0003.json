@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model fails to capture a symmetric U-shaped (squared) contribution of x4, underpredicting at large |x4| and overpredicting near x4 = 0.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "All four positive residuals (+0.25) have large |x4| (2.020, 1.158, -2.630, 2.437), and the negative value -2.630 behaves like the positive ones. All six negative residuals (about -0.25) have |x4| at most 0.36, so the error depends on the magnitude of x4, not its sign, which is the signature of a missing x4**2 term."
+}

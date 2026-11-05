@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target is a saturating even function of x4 (rising from about 0.2 at x4 near 0 to a plateau of about 0.6-0.8 for |x4| >= 1) plus additive linear effects of roughly +0.09*x1 and -0.07*x3.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "0.2 + 0.5*(1 - exp(-x4**2)) + 0.09*x1 - 0.07*x3",
+  "rationale": "Rows with |x4| <= 0.6 have targets 0.21-0.39, while rows with |x4| >= 0.96 have 0.50-0.84. Comparing similar-x4 rows isolates the linear terms: rows 0 and 5 (x4 near -1, x1 near -1.4) differ by 0.22 in target as x3 moves from +1.47 to -1.77, and rows 0 and 8 differ by 0.33 as x1 goes from -1.53 to +2.16."
+}

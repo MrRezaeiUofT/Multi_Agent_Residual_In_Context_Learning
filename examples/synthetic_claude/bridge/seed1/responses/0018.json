@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction adds a centred quadratic term in x4, raising predictions when |x4| is large and lowering them near x4 = 0, plus a bilinear x2*x5 term whose sign follows whether x2 and x5 agree in sign. Coefficients are moderate (about 0.1 each) to match residual magnitudes of roughly 0.15-0.3, and the result is clipped for stability.",
+  "f_k": "clip(0.1 * (x4**2 - 1) + 0.1 * x2 * x5, -0.5, 0.5)"
+}

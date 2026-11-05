@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Loss improved (0.144 to 0.094), but all ten worst failures are still over-predictions by 0.26-0.31 at large |x4| (1.47-2.65), where the x4 term adds its near-maximum of +0.20 to +0.31. Most of these rows have only a moderately negative x2*x5 (-0.16 to -1.2), so the tanh interaction takes off just 0.02-0.11 and cannot offset the x4 lift. Row 8 (x2*x5 of about -0.16, x1 = +2.49) still overshoots to 1.06 against a target of 0.80, which suggests the x4 plateau is set too high, especially when other features already push the base prediction up.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Lower the x4 plateau and re-centre it, and make the interaction less saturating with a larger slope: clip(0.5 * x4**2 / (1.0 + x4**2) - 0.17 + 0.3 * tanh(0.5 * x2 * x5), -0.6, 0.6). This cuts about 0.07 from the large-|x4| lift and roughly doubles the pull-down for products near -1 (from about -0.10 to -0.14), while staying close to mean-zero."
+}

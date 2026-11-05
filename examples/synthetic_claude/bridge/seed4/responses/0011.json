@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The residual is governed mainly by an even, threshold-like function of x4 whose transition lies near |x4| of about 0.8, with targets high above it and low below it, which the base model smooths over.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "even soft threshold in x4, e.g. tanh(x4**2) or 1/(1+exp(-4*(x4**2-0.64)))",
+  "rationale": "Positive residuals occur at x4 = +2.29, -0.80, -1.17 (targets 0.59-0.77) while negative residuals cluster at |x4| <= 0.78 (-0.38, -0.65, -0.02, +0.53, -0.78, -0.78, -0.64; targets 0.22-0.45). The three rows near |x4| ~0.78-0.80 split by sign of residual, which fits a transition point around there; x5 differs widely across those rows (-1.80, +1.92, -2.50), so any x5 role is secondary and possibly non-monotone."
+}

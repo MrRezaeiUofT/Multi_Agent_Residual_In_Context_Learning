@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a saturating x2*x5 interaction term: residuals are about +0.24 when x2 and x5 have the same sign and about -0.24 when their signs differ.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "c*tanh(k*x2*x5), roughly 0.24*sign(x2*x5) for moderate products",
+  "rationale": "In all ten rows the residual sign matches sign(x2*x5): rows 0,1,2,4,7,8,9 have positive products (0.6 to 1.95) and residuals of +0.23 to +0.24, while rows 3,5,6 have negative products (-0.38 to -1.12) and residuals of about -0.237. The near-constant magnitude across a wide product range, including the small product -0.38 in row 3, points to a bounded, sign-like response."
+}

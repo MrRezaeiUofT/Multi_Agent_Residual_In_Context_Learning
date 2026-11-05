@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "High targets (about 0.7-0.87) occur when x2 and x5 share a sign and |x4| is large, while low targets (about 0.14-0.23) occur when x2 and x5 have opposite signs and x4 is near zero, a combined interaction-plus-quadratic effect the base model flattens.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "bounded additive: sigmoid(a*x2*x5 + b*x4**2 + const), approximated as a*x2*x5 + b*(x4**2 - 1)",
+  "rationale": "All seven high-target rows have x2*x5 > 0 (about 0.9 to 3.2) and |x4| of at least 1.26, while the three low-target rows have x2*x5 < 0 (about -1.0 to -1.2) and |x4| of at most 0.15. The base model predicts roughly 0.4-0.55 for all of them, so it is missing both the sign-agreement interaction and the even x4 effect. The targets stay inside (0, 1), which suggests a saturating link."
+}

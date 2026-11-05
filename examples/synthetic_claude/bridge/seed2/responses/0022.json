@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target rises with |x4| (either sign) toward a plateau, and x1 adds a clear positive shift, so the highest targets occur when |x4| is large and x1 is positive and the lowest when x4 is near zero.",
+  "implicated_features": [
+    "x4",
+    "x1"
+  ],
+  "functional_form_guess": "target ~ clip(0.2 + 0.55*(1 - exp(-x4**2)) + 0.1*x1, 0, 1)",
+  "rationale": "Rows with x4 near zero (-0.02, 0.37) have targets of only 0.25-0.28, while rows with |x4| >= 0.75 have targets of 0.58-1.00. Among the large-|x4| rows the target orders by x1: x1 = 1.61 -> 1.00, 2.35 -> 0.91, about 0.2 -> 0.79-0.87, -0.99 -> 0.58, -1.45 -> 0.58, which points to an additive x1 effect."
+}

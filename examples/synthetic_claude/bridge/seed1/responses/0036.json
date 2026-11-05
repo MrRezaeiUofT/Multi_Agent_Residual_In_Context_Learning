@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target contains a bilinear x2*x5 component that the base model misses: matching signs of x2 and x5 raise the target and opposite signs lower it.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "bilinear interaction c*x2*x5",
+  "rationale": "All eight positive-residual rows (targets 0.62-0.89) have x2*x5 > 0, from both-positive pairs (1.946, 0.763) and both-negative pairs (-1.795, -1.783). The two negative-residual rows (targets 0.29-0.34) have x2*x5 < 0 (-0.227*0.756 and 2.474*-0.320), so the rule 'residual has the sign of x2*x5' holds for all 10 samples."
+}

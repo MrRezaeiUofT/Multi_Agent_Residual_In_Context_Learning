@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The remaining error is still driven by a missing even (U-shaped) term in x4, with the target underpredicted once |x4| exceeds roughly 0.75 and overpredicted for smaller |x4|.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "Four of the five positive residuals (+0.21) have |x4| of at least 0.75 (-0.825, -1.273, +0.838, -0.746), and three of the five negative residuals have smaller |x4| (-0.293, -0.442, -0.498). At these smaller residual magnitudes the groups overlap near |x4| of about 0.7 (rows 1 and 5), which suggests a smooth quadratic plus noise rather than a sharp threshold."
+}

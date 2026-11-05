@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The x4 term has the wrong shape. Overpredicted rows (error +0.10 to +0.12) all have |x4| of 1.75-2.16, where 0.2*tanh(0.5*(x4**2 - 1)) adds +0.16 to +0.19, too much, and their weakly negative x2*x5 (-0.19 to -0.74) cannot offset it. Underpredicted rows (error -0.10 to -0.12) all have |x4| of 0.67-0.82, where the current term is still slightly negative (-0.03 to -0.05) although the data want a small positive contribution. So the true even effect of x4 rises more sharply away from zero and plateaus lower (about +0.1) than the slow tanh-of-quadratic. The tanh(0.8*x2*x5) term also saturates a little early for products of about 0.7-1.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Replace the x4 term with a Gaussian dip that is negative only near zero and plateaus at about +0.1, and make the interaction slightly steeper: clip(0.1 - 0.25 * exp(-2 * x4**2) + 0.3 * tanh(x2 * x5), -0.5, 0.5). This gives about -0.15 at x4 = 0, +0.02 at |x4| = 0.75 and +0.1 for |x4| > 1.3, which cuts the large-|x4| overshoot by about 0.07-0.1 and lifts the moderate-|x4| rows by a similar amount."
+}

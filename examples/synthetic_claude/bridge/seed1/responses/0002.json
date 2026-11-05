@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a symmetric quadratic (U-shaped) effect of x4, underpredicting when |x4| is large and overpredicting when x4 is near zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "The four positive residuals (+0.26 to +0.27) all have |x4| between 1.25 and 1.74 with both signs (+1.357 and -1.741), whereas the six negative residuals (about -0.26) all have |x4| at most 0.43. Large |x5| shows up in both the positive and negative groups, so x5 does not separate them, while an even function of x4 does."
+}

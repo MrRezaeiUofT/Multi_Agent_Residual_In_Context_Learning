@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model omits a saturating x2*x5 interaction: residuals are about +0.22 when x2 and x5 share a sign and about -0.22 when their signs differ.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "c*tanh(k*x2*x5), c around 0.22",
+  "rationale": "All ten rows follow sign(residual) = sign(x2*x5): rows 3,4,5,6,8,9 have positive products (+0.52 to +4.0) and residuals of +0.217 to +0.222, while rows 0,1,2,7 have negative products (-0.38 to -2.56) and residuals of -0.217 to -0.222. The residual magnitude stays fixed while the product varies roughly tenfold, so the missing term saturates."
+}

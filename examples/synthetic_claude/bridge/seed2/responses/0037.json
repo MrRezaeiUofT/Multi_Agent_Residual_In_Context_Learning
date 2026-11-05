@@ -1,0 +1,4 @@
+{
+  "T_k": "Because the base model misses the bounded even dependence on x4, the correction adds a centred saturating term that raises predictions by up to about 0.23 when |x4| is large and lowers them by about 0.23 when x4 is near zero. Small secondary terms lower predictions slightly for positive x5 and positive x2, which the sample rows suggest the base model over-credits.",
+  "f_k": "clip(0.55*(0.58 - exp(-clip(x4**2, 0, 20))) - 0.04*tanh(x5) - 0.03*tanh(x2), -0.5, 0.5)"
+}

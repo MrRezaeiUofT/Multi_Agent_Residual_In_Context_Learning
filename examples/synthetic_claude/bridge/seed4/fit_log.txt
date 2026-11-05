@@ -1,0 +1,2 @@
+  high-residual pool: 180 / 600 examples (|r| range 0.180..0.356)
+  [correction 0] encoder variant = error_patterns

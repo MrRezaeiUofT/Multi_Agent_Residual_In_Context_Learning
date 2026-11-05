@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model under-captures an even, U-shaped dependence on x4: it underpredicts when |x4| is large (either sign) and overpredicts when x4 is near zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "All five positive residuals (+0.27 to +0.28) have |x4| between 1.06 and 1.83, including both positive and negative values (+1.621, -1.831), while all five negative residuals (about -0.27) have |x4| at most 0.33. The fact that the sign of x4 does not matter rules out a missing linear term and points to a squared term in x4."
+}

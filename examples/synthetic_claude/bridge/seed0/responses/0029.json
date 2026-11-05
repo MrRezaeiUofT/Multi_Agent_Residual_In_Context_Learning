@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target is a saturating even function of x4 that is low (0.05-0.26) for |x4| <= 0.35 and plateaus at about 0.6-0.75 for |x4| >= 0.77, with an additive positive x1 effect and a negative x3 effect.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "0.2 + 0.5*(1 - exp(-x4**2)) + 0.1*x1 - 0.07*x3",
+  "rationale": "Seven rows with |x4| of 0.77-1.93 have targets 0.58-0.94, and three rows with |x4| <= 0.35 have 0.05-0.26, so the target depends on |x4| and saturates quickly. The highest plateau target (0.94) has the largest x1 (+2.09) and negative x3, the lowest plateau target (0.58) has the largest x3 (+1.09), and the lowest overall (0.05) has x1 = -1.88."
+}

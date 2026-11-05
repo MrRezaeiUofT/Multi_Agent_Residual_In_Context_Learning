@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target is a saturating even function of |x4| (high, about 0.67-0.86, once |x4| >= 1; low, about 0.07-0.47, below 0.6) plus a clear additive positive x1 effect and a negative x3 effect.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "0.2 + 0.55*(1 - exp(-x4**2)) + 0.1*x1 - 0.07*x3",
+  "rationale": "Rows with |x4| of 0.99-2.05 have targets 0.67-0.86, and rows with |x4| <= 0.58 have 0.07-0.47. Within the low-x4 group the target rises with x1 (x1 = -2.38 -> 0.07; x1 = +1.04 to +1.23 -> 0.23-0.47), and of the high-x1 rows the one with high x3 (+1.67) is lowest (0.23) while the one with x3 = -1.48 is highest (0.47)."
+}

@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction drops the linear x4 tilt that raised the loss and goes back to a symmetric, mean-centred even x4 term with a slightly lower plateau: about -0.14 at x4 = 0 and about +0.11 to +0.14 for |x4| >= 1.5. It keeps the steep, low-cap x2*x5 interaction that behaves like a scaled sign of the product, saturating at +/-0.25. The total is clipped for stability.",
+  "f_k": "clip(0.3 * x4**2 / (0.5 + x4**2) - 0.14 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)"
+}

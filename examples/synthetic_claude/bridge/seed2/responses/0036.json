@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target rises with |x4| and with an x4-x5 contrast (x4 and x5 of opposite sign), so moderate positive x4 with positive x5 gives low targets while negative x4 with positive x5, or positive x4 with negative x5, gives high targets.",
+  "implicated_features": [
+    "x4",
+    "x5",
+    "x1"
+  ],
+  "functional_form_guess": "target ~ 0.3 + 0.35*(1 - exp(-(x4 - 0.5*x5)**2)) + 0.05*x1",
+  "rationale": "Rows with x4 of 0.65-0.72 and x5 of 0.40-0.74 have low targets (0.29-0.41), whereas x4 = -0.78 with x5 = 0.79 gives 0.785 and x4 = 0.56 with x5 = -1.99 gives 0.595, a sign-dependent interaction. Large-|x4| rows (-1.63, -2.36) give 0.72-0.73, and the outlier idx 5 (x4 = 0.27, target 0.835) has large x1 and x2, which suggests extra additive effects from those features."
+}

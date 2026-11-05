@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a near-step x2*x5 interaction: target is about 0.22 above the prediction when x2 and x5 have equal signs and about 0.22 below when they differ.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "c*tanh(k*x2*x5) with large k, approximately c*sign(x2*x5)",
+  "rationale": "All ten rows satisfy sign(residual) = sign(x2*x5): rows 0,1,2,6,9 have positive products (as small as +0.14 in row 0) with residuals of +0.22 to +0.23, and rows 3,4,5,7,8 have negative products (-0.48 to -1.93) with residuals of about -0.224. Because even a tiny product like 0.14 produces the full residual, the interaction appears to saturate very quickly."
+}

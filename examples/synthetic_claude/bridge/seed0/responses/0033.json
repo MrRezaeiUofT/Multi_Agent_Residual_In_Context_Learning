@@ -1,0 +1,12 @@
+{
+  "hypothesised_pattern": "The target combines a saturating even effect of x4 with a positive x2*x5 interaction: same-sign x2 and x5 raise the target, opposite signs lower it enough to cancel the x4 effect.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "0.25 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 + 0.08*x1 - 0.07*x3",
+  "rationale": "Rows 0 and 1 both have x4 near 1.07, yet row 0 (x2*x5 = -2.34, x3 = +1.43) has target 0.19 while row 1 (x2*x5 = +0.47) has 0.70; similarly row 8 (|x4| = 0.82, x2*x5 = -1.76) is only 0.30. The highest target (0.83, row 6) has x2*x5 = +1.29 plus large x1 (+1.52), and the near-zero-x4 rows with negative x2*x5 (rows 4, 7, 9) are all low (0.19-0.31)."
+}

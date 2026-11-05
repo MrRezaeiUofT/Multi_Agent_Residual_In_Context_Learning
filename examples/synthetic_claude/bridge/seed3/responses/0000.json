@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a multiplicative x2*x5 interaction whose sign determines the residual sign, with a saturating magnitude.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "saturating interaction c*tanh(x2*x5)",
+  "rationale": "In all ten high-residual rows the residual sign matches the sign of x2*x5: products of -2.2, -2.4, -2.0, -1.5, -1.1 give residuals near -0.33, and products of +1.55, +0.89, +1.53, +1.65, +1.88 give residuals near +0.33. The residual magnitude stays roughly constant (~0.31-0.38) even though the product magnitude varies from about 0.9 to 2.4, which points to saturation rather than a purely linear interaction."
+}

@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target is about 0.6-0.68 when |x4| is large or when a negative x4 is paired with a large positive x5, but stays near 0.28-0.49 when x4 is near zero, and a positive x4 paired with large positive x5 also gives a low target.",
+  "implicated_features": [
+    "x4",
+    "x5",
+    "x1"
+  ],
+  "functional_form_guess": "target ~ 0.35 + 0.3*(1 - exp(-x4**2)) - 0.12*tanh(x4*x5) + 0.05*x1",
+  "rationale": "x4 = -0.50 and -0.35 with x5 = 1.73 and 1.29 give 0.60 and 0.67, whereas x4 = +0.84 with x5 = 1.62 gives only 0.32, a sign flip consistent with a negative x4*x5 interaction. Large-|x4| rows (2.30 -> 0.65, -0.82 -> 0.675) are high, and near-zero-x4 rows sit at 0.28-0.49, with the top of that range at the largest x1 (1.63)."
+}

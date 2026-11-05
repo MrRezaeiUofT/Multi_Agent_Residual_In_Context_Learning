@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Loss fell sharply (0.115 to 0.041), and the remaining worst errors (0.10-0.13) all come from over-correction by the x2*x5 term at large |x2*x5|. The three under-predictions have strongly negative products (-1.69, -2.31, -0.61) and the three over-predictions strongly positive ones (+2.00, +3.05, +1.67), so in every case the error has the same sign as the interaction. With tanh(1.5*x2*x5) saturated, the term contributes close to its full +/-0.25 at these products, but the evidence suggests the real effect at saturation is only about +/-0.13 to 0.15. The x4 term no longer shows a systematic pattern, since these rows span x4 from near 0 to |x4| = 1.66.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Lower the interaction cap and keep its steepness and the x4 term: clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.15 * tanh(1.5 * x2 * x5), -0.6, 0.6). This cuts the saturated contribution from +/-0.25 to +/-0.15, which removes about 0.10 of over-correction on the rows shown, while still giving about +/-0.11 for moderate products near +/-0.6."
+}

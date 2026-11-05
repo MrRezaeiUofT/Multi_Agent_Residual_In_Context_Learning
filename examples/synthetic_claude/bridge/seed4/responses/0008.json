@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target depends on |x4| through an even, steep-then-saturating function with a transition near |x4| of about 0.45-0.5, which the base model largely misses.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "even sigmoid-like term, e.g. tanh(3*x4**2) or x4**2/(0.25+x4**2)",
+  "rationale": "Positive residuals (+0.24) occur at x4 = +0.95, -1.17, -1.11, +0.50, +1.29, and negative residuals at x4 = -0.05, -0.18, -0.29, -0.04, +0.42, so the sign of the residual flips between |x4| ~0.42 and ~0.50 regardless of sign. Targets for |x4| >= 0.95 are 0.62-0.84 versus 0.18-0.28 for |x4| <= 0.42, while base predictions stay at 0.26-0.60, indicating a missing sharp even nonlinearity in x4."
+}

@@ -1,0 +1,35 @@
+{
+  "id": "0066",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The target is close to a bounded function of |x4|: about 0.8-0.87 whenever |x4| > 1.2 (either sign) and about 0.07-0.15 when x4 is near zero, with x5 having little direct effect on the level.\nCURRENT_T_k: This reverts to the best-scoring correction: a centred, saturating even x4 term that raises predictions at large |x4| and lowers them near x4 = 0, damped by exp(-0.3*x5**2) when |x5| is large, plus a moderate saturating x2*x5 interaction that raises predictions when x2 and x5 share a sign and lowers them otherwise. The remaining tail errors are treated as noise rather than tuned further.\nCURRENT_f_k: clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.3*clip(x5**2, 0, 20)) + 0.22*tanh(1.5*x2*x5), -0.5, 0.5)\nTRAIN_LOSS: 0.0290\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -1.026    +0.914    +0.251    +1.370    -2.468    +0.162      +0.296      +0.167      -0.130\n  +1.124    -0.588    -0.472    +2.846    +2.128    +0.954      +0.503      +0.381      -0.122\n  -0.049    -0.586    -1.872    +2.351    +1.131    -0.067      +0.593      +0.490      -0.103\n  -0.738    +0.947    +1.780    +2.366    -1.144    -0.087      +0.285      +0.183      -0.102\n  +0.745    -0.988    +1.043    -1.769    -0.744    -0.225      +0.726      +0.828      +0.102\n  -0.471    -0.110    -1.947    +1.388    +2.090    +0.580      +0.601      +0.500      -0.101\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "0fc8df203f25066ffdf09ed32cdad865757acd1f548c51e7e35af86c3a7bad04"
+}

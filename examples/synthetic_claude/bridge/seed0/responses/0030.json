@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target rises with |x4| in a saturating even fashion (about 0.15-0.34 for |x4| <= 0.54, about 0.6-0.66 for |x4| of 0.77-1.5), with a possible negative effect of large x5 lowering the target.",
+  "implicated_features": [
+    "x4",
+    "x5",
+    "x1"
+  ],
+  "functional_form_guess": "0.2 + 0.5*(1 - exp(-x4**2)) + 0.07*x1 - 0.05*x5",
+  "rationale": "The rows with |x4| = 1.50 and 0.77 reach targets of 0.66 and 0.61, while the seven rows with |x4| <= 0.54 have targets of 0.15-0.34. Row 6 has |x4| = 0.86 but only 0.31, and it is the row with by far the largest x5 (+2.38) and negative x1 (-1.28), suggesting x5 subtracts from the target in addition to the x4 effect."
+}

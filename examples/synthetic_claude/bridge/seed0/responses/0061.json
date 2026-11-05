@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps the halved, mean-centred fast-saturating even x4 term (about -0.13 at x4 = 0, about +0.17 at large |x4|), which removed the systematic x4 errors. It lowers the cap of the steep x2*x5 interaction from +/-0.25 to +/-0.15, since the worst remaining errors were over-corrections at large |x2*x5|, while moderate products near +/-0.6 still receive about +/-0.11. The total is clipped for stability.",
+  "f_k": "clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.15 * tanh(1.5 * x2 * x5), -0.6, 0.6)"
+}

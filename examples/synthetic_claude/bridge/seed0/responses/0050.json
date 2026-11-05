@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The steep interaction lowered the loss again (0.053 to 0.044), and the remaining over-predictions (0.17-0.20) show a new regularity: all eight have NEGATIVE x4 (-1.47 to -2.51), with no large positive x4 rows in the list. So the even x4 term over-lifts the negative side, meaning the true x4 response is asymmetric (lower on the negative side) or the base model leaves a residual linear x4 slope. The x2*x5 sign pattern no longer separates these rows (products range from -1.0 to +3.05), and the two near-zero-x4 under-predictions are small, mixed cases.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Add a small, mean-zero linear x4 term to tilt the U so negative x4 gets less lift than positive x4: clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.06 * x4 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6). At x4 = -2 this removes about 0.12 from the lift, which roughly cancels the typical +0.18 over-prediction, while adding about +0.09 at x4 = +1.5, where no failures are currently seen."
+}

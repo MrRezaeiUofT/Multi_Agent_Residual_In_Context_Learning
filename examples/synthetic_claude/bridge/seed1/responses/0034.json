@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target mapping includes a bilinear x2*x5 term: when x2 and x5 have matching signs the target is higher than the base prediction, and when they differ it is lower.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "bilinear interaction c*x2*x5",
+  "rationale": "All five positive-residual rows (targets 0.55-0.74) have x2*x5 > 0 (about 1.77, 0.80, 0.24, 0.49, 1.46), and all five negative-residual rows (targets 0.26-0.36) have x2*x5 < 0 (about -0.32, -0.36, -0.63, -1.04, -0.53). Within each group x2 and x5 individually take both signs, so only their product explains the split."
+}

@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a symmetric, saturating dependence of the target on |x4|, under-predicting when |x4| exceeds about 0.6 and over-predicting when |x4| is below about 0.5.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "even saturating term such as tanh(2*x4**2) or x4**2/(0.3+x4**2)",
+  "rationale": "Positive residuals (+0.22 to +0.23) occur at x4 = -0.73, -2.07, +1.62, +0.96, -0.67, -1.52 (|x4| >= 0.67, both signs), while negative residuals occur at x4 = +0.50, -0.15, -0.30, +0.34 (|x4| <= 0.50). Targets reach 0.63-0.91 in the first group versus 0.21-0.33 in the second, and |x4| = 0.67 already yields 0.65, consistent with fast saturation of an even function."
+}

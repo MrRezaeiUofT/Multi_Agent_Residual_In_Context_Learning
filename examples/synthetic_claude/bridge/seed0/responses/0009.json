@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model under-represents a convex (likely U-shaped) effect of x4: target is under-predicted when |x4| is large and over-predicted when x4 is near zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (convex in x4, possibly saturating)",
+  "rationale": "The three positive residuals have x4 = +1.28, +0.99, +2.05, while the seven negative residuals all have x4 clustered near zero (between -0.58 and +0.38) rather than strongly negative. Small-magnitude x4 values of both signs being over-predicted suggests curvature (an even term) rather than a purely linear slope, although only positive large x4 is present here."
+}

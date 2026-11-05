@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a U-shaped (even) effect of x4, under-predicting when |x4| is roughly 1 or more and over-predicting when |x4| is small.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (possibly saturating x4**2/(1+x4**2))",
+  "rationale": "The five positive residuals have |x4| of 1.03, 1.66, 2.12, 0.96 and 1.10 with mixed signs, while the five negative residuals have |x4| of 0.52, 0.60, 0.48, 0.23 and 0.25. The split falls cleanly on the magnitude of x4 independent of its sign, pointing to a missing even term such as x4 squared."
+}

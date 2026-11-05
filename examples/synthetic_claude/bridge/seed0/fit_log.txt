@@ -1,0 +1,29 @@
+  high-residual pool: 180 / 600 examples (|r| range 0.171..0.377)
+  [correction 0] encoder variant = error_patterns
+    hypothesis: The target contains an even (U-shaped) effect of x4: it rises when |x4| is large and is lower when x4 is near zero, which the base model fits as roughly flat or linear.
+    form guess: quadratic x4**2 (possibly saturating, e.g. x4**2/(1+x4**2)) || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2, possibly saturating as x4**2/(1+x4**2) || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2, or saturating x4**2/(1+x4**2) || quadratic x4**2 (possibly saturating x4**2/(1+x4**2)) || quadratic x4**2 or saturating x4**2/(1+x4**2) || quadratic x4**2 (possibly saturating x4**2/(1+x4**2)) || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2 (convex in x4, possibly saturating) || quadratic x4**2 or saturating x4**2/(1+x4**2) || quadratic x4**2 (possibly saturating) || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2 plus a smaller even term in x5 (e.g. a*x4**2 + b*x5**2) || quadratic x4**2, possibly modulated as x4**2/(1+exp(x3)) || shifted quadratic (x4 - 0.3)**2, or x4**2 plus a small negative linear term in x4 || quadratic x4**2 (or saturating x4**2/(1+x4**2)) || quadratic x4**2 with a smaller x4-x5 interaction, e.g. a*x4**2 + b*x4*x5
+    f_k_0: clip(0.7 * x4**2 / (1.0 + x4**2) - 0.24, -0.5, 0.5)
+    loss_0: 0.1437
+  [correction 1] encoder variant = sample_patterns
+    hypothesis: The target is dominated by a saturating even function of x4, close to x4**2/(1+x4**2), giving targets near 0 when x4 is near 0 and about 0.7-0.85 when |x4| is about 1.7 or more, with a smaller negative linear contribution from x3.
+    form guess: x4**2/(1+x4**2) - 0.08*x3 (plus small offsets) || x4**2/(1+x4**2) + 0.15*tanh(x1) - 0.08*x3 || 0.8*(1 - exp(-x4**2)) + 0.1*x1 - 0.08*x3 || 0.15 + 0.55*x4**2/(0.5 + x4**2) + 0.08*x1 - 0.07*x3 || 0.1 + 0.7*(1 - exp(-x4**2)) - 0.08*x3 + 0.08*x1 || 0.2 + 0.5*(1 - exp(-x4**2)) + 0.09*x1 - 0.07*x3 || 0.15 + 0.6*(1 - exp(-x4**2)) + 0.08*x1 || 0.2 + 0.6*(1 - exp(-x4**2)) + 0.08*x1 - 0.07*x3 || 0.2 + 0.55*(1 - exp(-x4**2)) + 0.08*x1 || 0.2 + 0.55*(1 - exp(-x4**2)) + 0.1*x1 - 0.07*x3 || 0.2 + 0.5*(1 - exp(-x4**2)) + 0.1*x1 - 0.07*x3 || 0.2 + 0.5*(1 - exp(-x4**2)) + 0.07*x1 - 0.05*x5 || 0.2 + 0.5*sigmoid(4*(abs(x4) - 0.9)) + 0.08*x1 - 0.07*x3 || 0.3 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 - 0.07*x3 || 0.25 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 + 0.08*x1 - 0.07*x3 || 0.25 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 + 0.08*x1 - 0.07*x3 || 0.25 + 0.4*(1 - exp(-x4**2)) + 0.1*x2*x5 + 0.08*x1 - 0.07*x3 || 0.25 + 0.4*(1 - exp(-x4**2)) + 0.3*tanh(0.4*x2*x5) + 0.08*x1 - 0.07*x3
+    f_k_0: clip(0.55 * (1.0 - exp(-x4**2) - 0.42) + 0.25 * tanh(0.4 * x2 * x5), -0.6, 0.6)
+    loss_0: 0.1149
+  [correction 0] refining for T=10 iterations
+    iter 1: loss 0.1437 -> 0.0937  f_k = clip(0.6 * x4**2 / (1.0 + x4**2) - 0.21 + 0.25 * tanh(0.4 * x2 * x5), -0.6, 0.6)
+    iter 2: loss 0.0937 -> 0.0684  f_k = clip(0.5 * x4**2 / (1.0 + x4**2) - 0.17 + 0.3 * tanh(0.5 * x2 * x5), -0.6, 0.6)
+    iter 3: loss 0.0684 -> 0.0710  f_k = clip(0.4 * (1.0 - exp(-x4**2)) - 0.17 + 0.3 * tanh(0.5 * x2 * x5), -0.6, 0.6)
+    iter 4: loss 0.0710 -> 0.0755  f_k = clip(0.5 * x4**2 / (1.0 + x4**2) - 0.17 + 0.4 * tanh(0.7 * x2 * x5), -0.6, 0.6)
+    iter 5: loss 0.0755 -> 0.0530  f_k = clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.3 * tanh(0.5 * x2 * x5), -0.6, 0.6)
+    iter 6: loss 0.0530 -> 0.0441  f_k = clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6...
+    iter 7: loss 0.0441 -> 0.0590  f_k = clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.06 * x4 + 0.25 * tanh(1.5 * x2 * x5...
+    iter 8: loss 0.0590 -> 0.0353  f_k = clip(0.3 * x4**2 / (0.5 + x4**2) - 0.14 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)
+    iter 9: loss 0.0353 -> 0.0301  f_k = clip(0.25 * x4**2 / (0.5 + x4**2) - 0.115 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0....
+    iter 10: loss 0.0301 -> 0.0295  f_k = clip(0.2 * x4**2 / (0.5 + x4**2) - 0.09 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)
+  [correction 0] best loss = 0.0295 at t=10
+  [correction 1] refining for T=10 iterations
+    iter 1: loss 0.1149 -> 0.0411  f_k = clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)
+    iter 2: loss 0.0411 -> 0.0471  f_k = clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.15 * tanh(1.5 * x2 * x5), -0.6, 0.6)
+    iter 3: no failures above tau_fail; stopping early
+  [correction 1] best loss = 0.0411 at t=1
+  global scores p_k = ['0.863', '0.814']

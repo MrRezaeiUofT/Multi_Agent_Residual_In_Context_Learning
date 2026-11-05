@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The remaining errors split cleanly by the sign of x2*x5, which the correction cannot represent. All seven underpredictions (targets 0.53-0.84) have x2 and x5 of the same sign (x2 = 1.07-2.22, x5 = 0.41-1.29) and small |x4| (<= 0.35). All three overpredictions have opposite-sign x2 and x5 ((-1.09, 0.21), (0.61, -1.94), (0.62, -2.67)) and large |x4| (1.34-1.92). The secondary terms -0.04*tanh(x5) - 0.03*tanh(x2) push the same-sign rows down, which is the wrong direction, and the full-strength x4 term subtracts about 0.2 near x4 = 0 and adds about 0.2 at large |x4| regardless of x5, which makes both groups worse.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Replace the separate x2 and x5 terms with a saturating x2*x5 interaction, and damp and shrink the x4 term: clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.3*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5), -0.5, 0.5). The interaction adds about +0.24 to same-sign rows and about -0.2 to opposite-sign rows, and the damping keeps the x4 boost from overshooting when |x5| is large."
+}

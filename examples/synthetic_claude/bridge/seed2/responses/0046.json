@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The remaining errors are of a similar size (about 0.18-0.21) in both directions, and in both the x4 term pushes against the needed correction. The six underpredictions all have small |x4| (<= 0.35) with same-sign x2 and x5 (x2 = 1.07-2.22, x5 = 0.41-1.29). There the interaction is already saturated at about +0.24, while the x4 term still subtracts about 0.1, so the correction cannot get past about +0.14. The four overpredictions have large |x4| (1.34-1.92), where the x4 term adds +0.03 to +0.17 even though the targets are mid-to-low (0.13-0.58), and three of them have negative x2*x5. The interaction's ceiling is too low and the x4 term is too strong relative to it.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Halve the x4 amplitude and give the interaction a larger amplitude with a slightly gentler slope: clip(0.15*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.3*tanh(1.5*x2*x5), -0.5, 0.5). At x2 = 1.80, x5 = 0.52, x4 = 0.27 the correction rises from about +0.14 to about +0.22. At x2 = 0.61, x5 = -1.94, x4 = -1.34 it falls from about -0.19 to about -0.25."
+}

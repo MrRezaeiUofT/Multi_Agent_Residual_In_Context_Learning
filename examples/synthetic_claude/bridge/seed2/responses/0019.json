@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target is close to a bounded function of |x4|: about 0.8-0.87 whenever |x4| > 1.2 (either sign) and about 0.07-0.15 when x4 is near zero, with x5 having little direct effect on the level.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x2"
+  ],
+  "functional_form_guess": "target ~ 0.1 + 0.75*(1 - exp(-x4**2)), with a small downward shift when x1 and x2 are both strongly negative",
+  "rationale": "Cases with x4 = -2.82, 1.42, 1.59, 1.18, 2.52, 1.47 all have targets 0.77-0.87, while x4 = 0.03, 0.09, 0.31 give targets 0.07-0.15 regardless of x5 sign (-1.32, 3.05, -2.03). The one large-|x4| case with a lower target (x4 = 1.75, target 0.54) has x1 = -1.63 and x2 = -2.68, which suggests a secondary contribution from those features."
+}

@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Every worst failure has |x4| between 1.9 and 3.1, and the correction overpredicts by about 0.17-0.29. The unbounded quadratic 0.1*(x4**2 - 1) gives +0.27 to +0.86 (often hitting the 0.5 clip) in this region, which is far more than the true effect, so the x4 effect must saturate rather than keep growing. These rows also all have x2*x5 < 0 (about -0.2 to -1.7), so the downward pull from the interaction is swamped by the oversized x4 term.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Replace the unbounded quadratic with a saturating even function of x4 and bound the interaction as well, e.g. clip(0.12 * tanh(x4**2 - 1) + 0.15 * tanh(x2 * x5), -0.4, 0.4), so that large |x4| adds at most about +0.12 and opposite-sign x2/x5 can still pull the prediction down."
+}

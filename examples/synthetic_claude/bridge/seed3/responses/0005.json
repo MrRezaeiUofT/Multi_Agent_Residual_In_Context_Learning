@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a steeply saturating x2*x5 interaction: target exceeds the prediction when x2 and x5 share a sign and falls short when they have opposite signs.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "c*tanh(k*x2*x5) with large k (close to c*sign(x2*x5))",
+  "rationale": "Residual sign equals sign(x2*x5) in all ten rows: rows 1,2,3,4,5,8 (products +0.35 to +2.2) are about +0.25, and rows 0,6,7,9 (products -0.69 to -1.81) are about -0.245. Even small products such as 0.35 (row 3) and 0.51 (row 4) give the full ~0.25 residual, so the response looks bounded and steep near zero rather than linear in the product."
+}

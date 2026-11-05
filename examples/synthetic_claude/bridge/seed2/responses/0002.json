@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a U-shaped (even) dependence on x4: the target is raised when |x4| is large (either sign) and lowered when x4 is near zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "saturating even term such as 1 - exp(-x4**2) or x4**2/(1 + x4**2)",
+  "rationale": "The four positive residuals all have |x4| between 1.16 and 1.50, with two positive and two negative signs, while the six negative residuals all have |x4| <= 0.54. A linear x4 term cannot fit high targets at both x4 = +1.4 and x4 = -1.5, which points to a sign-symmetric effect; targets stay below about 0.82, consistent with saturation."
+}
