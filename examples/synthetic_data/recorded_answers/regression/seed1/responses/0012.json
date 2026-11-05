@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a multiplicative x2*x5 interaction: the target is underpredicted when x2 and x5 share a sign and overpredicted when their signs differ.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "bilinear interaction c*x2*x5",
+  "rationale": "All three positive residuals (+0.18) have x2*x5 > 0 (about 1.37, 0.27, 1.87), and all seven negative residuals (about -0.18) have x2*x5 < 0 (about -1.00, -2.59, -0.67, -0.23, -1.61, -1.24, -1.61). No single feature separates the groups on its own: for example, x2 is negative in both groups. The sign of the product separates them perfectly."
+}

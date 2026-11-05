@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The loss of 0.4129 is much worse than the softer forms tried in this session (best about 0.320), and the failures show why. The hard sign(x2*x5) gives a full plus or minus 3 even at products near zero, and the steep gate slope of 4 makes the class_2 decision almost binary, so rows in the noisy band near |x4| of 1 are wrong with high confidence. The product weight of 0.4 is too small, so rows 3, 6 and 7 with |x4| of 1.39 to 1.74 and products of 0.7 to 1.7 still enter class_2 even though they follow the sign rule. The x1 term also pushes strongly negative-x1 class_1 rows (rows 8 and 10, x1 of -2.4 and -1.7) toward class_2, which was already found to hurt.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Replace sign(x2*x5) with tanh(4*x2*x5), drop the x1 term, and use the gate G = sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))). Use class deltas [-3*tanh(4*x2*x5)*(1 - G) - 2*G, 3*tanh(4*x2*x5)*(1 - G) - 2*G, 3*G - (1 - G)*(0.5 + 0.5*abs(tanh(4*x2*x5)))]. Do not try to fit rows 1 and 2, which break the sign rule."
+}

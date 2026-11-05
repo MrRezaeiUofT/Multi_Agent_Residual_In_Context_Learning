@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The x2*x5 interaction has the right sign but rises too slowly, and the x4 term still works against it. All seven underpredictions (targets 0.53-0.84) have small |x4| (<= 0.27), positive x5 (0.41-0.83) and positive x2 (1.07-2.22), so x2*x5 is only about 0.4-1.8. There tanh(0.8*x2*x5) adds only +0.06 to +0.17, while the x4 term subtracts about 0.14, so the net change is close to zero. The three overpredictions have negative x2 with small-to-moderate positive x5 (products -0.23 to -0.84) and large |x4| (1.33-1.92): the x4 boost of about +0.15-0.23 outweighs the weak negative interaction.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Make the interaction steeper and slightly larger, and shrink the x4 amplitude: clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5), -0.5, 0.5). For example, at x2 = 1.8, x5 = 0.52, x4 = 0.27 the correction goes from about -0.01 to about +0.14, and at x2 = -1.09, x5 = 0.21, x4 = -1.92 it goes from about +0.20 to about +0.06."
+}

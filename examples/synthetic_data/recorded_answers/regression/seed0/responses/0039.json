@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps a mean-centred saturating even term in x4, with slightly reduced amplitude, so that large |x4| raises the prediction and x4 near zero lowers it. It also adds a saturating x2*x5 interaction that pulls predictions down when x2 and x5 have opposite signs (the shared feature of the worst over-predictions) and up when they agree. The result is clipped for stability.",
+  "f_k": "clip(0.6 * x4**2 / (1.0 + x4**2) - 0.21 + 0.25 * tanh(0.4 * x2 * x5), -0.6, 0.6)"
+}

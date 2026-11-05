@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Target class is class_2 when x4^2 - 0.25 exceeds about 1.85*|x2*x5|, and otherwise follows the sign of x2*x5, with the boundary being noisy when both terms are close to zero.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "Nine of ten examples fit the rule, including idx 6, which is class 0 at x4^2 of about 2.17 because |x2*x5| is about 1.21. Idx 9 is the miss: it is class 2 with x4^2 of about 0.21 and x2*x5 of about 0.05, so the rule predicts class 1. An earlier class 0 sample with x4^2 of about 0.29 and a similarly tiny product conflicts with lowering the offset, so this looks like noise near the origin and not a reason to change the rule."
+}

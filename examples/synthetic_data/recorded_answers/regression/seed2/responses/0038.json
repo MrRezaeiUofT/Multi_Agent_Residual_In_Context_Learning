@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The x4 bump is applied at full strength whatever x5 is, but the failures show that the x4 effect changes when |x5| is large. Seven of the worst errors are overpredictions at large |x4| (1.34-1.92) that also have large |x5| (0.99-2.67) and, in most cases, negative x1 (-0.74 to -2.06); their targets are only 0.13-0.43. The three underpredictions have x4 near zero (0.01, -0.17, 0.19) where the term subtracts about 0.25, yet the targets are about 0.67-0.69, two of them with |x5| > 2.6. The x5 penalty is too small to matter, and no x1 effect is modelled.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Make the x4 term depend on x5 so that it shrinks when |x5| is large, and add a linear x1 term: clip(0.55*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.25*clip(x5**2, 0, 20)) + 0.06*x1, -0.5, 0.5). This reduces the overcorrection at large |x4| with large |x5| and the undercorrection at small x4 with large |x5|, and the x1 term lowers predictions for the many failures with negative x1."
+}

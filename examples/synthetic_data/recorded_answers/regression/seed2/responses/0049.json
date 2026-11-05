@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction goes back to the better-scoring iter-4 balance: a centred, even x4 term damped by |x5|, plus a steep saturating x2*x5 interaction that raises predictions when x2 and x5 share a sign and lowers them when the signs differ. A small one-sided term adds extra lift only when x2 and x5 are both positive, the quadrant where the hardest underpredictions remain.",
+  "f_k": "clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5) + 0.1*tanh(maximum(x2, 0)*maximum(x5, 0)), -0.5, 0.5)"
+}

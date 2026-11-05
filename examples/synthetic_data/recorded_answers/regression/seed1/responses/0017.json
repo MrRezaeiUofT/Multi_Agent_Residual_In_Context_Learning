@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a multiplicative interaction between x2 and x5: the target exceeds the prediction when x2 and x5 have the same sign and falls short when they differ.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "bilinear interaction c*x2*x5",
+  "rationale": "All eight positive residuals (+0.15 to +0.16) have x2*x5 > 0, including both both-positive pairs (1.946, 0.763) and both-negative pairs (-1.795, -1.783). The two negative residuals have x2*x5 < 0 (-0.227*0.756 and 2.474*-0.320), so the residual sign follows the product rather than either feature alone."
+}

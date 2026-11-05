@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses an even, sign-independent effect of x4 in which |x4| above about 1 lifts the target sharply and |x4| below about 0.5 depresses it.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "x4**2/(1+x4**2) or a smooth threshold on |x4| such as tanh(x4**2)",
+  "rationale": "Every positive residual (+0.25) has |x4| >= 1.07 with mixed signs (-1.22, -1.20, +1.07, +2.12, -1.07), and every negative residual has |x4| <= 0.52 (+0.48, +0.52, +0.41, +0.21, +0.005). Targets jump from 0.10-0.46 to 0.62-0.86 across that magnitude boundary while base predictions remain at 0.35-0.71, pointing to a missing even, rapidly saturating x4 term."
+}

@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target is high when x2 and x5 agree in sign and |x4| is large, and low when x2 and x5 disagree in sign with x4 near zero, a joint interaction and quadratic structure that the base model misses.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "a*x2*x5 + b*(x4**2 - 1), possibly saturating via sigmoid",
+  "rationale": "The four high-target rows (0.70-0.81) all have x2*x5 > 0 (about 3.2, 1.0, 3.2, 1.7) and |x4| of at least 1.25, including the both-negative case in row 8 (x2=-1.27, x5=-1.35, x4=-1.74). The six low-target rows (0.13-0.43) all have x2*x5 < 0 (about -0.7 to -4.4) and |x4| of at most 0.43, so both terms point the same way."
+}

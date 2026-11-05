@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps the flattened, mean-centred even x4 term (about -0.16 at x4 = 0, rising to about +0.15 at large |x4|), which gave the lowest loss so far. The interaction is now a steep, low-cap function of x2*x5 that acts almost like a scaled sign: it adds about +0.18 when x2*x5 is near +0.6 and subtracts about 0.23 near -1, but saturates at +/-0.25 for extreme products. The total is clipped for stability.",
+  "f_k": "clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)"
+}

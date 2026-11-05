@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target depends on |x4| through an even, U-shaped term: it is well above prediction for |x4| >= about 0.8 (either sign) and below prediction for x4 near zero, a shape the base model misses.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "saturating even function such as 1 - exp(-x4**2)",
+  "rationale": "The five negative residuals all have |x4| <= 0.16 (e.g. -0.06, -0.07, 0.04), while the five positive residuals have x4 = 1.38, -1.77, -0.83, -1.02 and 1.23. The sign symmetry rules out a linear x4 term, and positive-residual targets cluster around 0.67-0.78, consistent with a plateau."
+}

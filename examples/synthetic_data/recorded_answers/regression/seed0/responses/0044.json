@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Switching to the faster-saturating exp form made the loss slightly worse (0.068 to 0.071) because it raises the lift at mid-range |x4| of 1.3-1.6, exactly where the over-predictions concentrate. Those over-predicted rows all have a negative x2*x5 (-1.01, -0.75, -1.21, -0.66, -0.30, -0.64, -0.16, -0.54), but the interaction subtracts only about 0.05-0.14. Two new under-predictions near x4 = 0 (x4 = +0.32 and -0.14, targets 0.55 and 0.66, under by 0.22) both have a positive x2*x5 of about +0.6, which the interaction lifts by under 0.09. Together these show the x2*x5 term is too weak in both directions.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Go back to the rational x4 form, which had the lower loss, and strengthen the interaction while keeping it bounded: clip(0.5 * x4**2 / (1.0 + x4**2) - 0.17 + 0.4 * tanh(0.7 * x2 * x5), -0.6, 0.6). For products of about -1 this subtracts about 0.24 instead of 0.14, for products of about +0.6 it adds about 0.16 instead of 0.09, and it saturates near +/-0.4 for extreme products."
+}

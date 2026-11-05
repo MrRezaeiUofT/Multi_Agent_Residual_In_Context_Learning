@@ -1,0 +1,4 @@
+{
+  "T_k": "This reverts to the best-scoring correction: a centred, saturating even x4 term that raises predictions at large |x4| and lowers them near x4 = 0, damped by exp(-0.3*x5**2) when |x5| is large, plus a moderate saturating x2*x5 interaction that raises predictions when x2 and x5 share a sign and lowers them otherwise. The remaining tail errors are treated as noise rather than tuned further.",
+  "f_k": "clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.3*clip(x5**2, 0, 20)) + 0.22*tanh(1.5*x2*x5), -0.5, 0.5)"
+}

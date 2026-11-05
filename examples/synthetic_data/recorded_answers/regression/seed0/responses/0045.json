@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction goes back to the lower-loss rational even term in x4 (about -0.17 at x4 = 0, rising to about +0.17 to +0.26 at large |x4|). It strengthens the bounded x2*x5 interaction, which now subtracts about 0.24 when x2*x5 is near -1 and adds about 0.16 when it is near +0.6, saturating at +/-0.4. Both parts are roughly mean-zero, and the total is clipped for stability.",
+  "f_k": "clip(0.5 * x4**2 / (1.0 + x4**2) - 0.17 + 0.4 * tanh(0.7 * x2 * x5), -0.6, 0.6)"
+}

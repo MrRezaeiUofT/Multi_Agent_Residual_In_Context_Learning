@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target has a U-shaped dependence on x4 that the base model misses: it is too low for large |x4| and too high for x4 near zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "even term like x4**2/(1 + x4**2) or 1 - exp(-x4**2)",
+  "rationale": "The two positive residuals have the largest |x4| apart from one case (1.35 and -0.93), while seven of the eight negative residuals have |x4| <= 0.34 (e.g. 0.07, 0.10, -0.005). One negative residual has x4 = 0.80, which suggests a smooth, saturating curvature rather than a sharp threshold."
+}

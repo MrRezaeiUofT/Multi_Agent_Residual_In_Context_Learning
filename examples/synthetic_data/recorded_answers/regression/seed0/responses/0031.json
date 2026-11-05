@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target shows a fairly sharp threshold in |x4| near 0.9-1.0: below it targets are about 0.1-0.38, above it they jump to about 0.66-0.83, with x1 and x3 shifting the level additively.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "0.2 + 0.5*sigmoid(4*(abs(x4) - 0.9)) + 0.08*x1 - 0.07*x3",
+  "rationale": "Rows with |x4| of 0.63-0.86 still have low targets (0.09-0.38), whereas rows with |x4| of 1.00-1.35 have 0.66-0.83, so the rise is concentrated around |x4| of about 0.9 and is symmetric in sign. Within groups, the lowest target (0.09) combines x1 = -1.24 and x3 = +1.09, and the highest (0.83) has x1 = +1.49 and negative x3."
+}

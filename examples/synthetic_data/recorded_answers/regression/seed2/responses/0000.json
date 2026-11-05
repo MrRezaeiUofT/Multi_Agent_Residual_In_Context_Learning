@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target rises with the magnitude of x4 regardless of its sign (a symmetric, saturating even function of x4), which the base model treats as roughly linear and so underpredicts at large |x4| and overpredicts near x4=0.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "saturating even function, e.g. 1 - exp(-x4**2) (possibly modulated by |x5|)",
+  "rationale": "All seven positive residuals have |x4| >= 1.18 (including x4 = -2.82 and +2.52), whereas all three negative residuals have x4 near zero (0.03, 0.09, 0.31). Since both large positive and large negative x4 raise the target, the effect is sign-symmetric, and targets cap near 0.87, suggesting saturation; the negative cases also share large |x5|, hinting x5 may modulate it."
+}

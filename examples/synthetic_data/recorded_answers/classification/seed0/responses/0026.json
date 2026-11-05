@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Class_2 wins when x4^2 - 0.25 exceeds about 1.85*|x2*x5|, and otherwise positive x2*x5 gives class_1 and negative x2*x5 gives class_0.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "All ten examples fit the rule. Idx 7 is a useful boundary case: x4^2 is only about 0.49 but |x2*x5| is about 0.09, so class 2 still wins. Idx 0, 1 and 2 have x4^2 of at most about 0.32 with positive x2*x5 of at least about 0.25 and are class 1, and idx 6 stays class 1 at x4^2 of about 1.15 because x2*x5 is about 2.9."
+}

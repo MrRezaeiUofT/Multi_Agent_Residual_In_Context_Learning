@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model still under-captures a U-shaped dependence on x4, under-predicting at large |x4|, with weaker evidence that large |x5| adds a similar even contribution.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "quadratic x4**2 plus a smaller even term in x5 (e.g. a*x4**2 + b*x5**2)",
+  "rationale": "The strongest positive residuals have |x4| of 2.09, 1.43 and 1.08, while the negative residuals include x4 = -0.24 and +0.06 near zero. Several moderate-x4 positive residuals (rows 2, 4, 5, 9) have |x5| above 0.9, hinting that a second even term or an x4-x5 magnitude effect explains the overlap at x4 around 0.5-0.7."
+}

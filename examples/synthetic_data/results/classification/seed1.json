@@ -1,0 +1,262 @@
+{
+  "seed": 1,
+  "T": 10,
+  "fit_seconds": 0.1,
+  "class_counts": [
+    354,
+    341,
+    305
+  ],
+  "logistic": {
+    "accuracy": 0.47,
+    "macro_f1": 0.4338748506208974,
+    "log_loss": 1.036568341547657
+  },
+  "xgboost": {
+    "accuracy": 0.9,
+    "macro_f1": 0.8992729706298386,
+    "log_loss": 0.30973660945892334
+  },
+  "oracle": {
+    "accuracy": 0.99,
+    "macro_f1": 0.9899161206247821
+  },
+  "maricl": {
+    "accuracy": 0.935,
+    "macro_f1": 0.9348510823801521,
+    "log_loss": 0.4232884592077032
+  },
+  "beta": 0.3,
+  "corrections": [
+    {
+      "k": 1,
+      "p_k": 0.88076898016672,
+      "retained_t": 8,
+      "hypothesis": "The base model misses a symmetric effect of x4: when |x4| is large (about >1.4) and x1 is negative, the true class is class_2 even though the linear evidence points to class_0, with positive x3 strengthening the shift.",
+      "form_guess": "class_2 score delta proportional to max(x4^2 - c, 0) * sigmoid(-x1), with c near 2 and an additive positive term in x3; a matching negative delta on class_0 || delta_class_2 = a*(x4^2 - 1) and delta_class_0 = -a*(x4^2 - 1), optionally tapered by tanh(x1) so the correction is strongest where x1 pushes against x4 magnitude || delta_class_2 = -a*max(x1,0)*max(-x2,0); delta_class_0 = +b*max(x1,0)*max(-x2,0)*tanh(x5); delta_class_1 = -b*max(x1,0)*max(-x2,0)*tanh(x5) || delta_class_2 = a*(x4^2 - 1) - b*max(x1,0)*(x2^2 - 1), with the removed class_2 score moved to class_0 and class_1 || delta_class_1 = +a*tanh(x2*x5); delta_class_0 = -a*tanh(x2*x5); delta_class_2 = b*(x4^2 - 1) || delta_class_2 = a*sigmoid(k*(|x4| - 1)); delta_class_1 = (1 - sigmoid(k*(|x4| - 1)))*b*tanh(x2*x5); delta_class_0 = -delta_class_1 || gate = sigmoid(k*(|x4| - 1)); delta_class_2 = a*gate; delta_class_1 = (1 - gate)*b*tanh(c*x2*x5); delta_class_0 = -delta_class_1 || delta_class_2 = a*sigmoid(k*(x4^2 - 1.2) ) - d*|x2*x5|; delta_class_1 = b*tanh(c*x2*x5); delta_class_0 = -delta_class_1 || gate = sigmoid(k*(|x4| - 1)); delta_class_2 = a*gate; delta_class_1 = (1 - gate)*b*tanh(c*x2*x5); delta_class_0 = -delta_class_1 || gate = sigmoid(k*(|x4| - 1.1)); delta_class_2 = a*gate; delta_class_1 = (1 - gate)*b*tanh(c*x2*x5); delta_class_0 = -delta_class_1 || delta_class_2 = a*x4^2 - c; delta_class_1 = b*x2*x5; delta_class_0 = -b*x2*x5, passed through softmax with the base logits || delta_class_2 = a*(x4^2 - c); delta_class_1 = b*x2*x5; delta_class_0 = -b*x2*x5, with a roughly equal to b || delta_class_2 = a*(x4^2 - c); delta_class_1 = b*x2*x5; delta_class_0 = -b*x2*x5, with noise near the boundary || delta_class_1 = b*x2*x5; delta_class_0 = -b*x2*x5; delta_class_2 = a*max(x4^2 - 1, 0) || delta_class_1 = b*x2*x5; delta_class_0 = -b*x2*x5; delta_class_2 = a*max(x4^2 - 1, 0) || gate = sigmoid(k*(1 - |x4|)); delta_class_1 = gate*b*tanh(c*x2*x5) with large c, approaching sign(x2)*sign(x5); delta_class_0 = -delta_class_1; delta_class_2 = -d*gate || delta_class_2 = a*(x4^2 - c) with c near 1 to 1.5; delta_class_1 = b*tanh(k*x2*x5); delta_class_0 = -delta_class_1 || delta_class_1 = b*tanh(k*x2*x5)*max(1 - x4^2, 0) + b0; delta_class_0 = -delta_class_1; delta_class_2 = a*max(x4^2 - 1, 0)",
+      "T_k": "The gate compares x4**2 with 1.1 plus 0.7*abs(x2*x5) with a further softened slope of 2, to reduce over-confidence in the overlap band near the class_2 boundary. Where the gate is closed, tanh(4*x2*x5) splits class_1 from class_0 and class_2 takes a partial suppression of 0.5 plus half of abs(tanh(4*x2*x5)).",
+      "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+      "flags": {
+        "interaction_x2x5": true,
+        "nonlinear_x4": true,
+        "uses_x6": false,
+        "spurious_x1x2": false,
+        "features_used": [
+          "x2",
+          "x4",
+          "x5"
+        ]
+      },
+      "structure": {
+        "r_interaction_x2x5": 0.7965227040082324,
+        "r_even_x4": 0.8786959485737351
+      },
+      "history": [
+        {
+          "t": 0,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5))), 4*sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5))) - 1]",
+          "train_log_loss": 0.3566926746883587
+        },
+        {
+          "t": 1,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1))) - 2*sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1))) - 2*sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)), 4*sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)) - 1]",
+          "train_log_loss": 0.40993468716688825
+        },
+        {
+          "t": 2,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.2 - 0.6*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.2 - 0.6*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.2 - 0.6*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.2 - 0.6*abs(x2*x5))), 4*sigmoid(3*(x4**2 - 1.2 - 0.6*abs(x2*x5))) - 1]",
+          "train_log_loss": 0.3362073051464499
+        },
+        {
+          "t": 3,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.0 - 0.8*tanh(abs(x2*x5))))) - 2*sigmoid(2.5*(x4**2 - 1.0 - 0.8*tanh(abs(x2*x5)))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.0 - 0.8*tanh(abs(x2*x5))))) - 2*sigmoid(2.5*(x4**2 - 1.0 - 0.8*tanh(abs(x2*x5)))), 4*sigmoid(2.5*(x4**2 - 1.0 - 0.8*tanh(abs(x2*x5)))) - 1]",
+          "train_log_loss": 0.3447044849897269
+        },
+        {
+          "t": 4,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 4*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - 1]",
+          "train_log_loss": 0.32672282634496097
+        },
+        {
+          "t": 5,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*abs(tanh(4*x2*x5))]",
+          "train_log_loss": 0.32855450980151896
+        },
+        {
+          "t": 6,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.32495744091340223
+        },
+        {
+          "t": 7,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 8,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.32105805580865354
+        },
+        {
+          "t": 9,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 10,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.0 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.0 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.0 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.0 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.0 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.0 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3234586034558136
+        }
+      ]
+    },
+    {
+      "k": 2,
+      "p_k": 0.8801534328561953,
+      "retained_t": 2,
+      "hypothesis": "Direct rule from the samples: any row with |x4| well above 1 is class_2 regardless of the sign of x4, and the values of x1 and x3 that the base model follows do not change this.",
+      "form_guess": "if x4^2 > about 1.2 then class_2; as a smooth score, delta_class_2 = a*sigmoid(k*(x4^2 - 1.2)) || if |x4| > 1.2 then class_2, else if x2*x5 < 0 then class_0, else class_1 || if |x4| > 0.9 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if |x4| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if |x4| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if |x4| > 1.1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if |x4| > 1 then class_2, else if sign(x2) == sign(x5) then class_1, else class_0 || if x4^2 - 0.4*|x2*x5| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if |x4| > 1 then class_2, else if sign(x2) == sign(x5) then class_1, else class_0 || if x4^2 - 0.4*|x2*x5| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if x4^2 - 0.4*|x2*x5| > 1 + 0.3*x1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if x4^2 - 0.4*|x2*x5| > 1 + 0.3*x1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || class_2 score = sigmoid(k*(x4^2 - 0.4*|x2*x5| - 1 - 0.2*x1)) with moderate k; class_1 versus class_0 by tanh(c*x2*x5) || if x4^2 - 0.4*|x2*x5| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if |x4| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if |x4| < 0.7 then (class_1 if sign(x2) == sign(x5) else class_0) || if x4^2 - 0.4*|x2*x5| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0 || if |x4| > 1.1 and |x2*x5| < 1 then class_2, else if x2*x5 > 0 then class_1, else class_0",
+      "T_k": "This keeps the best gate, slope 2.5 on x4**2 minus 1.1 minus 0.7*abs(x2*x5), and the smooth tanh(4*x2*x5) split between class_1 and class_0. The only change is a weaker class_2 boost of 2.5 times the gate instead of 3, to reduce confidence on the gate-open class_0 and class_1 rows.",
+      "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 2.5*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+      "flags": {
+        "interaction_x2x5": true,
+        "nonlinear_x4": true,
+        "uses_x6": false,
+        "spurious_x1x2": false,
+        "features_used": [
+          "x2",
+          "x4",
+          "x5"
+        ]
+      },
+      "structure": {
+        "r_interaction_x2x5": 0.7876056549937679,
+        "r_even_x4": 0.8710833803640194
+      },
+      "history": [
+        {
+          "t": 0,
+          "f_k": "[-3*sign(x2*x5)*(1 - sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1))) - 2*sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1)), 3*sign(x2*x5)*(1 - sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1))) - 2*sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1)), 4*sigmoid(4*(x4**2 - 0.4*abs(x2*x5) - 1 - 0.1*x1)) - 1]",
+          "train_log_loss": 0.4129155854577568
+        },
+        {
+          "t": 1,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 2,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 2.5*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3211814188664885
+        },
+        {
+          "t": 3,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 4,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 5,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 6,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 7,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 8,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 9,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        },
+        {
+          "t": 10,
+          "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]",
+          "train_log_loss": 0.3201557509748052
+        }
+      ]
+    }
+  ],
+  "budget_curve": [
+    {
+      "T": 0,
+      "accuracy": 0.86,
+      "macro_f1": 0.8553037125859809,
+      "log_loss": 0.4431958799337764
+    },
+    {
+      "T": 1,
+      "accuracy": 0.92,
+      "macro_f1": 0.9198509665605163,
+      "log_loss": 0.42812570728227795
+    },
+    {
+      "T": 2,
+      "accuracy": 0.905,
+      "macro_f1": 0.9032203916551548,
+      "log_loss": 0.4287351896216785
+    },
+    {
+      "T": 3,
+      "accuracy": 0.905,
+      "macro_f1": 0.9032203916551548,
+      "log_loss": 0.4287351896216785
+    },
+    {
+      "T": 4,
+      "accuracy": 0.915,
+      "macro_f1": 0.9136390789616596,
+      "log_loss": 0.42466106797006786
+    },
+    {
+      "T": 5,
+      "accuracy": 0.93,
+      "macro_f1": 0.9295156287282271,
+      "log_loss": 0.419660919690455
+    },
+    {
+      "T": 6,
+      "accuracy": 0.93,
+      "macro_f1": 0.9295156287282271,
+      "log_loss": 0.419660919690455
+    },
+    {
+      "T": 7,
+      "accuracy": 0.925,
+      "macro_f1": 0.9241722371493365,
+      "log_loss": 0.4217377393445359
+    },
+    {
+      "T": 8,
+      "accuracy": 0.935,
+      "macro_f1": 0.9348510823801521,
+      "log_loss": 0.4232884592077032
+    },
+    {
+      "T": 9,
+      "accuracy": 0.935,
+      "macro_f1": 0.9348510823801521,
+      "log_loss": 0.4232884592077032
+    },
+    {
+      "T": 10,
+      "accuracy": 0.935,
+      "macro_f1": 0.9348510823801521,
+      "log_loss": 0.4232884592077032
+    }
+  ]
+}

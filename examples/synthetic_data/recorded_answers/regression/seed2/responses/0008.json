@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target rises with |x4| (an even effect) and with strongly negative x5, in a combined bounded form that the base model underfits, so it underpredicts when x5 << 0 or |x4| is large and overpredicts when x5 > 0 with modest |x4|.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "sigmoid(a*x4**2 - b*x5 + c), i.e. an even x4 term plus a decreasing x5 term passed through a saturating link",
+  "rationale": "All six positive residuals have negative x5 (-0.50 to -2.61) and mostly sizeable |x4| (0.56-1.78), with targets up to 0.85. Three of the four negative residuals have positive x5 (up to 2.25) and |x4| <= 0.64, so the base model underweights both the x4 magnitude and the steep x5 effect."
+}

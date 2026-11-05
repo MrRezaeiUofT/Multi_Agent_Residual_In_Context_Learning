@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Targets exceed the base prediction when x2*x5 > 0 and |x4| is large, and fall below it when x2*x5 < 0 and x4 is near zero.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "a*x2*x5 + b*(x4**2 - 1)",
+  "rationale": "The four positive-residual rows (targets 0.66-0.84) all have x2*x5 > 0 (about 1.09, 1.13, 0.83, 0.54) and |x4| of at least 1.0 (-1.004, 1.385, -1.564, -1.975). The six negative-residual rows (targets 0.21-0.56) all have x2*x5 < 0 (about -0.7 to -3.3) and |x4| of at most 0.55. Row 0 has a high base prediction (0.80) driven by x1, yet the opposite-sign x2/x5 pair still pulls its target down."
+}

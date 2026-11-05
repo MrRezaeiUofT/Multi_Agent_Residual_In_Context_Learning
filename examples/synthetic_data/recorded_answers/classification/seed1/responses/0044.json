@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The saturating penalty did not help: train loss rose from 0.3362 to 0.3447. Capping the product penalty at 0.8 brought back the gate-open errors, with rows 3, 4, 5, 6 and 10 being true class_0 or class_1 at |x4| between 1.39 and 1.74 and |x2*x5| between about 0.7 and 3.2, all following the sign rule. Rows 7, 8 and 9 (class_2 at |x4| from 0.62 to 0.76) remain only partly helped, which suggests that lowering the offset costs more than it gains. Rows 1 and 2 remain unexplained and look like noise.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Return to the linear penalty, which fit better, and raise its weight slightly: gate = sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))). This keeps large products out of class_2, including row 3 and row 5, while the offset of 1.1 sits between the iter 0 and iter 2 values. Keep the same outer form and do not fit rows 1 and 2."
+}

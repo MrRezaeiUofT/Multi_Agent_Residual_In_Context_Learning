@@ -1,0 +1,35 @@
+{
+  "id": "0058",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The target is close to a bounded function of |x4|: about 0.8-0.87 whenever |x4| > 1.2 (either sign) and about 0.07-0.15 when x4 is near zero, with x5 having little direct effect on the level.\nCURRENT_T_k: Because the base model misses the bounded even dependence on x4, the correction adds a centred saturating term that raises predictions by up to about 0.23 when |x4| is large and lowers them by about 0.23 when x4 is near zero. Small secondary terms lower predictions slightly for positive x5 and positive x2, which the sample rows suggest the base model over-credits.\nCURRENT_f_k: clip(0.55*(0.58 - exp(-clip(x4**2, 0, 20))) - 0.04*tanh(x5) - 0.03*tanh(x2), -0.5, 0.5)\nTRAIN_LOSS: 0.1407\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  +1.204    +1.796    -1.381    +0.266    +0.523    +0.429      +0.835      +0.632      -0.203\n  +0.406    +2.190    +0.136    -0.172    +0.827    -0.775      +0.670      +0.481      -0.188\n  +1.442    +1.366    -0.306    -0.198    +0.724    -1.034      +0.768      +0.586      -0.183\n  +0.461    +2.219    -1.699    +0.138    +0.411    -0.985      +0.763      +0.583      -0.180\n  -0.127    +1.593    -0.123    -0.351    +1.291    -0.791      +0.671      +0.496      -0.174\n  +1.909    +1.067    +1.214    -0.244    +0.411    -0.271      +0.666      +0.499      -0.167\n  -0.264    -1.090    -1.245    -1.923    +0.209    +0.003      +0.580      +0.746      +0.166\n  +1.086    +0.607    +1.242    -1.340    -1.935    -1.573      +0.374      +0.536      +0.162\n  -1.658    +0.624    +1.930    -1.527    -2.673    -0.247      +0.129      +0.291      +0.162\n  -1.193    +1.185    -0.418    -0.028    +0.732    -0.147      +0.530      +0.370      -0.160\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "54be0317f7594e67b45b8033d6ceca792163614991daa82c8bdb0daecb043d3f"
+}

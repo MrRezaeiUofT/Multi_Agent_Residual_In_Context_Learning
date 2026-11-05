@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a U-shaped (even) effect of x4 whose crossover is near |x4| of about 0.9: larger |x4| raises the target above prediction, smaller |x4| leaves it below.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (or saturating x4**2/(1+x4**2))",
+  "rationale": "Positive residuals appear at x4 = -1.00, +1.05, +1.35, while negative residuals appear at x4 = +0.83, -0.63, -0.44, -0.66, -0.86, +0.67, -0.05. Both groups contain both signs of x4, so the residual is driven by |x4|, consistent with an unmodelled quadratic term whose effect is offset by the base model's mean."
+}

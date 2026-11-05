@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction is kept unchanged as final: class_1 and class_0 get +4.5*x2*x5 and -4.5*x2*x5, and class_2 gets 2.5*x4^2 - 0.75, which reproduces the class_2 versus sign-of-product rule. Further scaling would only increase overconfidence on the likely noisy labels. Outputs are clipped for stability.",
+  "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]"
+}

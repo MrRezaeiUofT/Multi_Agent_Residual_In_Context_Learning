@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Rows map to class_2 when |x4| is above about 1.2, and rows with small |x4| and x2*x5 < 0 map to class_0, with one outlier that is class_2 despite small |x4|.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "if |x4| > 1.2 then class_2, else if x2*x5 < 0 then class_0, else class_1",
+  "rationale": "Seven of the eight class_2 rows have |x4| of at least 1.29, and the two class_0 rows have |x4| of 0.36 and 0.05 with x2*x5 negative. Row 4 (x2 of -3.25, x4 of -0.2, x5 of -1.74) would be class_1 by this rule but is class_2, so it may be label noise or an effect of extreme x2."
+}

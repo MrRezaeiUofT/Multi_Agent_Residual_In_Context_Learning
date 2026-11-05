@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps the antisymmetric x2*x5 term between class_1 and class_0 and the x4^2 term on class_2, with the same 1.8 ratio and 0.3 offset. This iteration tests a 25 percent higher overall scale, since the previous doubling lowered the loss substantially. Outputs remain clipped so that large feature values cannot produce extreme logits.",
+  "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]"
+}

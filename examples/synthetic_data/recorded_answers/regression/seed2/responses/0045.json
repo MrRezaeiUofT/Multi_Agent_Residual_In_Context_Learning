@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction combines a smaller, centred, saturating even x4 term (damped when |x5| is large) with a steeper and slightly stronger x2*x5 interaction. The interaction is now the main driver: it raises predictions by up to 0.25 when x2 and x5 share a sign and lowers them by as much when the signs differ, and it saturates quickly so that even moderate products have an effect.",
+  "f_k": "clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5), -0.5, 0.5)"
+}

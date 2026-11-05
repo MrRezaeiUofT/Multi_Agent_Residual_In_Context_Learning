@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The worst failures split into two groups that both point to an x4 term with too much amplitude. Eight rows with |x4| of 1.47-2.51 are over-predicted by 0.14-0.18, where the term adds its full plateau of about +0.32. Two rows near x4 = 0 (x4 = +0.32 and -0.14) are under-predicted by about 0.14, where the term subtracts about 0.20-0.23. Both under-predicted rows have a moderately positive x2*x5 (about +0.6), for which the shallow tanh(0.4*x2*x5) adds only about 0.06, so the interaction is also too weak for moderate products.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Roughly halve the x4 amplitude, keep it mean-centred, and steepen the interaction while keeping its cap: clip(0.3 * (1.0 - exp(-x4**2) - 0.42) + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6). The x4 term then runs from about -0.13 at x4 = 0 to about +0.17 at large |x4|, removing roughly 0.15 from the large-|x4| overshoot and 0.1 from the near-zero undershoot. The interaction adds about +0.18 for x2*x5 of about +0.6 and is capped at +/-0.25."
+}

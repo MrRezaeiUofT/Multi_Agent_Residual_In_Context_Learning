@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The last change was tuned to the worst rows and raised the overall loss (0.0468 -> 0.0512). Cutting the x4 amplitude and raising the interaction ceiling to 0.3 helped the extreme rows but over-corrected typical rows, and removed real x4 signal. The remaining underpredictions are now concentrated in one quadrant: seven of the ten have x2 > 0 and x5 > 0 with small |x4| (<= 0.35), with targets of 0.61-0.84 still 0.15-0.18 too low. The overpredictions are rows with large |x4| (1.33-1.92) where the symmetric interaction is weak or of the wrong sign. A symmetric tanh(x2*x5) gives the (+,+) and (-,-) quadrants the same lift, but the evidence suggests the (+,+) quadrant needs more.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Return to the better-scoring iter-4 coefficients and add a one-sided term for the positive-positive quadrant: clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5) + 0.1*tanh(maximum(x2, 0)*maximum(x5, 0)), -0.5, 0.5). This restores the x4 signal that the average fit relies on and gives an extra lift of about 0.07-0.1 only where x2 and x5 are both positive."
+}

@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target is driven by an even function of x4 (large |x4| gives high targets, x4 near zero gives low targets) that the base model misses, while the base model over-relies on x1 and over-predicts when x1 is large but |x4| is small.",
+  "implicated_features": [
+    "x4",
+    "x1"
+  ],
+  "functional_form_guess": "x4**2/(1+x4**2) (saturating even term in x4), with base over-weighting of x1",
+  "rationale": "The two positive residuals (+0.27) have the largest |x4| in the table (1.36 and 1.57) with targets 0.70-0.84, while all eight negative residuals have |x4| <= 0.69 and targets 0.11-0.44. Several of the over-predicted rows have large positive x1 (1.98, 0.90, 1.22, 1.26, 1.43) with base predictions 0.61-0.71, suggesting the model attributes to x1 what is really the missing x4 effect."
+}

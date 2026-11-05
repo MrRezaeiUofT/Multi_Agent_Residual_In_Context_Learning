@@ -1,0 +1,35 @@
+{
+  "id": "0040",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The base model misses a symmetric U-shaped (quadratic) effect of x4: target is underpredicted when |x4| is large and overpredicted when x4 is near zero.\nCURRENT_T_k: The correction keeps the even x4 effect and the sign-agreement x2*x5 interaction but makes both saturate. The x4 term behaves like 0.1*(x4**2 - 1) near the centre (about -0.09 at x4 = 0) but levels off at about +0.2 for |x4| > 2, which fixes the overprediction at extreme x4. The x2*x5 term is tanh-bounded to about \u00b10.15 so that opposite-sign pairs can still pull predictions down when |x4| is large.\nCURRENT_f_k: clip(0.2 * tanh(0.5 * (x4**2 - 1)) + 0.15 * tanh(0.8 * x2 * x5), -0.4, 0.4)\nTRAIN_LOSS: 0.0544\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -1.179    +1.052    +0.865    -0.720    +0.903    +0.121      +0.562      +0.396      -0.165\n  +2.118    -1.112    -0.378    +2.043    +0.647    +0.663      +0.612      +0.770      +0.158\n  +0.594    +0.891    +0.321    -0.818    +0.732    -0.501      +0.708      +0.561      -0.148\n  +0.578    -1.054    +0.858    +2.160    +0.703    +0.027      +0.428      +0.571      +0.143\n  -1.075    +0.884    +1.453    +1.063    +1.562    -1.951      +0.594      +0.454      -0.140\n  -0.921    -0.827    +2.410    +0.838    -1.084    -0.033      +0.497      +0.360      -0.137\n  +1.262    +0.574    -1.479    +1.909    -0.714    +0.511      +0.655      +0.792      +0.137\n  -0.731    -1.372    -1.695    -0.552    -0.549    -0.629      +0.697      +0.560      -0.136\n  -0.774    +1.305    -0.551    -0.825    +0.808    -0.448      +0.665      +0.533      -0.132\n  -0.399    -1.731    +0.976    -1.004    -0.629    -0.236      +0.656      +0.525      -0.131\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "054ad760d8c66da1827e835d7201ea28490e6940675eba2cab02d0f2f6e7c428"
+}

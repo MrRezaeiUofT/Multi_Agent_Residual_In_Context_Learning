@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "A sign-agreement rule on x2 and x5 predicts the residuals: the target is above the base prediction when x2*x5 > 0 and below it when x2*x5 < 0.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "bilinear interaction c*x2*x5",
+  "rationale": "The four positive-residual rows (targets 0.57-0.71) have x2*x5 of about +1.02, +1.04, +0.49 and +1.18, and the six negative-residual rows (targets 0.23-0.49) have x2*x5 of about -0.24, -1.00, -1.25, -0.41, -0.54 and -0.08. The x1-heavy rows (rows 1, 8, 9, with x1 of 1.7-2.0) are overpredicted when the product is negative, which shows the x2*x5 term acts on top of the main effects the base model already captures."
+}

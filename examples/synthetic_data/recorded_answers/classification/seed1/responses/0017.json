@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "With |x4| below about 1, rows where x2 and x5 are both positive are class_1 but the base model calls them class_0, and rows where the signs differ are class_0 but it calls them class_2, so it misses the x2*x5 sign interaction.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "delta_class_1 = b*tanh(k*x2*x5)*max(1 - x4^2, 0) + b0; delta_class_0 = -delta_class_1; delta_class_2 = a*max(x4^2 - 1, 0)",
+  "rationale": "All seven true class_1 rows here have x2 > 0 and x5 > 0 with |x4| below 0.9, and were predicted class_0, while the two true class_0 rows have x2 < 0 and x5 > 0 and were predicted class_2, making 110 of 110 for the sign rule. Row 9 is a class_2 row with |x4| of 1.16 and a small product of about 0.07, consistent with the x4 term."
+}

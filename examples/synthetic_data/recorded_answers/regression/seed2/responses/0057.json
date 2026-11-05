@@ -1,0 +1,4 @@
+{
+  "T_k": "The best-scoring structure is unchanged except that the amplitude of the centred, even x4 term is reduced from 0.3 to 0.25. The x4 term is still damped strongly by |x5|, and the steep saturating x2*x5 interaction is kept as is. This isolated change tests whether a slightly weaker x4 adjustment lowers the overall loss.",
+  "f_k": "clip(0.25*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.4*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5), -0.5, 0.5)"
+}

@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model misses a multiplicative interaction x2*x5, overpredicting when x2 and x5 have opposite signs and underpredicting when they agree, with a possible secondary even effect of x4.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "bilinear interaction a*x2*x5 plus smaller b*x4**2",
+  "rationale": "All seven negative residuals (-0.17) have x2*x5 < 0 (for example 1.782*-0.817 and -0.686*2.662), and all three positive residuals have x2*x5 > 0 (about 0.15, 0.62, 1.72). The positive residual with the smallest product (row 1, product about 0.15) has very large |x4| (-2.537), which is consistent with an additional U-shaped x4 term."
+}

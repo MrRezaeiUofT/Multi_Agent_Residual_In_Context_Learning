@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model fails to capture a bounded x2*x5 interaction: residuals are positive when x2 and x5 share a sign and negative when their signs are opposite.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "c*tanh(k*x2*x5) with c around 0.23",
+  "rationale": "Residual sign equals sign(x2*x5) in all ten rows: rows 1,2,4,8,9 (products +0.38 to +2.3) are about +0.23, and rows 0,3,5,6,7 (products -0.79 to -4.5) are about -0.23. The residual size barely changes between a product of -4.5 (row 0) and +0.38 (row 9), which indicates strong saturation of the interaction effect."
+}

@@ -1,0 +1,35 @@
+{
+  "id": "0072",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: Direct rule from the samples: any row with |x4| well above 1 is class_2 regardless of the sign of x4, and the values of x1 and x3 that the base model follows do not change this.\nCURRENT_T_k: This is the final converged correction: a soft gate at slope 2.5 on x4**2 minus 1.1 minus 0.7*abs(x2*x5) gives class_2 a boost of 3 times the gate. Below the gate, tanh(4*x2*x5) splits class_1 (positive product) from class_0 (negative product), and class_2 takes a partial suppression of 0.5 plus half of abs(tanh(4*x2*x5)).\nCURRENT_f_k: [-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]\nTRAIN_LOSS: 0.3202\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -0.272    -3.248    +1.732    -0.199    -1.741    -0.059      +2.000      +0.705      +0.917\n  +0.952    +0.566    +1.183    +0.130    -1.298    -0.379      +1.000      +0.668      +0.832\n  -0.928    -1.267    -0.203    -1.741    -1.345    +0.467      +1.000      +0.544      +0.768\n  +1.011    +1.696    -0.475    -0.615    +0.181    +1.111      +2.000      +0.596      +0.748\n  -0.685    +0.259    -1.913    +0.758    +0.847    +0.044      +2.000      +0.564      +0.747\n  -0.023    -0.580    +1.032    +1.430    +1.244    +0.755      +0.000      +0.552      +0.734\n  -2.445    -0.297    -0.785    +1.091    -0.056    -0.563      +1.000      +0.368      +0.722\n  -0.629    +1.082    +1.251    +1.616    -0.775    -0.360      +0.000      +0.533      +0.722\n  -0.680    +0.765    -0.269    -0.973    +0.044    -0.143      +1.000      +0.386      +0.702\n  -1.724    -0.498    +0.159    +1.252    -0.417    +1.910      +1.000      +0.407      +0.700\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "330e510613fd432e82ee114cf18f798991e2b952ca18c2d1f59e3642d02d20d9"
+}

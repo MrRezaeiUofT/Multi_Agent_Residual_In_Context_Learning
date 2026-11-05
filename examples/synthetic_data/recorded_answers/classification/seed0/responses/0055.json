@@ -1,0 +1,4 @@
+{
+  "T_k": "The final correction is unchanged: an antisymmetric x2*x5 term separates class_1 from class_0, and an x4^2 term raises class_2 when it outweighs that product. Recent iterations brought no improvement, so the remaining errors are treated as noise. Outputs remain clipped for stability.",
+  "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]"
+}

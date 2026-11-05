@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "Target values split by |x4|: about 0.66-0.86 when |x4| >= 0.92 and about 0.15-0.35 when |x4| <= 0.66, indicating a saturating even (inverted-Gaussian) function of x4 with a modest positive x1 effect.",
+  "implicated_features": [
+    "x4",
+    "x1"
+  ],
+  "functional_form_guess": "0.15 + 0.6*(1 - exp(-x4**2)) + 0.08*x1",
+  "rationale": "The five rows with |x4| of 0.92-1.82 (both signs) have targets 0.66-0.86, while the five rows with |x4| of 0.15-0.66 have 0.15-0.35, so the target follows |x4| rather than its sign and plateaus quickly. The highest target (0.86) is the row with the largest x1 (+1.70), consistent with an additive positive x1 contribution."
+}

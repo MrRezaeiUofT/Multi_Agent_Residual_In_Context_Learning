@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction adds a saturating even function of x4 that is negative near x4 = 0 (about -0.24) and rises to about +0.3 to +0.45 for |x4| of 2 or more, matching residuals of roughly -0.3 near zero and +0.3 at large |x4|. The offset is chosen so the term is roughly mean-zero for a standardised x4, and the output is clipped for stability.",
+  "f_k": "clip(0.7 * x4**2 / (1.0 + x4**2) - 0.24, -0.5, 0.5)"
+}

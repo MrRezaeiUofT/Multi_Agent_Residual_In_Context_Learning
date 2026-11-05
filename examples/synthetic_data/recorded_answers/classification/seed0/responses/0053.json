@@ -1,0 +1,4 @@
+{
+  "T_k": "This is the final correction: an antisymmetric x2*x5 term separates class_1 (positive product) from class_0 (negative product), and an x4^2 term raises class_2 when it outweighs that product. It is unchanged because the last several iterations brought no improvement. Outputs remain clipped for stability.",
+  "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]"
+}

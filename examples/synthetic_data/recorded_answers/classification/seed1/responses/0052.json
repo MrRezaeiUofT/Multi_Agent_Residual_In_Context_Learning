@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Softening the gate lowered train loss to 0.3202, the best so far, and every overlap row improved slightly, which confirms that the remaining error near the boundary is mostly about over-confidence rather than a wrong threshold. The failures are the same overlap set: class_2 rows at |x4| of 0.62 to 0.76 with tiny products (rows 3, 5, 6, 9, 10), class_0 or class_1 rows at |x4| of 1.09 to 1.74 (rows 4, 7, 8), and rows 1 and 2, which break the sign rule and look like noise.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Continue the same direction with a smaller step: soften the gate slope from 2.5 to 2, G = sigmoid(2*(x4**2 - 1.1 - 0.7*abs(x2*x5))). Keep the steep tanh(4*x2*x5) split, since the sign rule has held on every non-class_2 row seen so far, and leave the offset, product weight and partial class_2 suppression unchanged. If loss rises, revert to slope 2.5."
+}

@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses an even, U-shaped dependence on x4: the target is higher than predicted when |x4| is large and lower than predicted when x4 is close to zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "The four positive residuals (+0.24) have |x4| of 1.00 to 1.98, mostly negative x4 (-1.004, -1.564, -1.975) along with +1.385, so sign does not matter. The six negative residuals (about -0.24) all have |x4| at most 0.55, most of them within 0.05 of zero, which fits a missing x4**2 term."
+}

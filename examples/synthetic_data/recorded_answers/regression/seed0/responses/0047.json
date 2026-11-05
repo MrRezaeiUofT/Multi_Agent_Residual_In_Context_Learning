@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps a mean-centred saturating even term in x4 but flattens its plateau: about -0.16 at x4 = 0, near +0.03 at |x4| = 1, and only about +0.13 to +0.17 for |x4| >= 1.5, which reduces the persistent large-|x4| over-prediction. The x2*x5 interaction goes back to the gentler, better-performing scale, bounded near +/-0.3, and the total is clipped for stability.",
+  "f_k": "clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.3 * tanh(0.5 * x2 * x5), -0.6, 0.6)"
+}

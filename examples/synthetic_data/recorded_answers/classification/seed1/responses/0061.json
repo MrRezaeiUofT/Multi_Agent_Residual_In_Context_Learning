@@ -1,0 +1,4 @@
+{
+  "T_k": "This keeps the best gate, slope 2.5 on x4**2 minus 1.1 minus 0.7*abs(x2*x5), and the smooth tanh(4*x2*x5) split between class_1 and class_0. The only change is a weaker class_2 boost of 2.5 times the gate instead of 3, to reduce confidence on the gate-open class_0 and class_1 rows.",
+  "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 2.5*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]"
+}

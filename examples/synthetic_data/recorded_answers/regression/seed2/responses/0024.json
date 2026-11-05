@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target is about 0.63-0.78 when |x4| >= 0.96 (either sign) and about 0.17-0.37 when |x4| <= 0.56, and within the low group it climbs with x1.",
+  "implicated_features": [
+    "x4",
+    "x1"
+  ],
+  "functional_form_guess": "target ~ 0.2 + 0.55*(1 - exp(-x4**2)) + 0.08*x1",
+  "rationale": "Rows with x4 = -1.19, 0.96, -1.39, 1.75 have targets of 0.63-0.78, while the six rows with |x4| <= 0.56 have targets of 0.17-0.37. In the low group the target tracks x1 (x1 = -0.05 -> 0.17, 0.06 -> 0.22, 0.68 -> 0.25, 0.83 -> 0.27, 1.34 -> 0.365), and the base model overpredicts these rows, which mostly have positive x2."
+}

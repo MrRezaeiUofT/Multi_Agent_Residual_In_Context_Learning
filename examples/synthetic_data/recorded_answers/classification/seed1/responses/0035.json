@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Class follows the sign of x2*x5 unless x4^2 is well above 1 and above the size of the product, in which case it is class_2.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "if x4^2 - 0.4*|x2*x5| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0",
+  "rationale": "Rows 7 and 8 are class_2 with x4^2 of 6.6 and 1.93 and products below 0.4. Rows 2 and 4 stay class_1 with |x4| of 1.06 and 1.26 and products near 1.4, though row 4 sits on the boundary of this rule, and the other six rows have |x4| below 0.82 and follow the sign rule."
+}

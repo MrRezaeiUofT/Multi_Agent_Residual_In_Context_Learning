@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Train loss improved slightly to 0.3250, the best so far, so the partial suppression is a small net gain. The remaining failures are the same overlap set as before: class_2 rows with |x4| between 0.62 and 0.76 and tiny products (rows 3, 5, 6, 8, 9), class_0 or class_1 rows with |x4| of 1.09 to 1.74 that the gate lets into class_2 (rows 4, 7, 10), and rows 1 and 2 that break the rule. These sit on both sides of the same boundary, so moving the threshold trades one group for the other; what is left to gain is confidence calibration near the boundary, where the steep gate makes these errors costly.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Keep the whole form and soften the gate slope from 3 to 2.5, G = sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), so rows in the overlap band near x4**2 of about 1 get less extreme class_2 scores in either direction. Leave the offset, the product weight, the tanh(4*x2*x5) split and the partial class_2 suppression unchanged, and do not fit rows 1 and 2."
+}

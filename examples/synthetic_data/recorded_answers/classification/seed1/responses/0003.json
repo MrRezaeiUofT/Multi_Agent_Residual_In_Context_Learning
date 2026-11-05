@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Large |x4| lifts class_2 across a wider x1 range than first thought, while among rows with positive x1 and small-to-moderate |x4| the base model over-predicts class_2 when |x2| is large, regardless of the sign of x2.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x1"
+  ],
+  "functional_form_guess": "delta_class_2 = a*(x4^2 - 1) - b*max(x1,0)*(x2^2 - 1), with the removed class_2 score moved to class_0 and class_1",
+  "rationale": "Eight of the ten rows are true class_2 predicted class_0 with |x4| >= 1.42, and three of them have x1 > 0, so the x4 effect is not restricted to negative x1. The two reverse errors have x2 of +1.6 and +2.5, which together with the negative x2 rows from the previous batches contradicts a pure x1*x2 sign effect and points to an even function of x2."
+}

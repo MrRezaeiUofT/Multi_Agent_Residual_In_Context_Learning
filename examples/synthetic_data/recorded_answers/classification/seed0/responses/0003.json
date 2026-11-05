@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Large |x4| above roughly 1.2 favours class_2 regardless of sign, and the base model under-uses the sign of x5 to separate class_0 from class_1, especially when x3 is negative.",
+  "implicated_features": [
+    "x4",
+    "x5",
+    "x3"
+  ],
+  "functional_form_guess": "delta_class_2 = a*max(|x4| - 1.2, 0) or a*x4^2; delta_class_0 = -b*x3*x5; delta_class_1 = +b*x3*x5, with a, b > 0",
+  "rationale": "All six class 2 errors (idx 0, 4, 5, 6, 7, 9) have |x4| between about 1.4 and 2.2 with mixed signs and are mispredicted as class 0, matching an even-order or threshold effect in x4. Idx 1, 2 and 3 have negative x3 and their true class follows the sign of x5. Idx 8 has x1 and x5 both negative with true class 1, which contradicts an x1*x5 rule but fits x3*x5 being positive."
+}

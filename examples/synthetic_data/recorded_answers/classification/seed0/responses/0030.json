@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Target class is class_2 when x4^2 - 0.25 exceeds about 1.85*|x2*x5|, and otherwise the sign of x2*x5 gives class_1 (positive) or class_0 (negative), even for very small products.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "All ten examples fit the rule. Idx 5 and 7 have |x2*x5| of only about 0.02 to 0.03 and x4^2 below the 0.25 offset, yet their labels still follow the sign of the product. The two class 2 samples (idx 1, 4) have x4^2 of at least about 1.36 against |x2*x5| below 0.1."
+}

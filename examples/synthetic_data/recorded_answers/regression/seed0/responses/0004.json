@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target depends on the magnitude of x4 through an even U-shaped term that the base model does not represent, so predictions are too low for |x4| > ~1 and too high for |x4| near 0.3.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2, or saturating x4**2/(1+x4**2)",
+  "rationale": "All seven positive residuals have |x4| between 1.06 and 1.51 with both signs present (+1.06, +1.42, -1.31, +1.51, +1.38, -1.23, -1.12), while all three negative residuals have x4 around +0.33 to +0.36. The residual sign follows |x4| rather than x4 itself, indicating a missing even (quadratic-like) function of x4."
+}

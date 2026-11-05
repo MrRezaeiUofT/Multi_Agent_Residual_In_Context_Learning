@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "Targets follow a saturating even function of x4 (about 0.03-0.31 for |x4| <= 0.57 and about 0.67-0.81 for |x4| >= 1.07), with negative x1 pulling low-x4 targets toward zero.",
+  "implicated_features": [
+    "x4",
+    "x1"
+  ],
+  "functional_form_guess": "0.2 + 0.55*(1 - exp(-x4**2)) + 0.08*x1",
+  "rationale": "Four rows with |x4| from 1.07 to 1.60 (both signs) have targets 0.67-0.81, while six rows with |x4| of 0.13-0.57 have 0.03-0.31, so the target tracks |x4| with a plateau above about 1. The two lowest targets (0.03, 0.13) are the rows with the most negative x1 (-1.38, -1.26), supporting an additive positive x1 term."
+}

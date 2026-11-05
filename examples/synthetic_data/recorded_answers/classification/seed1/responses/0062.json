@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The weaker class_2 boost raised train loss slightly from 0.3202 to 0.3212. It helped the gate-open class_0 and class_1 rows a little (rows 6 and 7 dropped by about 0.01), but cost more on the many true class_2 rows above the gate that need the full boost. The remaining failures are the same boundary overlap and the two rule-breaking rows, so the 3*G boost from iter 1 is the better setting and the form has converged.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Revert to the iter 1 form with the class_2 boost of 3*G: [-3*tanh(4*x2*x5)*(1 - G) - 2*G, 3*tanh(4*x2*x5)*(1 - G) - 2*G, 3*G - (1 - G)*(0.5 + 0.5*abs(tanh(4*x2*x5)))] with G = sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), and treat it as final."
+}

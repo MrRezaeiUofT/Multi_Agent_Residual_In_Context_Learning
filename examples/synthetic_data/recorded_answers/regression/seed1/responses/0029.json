@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target exceeds the base prediction when x2 and x5 share a sign and when |x4| is large, and falls short when x2 and x5 differ in sign.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "a*x2*x5 + b*(x4**2 - 1)",
+  "rationale": "All five positive residuals (+0.19 to +0.20) have x2*x5 > 0 (about 1.65, 0.42, 0.22, 0.29, 0.53), and all five negative residuals have x2*x5 < 0 (about -0.5 to -1.8). Rows with small positive products still show positive residuals when |x4| is large (row 5: x4=-2.373; row 6: x4=-1.828), and row 8 is negative despite |x4|=0.91 because its product is strongly negative (-1.77), which shows both terms acting additively."
+}

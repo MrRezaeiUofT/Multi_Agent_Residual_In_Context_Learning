@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target is lifted when x2 and x5 agree in sign and lowered when they disagree, a bilinear x2*x5 effect the base model does not capture.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "bilinear interaction c*x2*x5",
+  "rationale": "The three positive-residual rows (targets 0.55-0.75) have x2*x5 of about +1.37, +0.27 and +1.87, and the seven negative-residual rows (targets 0.20-0.42) have x2*x5 between about -0.23 and -2.59. Row 4 has only a small positive product but large x4 (2.063) and still shows a positive residual, which hints at a secondary even effect of x4."
+}

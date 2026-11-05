@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses an even effect of x4 (higher target at larger |x4|), and also a possible x4-x5 interaction in which moderately negative x4 combined with large positive x5 raises the target.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "a*(1 - exp(-x4**2)) - b*tanh(x4*x5)",
+  "rationale": "Positive residuals include large |x4| of both signs (-2.29, -1.42, 2.18) and a cluster with x4 of about -0.5 to -0.77 paired with x5 of 1.33-2.29 (product about -1). The three negative residuals all have |x4| <= 0.37 and small to moderate x5, which fits a magnitude-driven x4 term the base model fits only linearly."
+}

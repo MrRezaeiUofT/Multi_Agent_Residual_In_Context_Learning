@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps the flattened, mean-centred even x4 term and the steep, low-cap x2*x5 interaction that gave the best loss so far. It adds a small mean-zero linear x4 tilt, so large negative x4 gets about 0.12 less lift than before and large positive x4 a little more, targeting the over-predictions that now cluster at negative x4. The total is clipped for stability.",
+  "f_k": "clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.06 * x4 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6)"
+}

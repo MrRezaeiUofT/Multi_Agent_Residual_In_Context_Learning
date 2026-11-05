@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Train loss moved from 0.3267 to 0.3286, so the change was close to neutral and iter 4 is still the best. Removing the fixed penalty eased the small-product class_2 rows slightly (rows 6 and 10 improved by about 0.03), but it also let class_2 take rows that are really class_1: rows 8 and 9 are new failures at |x4| of 1.09 and 1.25 with products of 0.02 and 0.21 and strongly negative x1. Near |x4| of 1, small-product rows of class_1 and class_2 overlap, and no feature seen so far separates them reliably, so much of the remaining error may be irreducible. Rows 1 and 2 still look like noise.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Use a partial suppression that sits between the two forms: delta_class_2 = 3*G - (1 - G)*(0.5 + 0.5*abs(tanh(4*x2*x5))), with G = sigmoid(3*(x4**2 - 1.1 - 0.7*abs(x2*x5))) unchanged. Keep the class_0 and class_1 terms as they are, and expect only a small gain since the remaining overlap is probably noise."
+}

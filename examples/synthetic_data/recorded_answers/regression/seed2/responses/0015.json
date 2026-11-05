@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The residuals follow the sign of x4, which suggests the x4 response is asymmetric: positive x4 raises the target more than the base model allows, while negative x4 of moderate size is overpredicted.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "an asymmetric saturating x4 term such as tanh(x4) added to an even part, e.g. a*tanh(x4) + b*(1 - exp(-x4**2)), with large positive x5 lowering the target",
+  "rationale": "All four positive residuals have x4 > 0 (0.26 to 1.38), while four of the six negative residuals have x4 < 0 (-1.12, -0.81, -0.59, -0.30). The two negative cases with positive x4 have large |x5| (1.42 and -1.46), and the x4 = -1.12 case has x5 = 1.78, so x5 magnitude may also pull the target down."
+}

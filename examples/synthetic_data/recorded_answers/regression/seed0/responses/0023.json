@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target is high (about 0.7-0.9) whenever |x4| exceeds about 1 and low (about 0.15-0.37) when |x4| is about 0.35, a saturating even step-like function of x4, with negative x3 and positive x1 nudging it upward.",
+  "implicated_features": [
+    "x4",
+    "x3",
+    "x1"
+  ],
+  "functional_form_guess": "0.1 + 0.7*(1 - exp(-x4**2)) - 0.08*x3 + 0.08*x1",
+  "rationale": "Seven rows with |x4| from 1.06 to 1.51 (both signs) have targets 0.68-0.88, while three rows with x4 of about 0.33-0.36 have targets 0.16-0.37. Within the high group the largest targets (0.88, 0.85) have the most negative x3 (-1.12, -1.04), and within the low group the largest target (0.37) has the largest x1 (+1.17)."
+}

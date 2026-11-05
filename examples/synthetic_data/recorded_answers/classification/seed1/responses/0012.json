@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model lacks the even x4 term and the x2*x5 product: class_2 scores on x4^2, while class_1 and class_0 take opposite signs of x2*x5, and the label goes to whichever score is largest.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = a*(x4^2 - c); delta_class_1 = b*x2*x5; delta_class_0 = -b*x2*x5, with noise near the boundary",
+  "rationale": "All six true class_0 or class_1 rows here follow the sign rule, making 66 of 66, and the four class_2 rows have x4^2 of at least 0.94 against products below 1.5. Row 5 is an exception to the score comparison (x4^2 of 1.18 versus a product of 0.49 but class_1), so the rule needs a margin c or label noise."
+}

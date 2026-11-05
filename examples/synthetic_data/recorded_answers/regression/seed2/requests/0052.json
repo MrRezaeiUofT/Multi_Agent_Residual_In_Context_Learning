@@ -1,0 +1,35 @@
+{
+  "id": "0052",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The target rises with the magnitude of x4 regardless of its sign (a symmetric, saturating even function of x4), which the base model treats as roughly linear and so underpredicts at large |x4| and overpredicts near x4=0.\nCURRENT_T_k: The correction returns to the best-scoring iter-4 structure, a centred, even x4 term plus a steep saturating x2*x5 interaction, and drops the one-sided quadrant term that raised the loss. The x4 term is now damped more strongly by |x5|, so it fades faster when |x5| is large, where large-|x4| rows were still overpredicted, and stays nearly unchanged for small |x5|.\nCURRENT_f_k: clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.4*clip(x5**2, 0, 20)) + 0.25*tanh(2*x2*x5), -0.5, 0.5)\nTRAIN_LOSS: 0.0466\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  +1.204    +1.796    -1.381    +0.266    +0.523    +0.429      +0.835      +0.624      -0.211\n  +0.406    +2.190    +0.136    -0.172    +0.827    -0.775      +0.670      +0.474      -0.196\n  +1.442    +1.366    -0.306    -0.198    +0.724    -1.034      +0.768      +0.578      -0.190\n  +0.461    +2.219    -1.699    +0.138    +0.411    -0.985      +0.763      +0.573      -0.190\n  -0.264    -1.090    -1.245    -1.923    +0.209    +0.003      +0.580      +0.759      +0.179\n  -0.127    +1.593    -0.123    -0.351    +1.291    -0.791      +0.671      +0.492      -0.178\n  +1.909    +1.067    +1.214    -0.244    +0.411    -0.271      +0.666      +0.491      -0.175\n  -1.193    +1.185    -0.418    -0.028    +0.732    -0.147      +0.530      +0.362      -0.168\n  -0.793    +1.709    +0.098    +1.547    -1.088    +0.542      +0.305      +0.471      +0.166\n  -0.139    -0.723    -1.764    +1.330    +1.067    -1.067      +0.447      +0.612      +0.166\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "b4c7cc80e6c6995bf8c97372e5fc18f9177755449f2b0d55ec1b1eb62ff3b3a8"
+}

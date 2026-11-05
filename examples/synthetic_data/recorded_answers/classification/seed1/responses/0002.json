@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model over-predicts class_2 when x1 is positive and x2 is negative, a region where the true class is class_0 or class_1 and the sign of x5 appears to decide between them (x5 > 0 gives class_0, x5 < 0 gives class_1).",
+  "implicated_features": [
+    "x1",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = -a*max(x1,0)*max(-x2,0); delta_class_0 = +b*max(x1,0)*max(-x2,0)*tanh(x5); delta_class_1 = -b*max(x1,0)*max(-x2,0)*tanh(x5)",
+  "rationale": "All four true-non-class_2 errors here (x1 from 0.71 to 2.06, x2 from -0.70 to -2.83) were predicted class_2, and the two similar errors in the previous batch share the same signs, which points to a negative x1*x2 effect on class_2. Within this group the true class_0 rows all have x5 > 0 and the true class_1 rows both have x5 < 0, though that split rests on only six rows."
+}

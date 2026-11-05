@@ -1,0 +1,44 @@
+{
+  "id": "0035",
+  "schema": "Hypothesis",
+  "role": "encoder",
+  "json_schema": {
+    "description": "Structured hypothesis z_k produced by the encoder.",
+    "properties": {
+      "hypothesised_pattern": {
+        "description": "One-sentence statement of the pattern the base model misses.",
+        "title": "Hypothesised Pattern",
+        "type": "string"
+      },
+      "implicated_features": {
+        "description": "Feature names involved in the pattern. Must match provided names.",
+        "items": {
+          "type": "string"
+        },
+        "title": "Implicated Features",
+        "type": "array"
+      },
+      "functional_form_guess": {
+        "description": "A guess at the functional form (e.g. 'saturating x1*x2/(1+x1*x2)').",
+        "title": "Functional Form Guess",
+        "type": "string"
+      },
+      "rationale": {
+        "description": "2-3 sentence explanation grounded in the residual evidence.",
+        "title": "Rationale",
+        "type": "string"
+      }
+    },
+    "required": [
+      "hypothesised_pattern",
+      "implicated_features",
+      "functional_form_guess",
+      "rationale"
+    ],
+    "title": "Hypothesis",
+    "type": "object"
+  },
+  "system": "You are an expert ML diagnostician. Given evidence of where a base model fails, you hypothesise the structural pattern it misses, in a form that could be expressed as a closed-form correction.",
+  "user": "You are analysing high-residual training examples to learn the TRUE underlying input->target relationship that the base model misses.\n\nFocus on SAMPLE PATTERNS: what direct mappings between feature values and target values are visible in these examples? What rules would predict well from the sample patterns alone?\n\nDOMAIN CONTEXT: Synthetic 3-class classification benchmark with standardised inputs. Feature semantics are unknown and no domain knowledge applies.\n\nTASK: classification   CLASSES: ['class_0', 'class_1', 'class_2']\n\nFEATURES:\n\n  - x1: standardised input feature (semantics unknown)\n  - x2: standardised input feature (semantics unknown)\n  - x3: standardised input feature (semantics unknown)\n  - x4: standardised input feature (semantics unknown)\n  - x5: standardised input feature (semantics unknown)\n  - x6: standardised input feature (semantics unknown)\n\nHIGH-RESIDUAL EXAMPLES (sorted by |residual|):\n\nidx        x1        x2        x3        x4        x5        x6      target    pred_cls     P(true)    residual\n  0    +1.050    -0.799    -0.148    -0.233    -0.610    +2.559           1           2       0.311      +0.689\n  1    +0.861    +1.020    -0.825    -0.131    +0.720    +0.913           1           2       0.311      +0.689\n  2    +0.926    -0.767    +0.468    -0.327    -0.035    +0.387           1           2       0.312      +0.688\n  3    -0.286    +0.912    -0.775    -1.205    +0.129    +0.481           2           0       0.312      +0.688\n  4    +0.358    +0.415    -1.250    +0.176    -0.320    -1.904           0           2       0.312      +0.688\n  5    +0.320    -1.073    +1.189    -1.704    -1.039    +0.236           2           0       0.313      +0.687\n  6    +0.977    -0.355    +0.748    -0.686    -0.676    +0.596           1           2       0.313      +0.687\n  7    -0.051    -0.748    +0.215    +1.060    -2.187    +0.738           1           0       0.313      +0.687\n  8    -0.976    -1.101    -1.036    -0.659    +0.908    -0.113           0           2       0.314      +0.686\n  9    +0.294    -1.510    +0.644    -0.230    +0.359    -0.340           0           2       0.314      +0.686\n\nNOTE: this is a 3-class classification problem. The correction will output a vector of per-class score deltas.",
+  "sha256": "7f7c652194d016b0fc464394ada3cdba0a5c94bf39e01562c66df29143072562"
+}

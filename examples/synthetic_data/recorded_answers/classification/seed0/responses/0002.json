@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "When x3 is negative the base model over-predicts class_2 and ignores that the sign of x5 splits those samples into class_0 (x5 > 0) and class_1 (x5 < 0), which is an x3*x5 interaction, while large |x4| separately favours class_2.",
+  "implicated_features": [
+    "x3",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "delta_class_0 = -a*x3*x5; delta_class_1 = +a*x3*x5; delta_class_2 = b*(x4^2 - 1), with a, b > 0",
+  "rationale": "Every true class 0 or 1 sample mispredicted as class 2 here has negative x3, and the true class follows x5: positive x5 gives class 0 (idx 1, 4, 8, 9) and negative x5 gives class 1 (idx 0, 5). Idx 4 and 8 have x1 near zero yet still follow this rule, so x3*x5 explains them better than the x1*x5 product suggested earlier. The class 2 errors (idx 2, 3, 6, 7) have |x4| from about 1.1 to 2.3 with both signs, consistent with the even effect of x4."
+}

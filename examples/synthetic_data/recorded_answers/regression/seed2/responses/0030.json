@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target jumps from about 0.2-0.42 to about 0.7-0.97 once |x4| exceeds roughly 0.95 (either sign), a steep sign-symmetric transition, with x1 adding a small positive shift.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x5"
+  ],
+  "functional_form_guess": "target ~ 0.3 + 0.55*sigmoid(4*(abs(x4) - 0.95)) + 0.05*x1",
+  "rationale": "Rows with x4 = -2.17, -3.09 and -1.02 have targets of 0.69, 0.97 and 0.78, but rows with |x4| from 0.20 to 0.89 all stay between 0.20 and 0.42, including x4 = -0.89 (0.386) and -0.72 (0.30). That sharp change between |x4| = 0.89 and 1.02 suggests a threshold-like even function rather than a gentle quadratic; large positive x5 (2.04 at idx 0) may push the threshold slightly outward."
+}

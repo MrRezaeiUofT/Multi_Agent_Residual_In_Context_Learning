@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target is mainly set by |x4|, high (0.83-0.93) when |x4| > 1.2 and low (0.11-0.40) when |x4| < 0.35, and within each group it rises with x1.",
+  "implicated_features": [
+    "x4",
+    "x1"
+  ],
+  "functional_form_guess": "target ~ sigmoid(a*x4**2 + b*x1 - c), e.g. 0.15 + 0.7*(1 - exp(-x4**2)) + 0.1*x1",
+  "rationale": "All five high-target rows have |x4| between 1.23 and 2.28, and all five low-target rows have |x4| <= 0.32, irrespective of the signs of x4 and x5. Among the small-x4 rows, the target increases steadily with x1 (x1 = -1.10 -> 0.13, -0.89 -> 0.11, 0.44 -> 0.25, 0.99 -> 0.28, 1.04 -> 0.40), and the highest high-target value (0.915) has the largest x1 (2.66)."
+}

@@ -1,0 +1,11 @@
+{
+  "hypothesised_pattern": "The base model misses two pairwise interactions: a positive x3*x4 product pushes samples into class_2 and a positive x1*x5 product pushes samples into class_0, so it confuses classes 0 and 2 when these features act jointly.",
+  "implicated_features": [
+    "x1",
+    "x3",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_2 = a*x3*x4 (possibly saturating, x3*x4/(1+|x3*x4|)); delta_class_0 = b*x1*x5, with a, b > 0",
+  "rationale": "The largest residuals with true class 2 and predicted class 0 (idx 0-3, 7) all have x3 and x4 both strongly positive, giving x3*x4 between about 1.2 and 3.6, even though x1 is negative. The true class 0 errors predicted as class 2 (idx 4-6) have x1 and x5 both strongly positive, giving x1*x5 of about 1.8 to 3.1 with a small x3*x4, which points to a joint effect rather than additive ones. Idx 8 (x3 +3.1, x4 -2.7) does not fit the x3*x4 sign, so an additional effect of large |x3| may also exist."
+}

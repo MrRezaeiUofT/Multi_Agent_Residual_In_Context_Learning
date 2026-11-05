@@ -1,0 +1,35 @@
+{
+  "id": "0042",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The target rises with the magnitude of x4 regardless of its sign (a symmetric, saturating even function of x4), which the base model treats as roughly linear and so underpredicts at large |x4| and overpredicts near x4=0.\nCURRENT_T_k: The correction is a centred, saturating even function of x4 that raises predictions when |x4| is large and lowers them near x4 = 0, damped by a Gaussian factor in x5 so that it fades when |x5| is large. The linear x1 term is dropped because the base model already appears to capture x1, and the amplitude is reduced to avoid overshooting at large |x4| and over-penalising near x4 = 0.\nCURRENT_f_k: clip(0.42*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)), -0.4, 0.4)\nTRAIN_LOSS: 0.1171\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  +1.204    +1.796    -1.381    +0.266    +0.523    +0.429      +0.835      +0.482      -0.353\n  +0.406    +2.190    +0.136    -0.172    +0.827    -0.775      +0.670      +0.322      -0.348\n  +1.442    +1.366    -0.306    -0.198    +0.724    -1.034      +0.768      +0.432      -0.336\n  +0.461    +2.219    -1.699    +0.138    +0.411    -0.985      +0.763      +0.429      -0.333\n  -0.793    +1.709    +0.098    +1.547    -1.088    +0.542      +0.305      +0.631      +0.326\n  -0.127    +1.593    -0.123    -0.351    +1.291    -0.791      +0.671      +0.345      -0.325\n  -0.738    -1.405    -1.394    +1.924    +0.987    +0.554      +0.429      +0.745      +0.317\n  +1.086    +0.607    +1.242    -1.340    -1.935    -1.573      +0.374      +0.688      +0.315\n  +1.225    +1.834    -0.601    +1.288    -1.537    -2.039      +0.470      +0.785      +0.314\n  -1.011    +0.783    +2.057    -1.638    -1.729    -1.505      +0.211      +0.525      +0.314\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "403b42e7800e8971fcedc3cf4702cf08fbe893b0f6ddb80939e03782d18286dd"
+}

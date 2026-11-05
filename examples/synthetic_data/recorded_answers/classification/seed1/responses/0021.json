@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "A two-step rule predicts all rows here: |x4| above about 0.9 gives class_2, otherwise x2*x5 > 0 gives class_1 and x2*x5 < 0 gives class_0.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "if |x4| > 0.9 then class_2, else if x2*x5 > 0 then class_1, else class_0",
+  "rationale": "The six class_2 rows have |x4| from 0.99 to 2.06, and the four other rows have |x4| of at most 0.78, so a cut near 0.9 splits them cleanly. Among those four, the two class_1 rows have positive x2*x5 and the two class_0 rows have negative x2*x5."
+}

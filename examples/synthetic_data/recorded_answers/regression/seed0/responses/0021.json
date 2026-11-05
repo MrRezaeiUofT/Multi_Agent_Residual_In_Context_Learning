@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The target is governed mainly by a fast-saturating even function of x4 (an inverted Gaussian dip at x4 = 0 that plateaus by |x4| of about 1.3), with smaller additive positive x1 and negative x3 effects.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "0.8*(1 - exp(-x4**2)) + 0.1*x1 - 0.08*x3",
+  "rationale": "Rows with |x4| between 1.30 and 2.17 all have targets of 0.69-0.95 and rows with |x4| = 1.30 (0.78) are already as high as |x4| = 1.73 (0.77), showing saturation by |x4| near 1.3, while rows with |x4| <= 0.36 have targets of 0.00-0.28. Within the plateau the highest target (0.95, row 0) has x1 = +1.30 and x3 = -1.31, and within the dip the higher targets have large positive x1 (row 3, x1 = +2.04, target 0.28) while row 8 (x1 = -1.05, x3 = +1.07) hits 0.00."
+}

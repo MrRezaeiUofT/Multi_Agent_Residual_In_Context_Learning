@@ -1,0 +1,4 @@
+{
+  "T_k": "Because the deeper Gaussian dip in iteration 3 raised the loss above iteration 2, this version moves partly back. The even x4 effect is a softer dip: about -0.10 at x4 = 0, slightly positive by |x4| = 0.75 and a plateau of about +0.12 for large |x4|. The tanh-bounded x2*x5 interaction (amplitude 0.3) is kept, and the total is capped at -0.35 below so that a near-zero x4 combined with a strongly negative product no longer overshoots.",
+  "f_k": "clip(0.12 - 0.22 * exp(-1.5 * x4**2) + 0.3 * tanh(0.9 * x2 * x5), -0.35, 0.45)"
+}

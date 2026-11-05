@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model overpredicts when |x4| is small and |x5| is large, and underpredicts when |x4| is large, which points to a missing even effect of x4 (and possibly a negative even effect of x5).",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "difference of even terms, e.g. a*(1 - exp(-x4**2)) - b*x5**2/(1 + x5**2)",
+  "rationale": "Eight negative residuals have |x4| <= 0.66, and most of them have |x5| >= 1.06 (up to 2.29). The two positive residuals have the largest |x4| (-1.00 and 2.12), consistent with an even, sign-independent x4 effect that the base model cannot represent."
+}

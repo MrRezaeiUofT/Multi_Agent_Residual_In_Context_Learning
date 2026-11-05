@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Trimming the x4 term lowered the loss again (0.035 to 0.030), so every recent reduction in x4 amplitude has helped, which suggests the base model already captures part of the x4 curvature. The worst rows are the same persistent set: eight over-predictions of 0.15-0.18 at |x4| of 1.47-2.51, where the x4 term still adds about +0.09 to +0.11. The other two are under-predictions of about 0.15 at x4 near 0 (x4 = -0.14, +0.32) despite x2*x5 of about +0.6, where the -0.115 dip still pulls them down. Both error groups point the same way: the even x4 term is still slightly too large at both ends, so this is a scale issue, not a missing form.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Shrink the x4 term again while keeping it mean-centred, and keep the interaction as is: clip(0.2 * x4**2 / (0.5 + x4**2) - 0.09 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6). This raises near-zero-x4 predictions by about 0.025 and lowers large-|x4| predictions by about 0.02-0.03, addressing both groups of worst errors at once."
+}

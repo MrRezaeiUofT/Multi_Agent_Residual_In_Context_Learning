@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model misses a symmetric effect of x4: when |x4| is large (about >1.4) and x1 is negative, the true class is class_2 even though the linear evidence points to class_0, with positive x3 strengthening the shift.",
+  "implicated_features": [
+    "x4",
+    "x1",
+    "x3"
+  ],
+  "functional_form_guess": "class_2 score delta proportional to max(x4^2 - c, 0) * sigmoid(-x1), with c near 2 and an additive positive term in x3; a matching negative delta on class_0",
+  "rationale": "All ten top residuals are true class_2 predicted as class_0, all have x1 < 0, and all have |x4| >= 1.42 with both signs of x4 present, which a linear model cannot capture and suggests an even function such as x4^2. Nine of the ten also have x3 clearly positive, while x2, x5 and x6 vary in sign with no visible structure."
+}

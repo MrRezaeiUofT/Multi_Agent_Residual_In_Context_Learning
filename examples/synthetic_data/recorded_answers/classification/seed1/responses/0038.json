@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Six of the ten failures (rows 3, 4, 5, 6, 7, 10) are true class_0 or class_1 with |x4| between 1.31 and 1.74 and |x2*x5| between about 0.7 and 3.2, and all follow the x2*x5 sign rule, but the gate stays open because 0.4*abs(x2*x5) is too small an offset, so they are pushed to class_2. Rows 8 and 9 are the reverse: class_2 at |x4| near 0.75 with a tiny product and negative x1, so the gate is closed when it should be partly open. Rows 1 and 2 break the sign rule outright and look like irreducible label noise.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Keep the form and change the gate to sigmoid(2.5*(x4**2 - 0.8 - 0.7*abs(x2*x5) - 0.2*x1)): raise the product weight from 0.4 to 0.7, lower the offset from 1 to 0.8, add a small x1 shift so negative x1 opens the gate earlier, and reduce the slope from 3 to 2.5 so boundary rows are less overconfident. Do not try to fit rows 1 and 2."
+}

@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Target class is class_2 when x4^2 - 0.25 exceeds about 1.85*|x2*x5|, and otherwise follows the sign of x2*x5, with an apparent small rate of label noise.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "Nine of ten examples fit the rule. Idx 5 is the miss: it is class 1 with x2*x5 of about -2.5, far from the boundary, so the rule strongly predicts class 0. It is the only strong counterexample among the many samples checked, so I treat it as likely label noise, though a smaller unmodelled effect cannot be ruled out."
+}

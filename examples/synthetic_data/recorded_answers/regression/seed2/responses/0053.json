@@ -1,0 +1,4 @@
+{
+  "T_k": "The best-scoring structure is kept: a centred, even x4 term damped strongly by |x5|, plus a steep saturating x2*x5 interaction. The interaction ceiling is raised slightly, and a small linear x1 term is added, because the remaining underpredictions mostly have positive x1 and the overpredictions negative x1.",
+  "f_k": "clip(0.3*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.4*clip(x5**2, 0, 20)) + 0.27*tanh(2*x2*x5) + 0.03*x1, -0.5, 0.5)"
+}

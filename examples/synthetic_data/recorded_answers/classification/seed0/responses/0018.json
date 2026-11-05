@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction adds an antisymmetric x2*x5 term that raises class_1 when the product is positive and class_0 when it is negative, replacing the earlier x1*x5 and x3*x5 guesses that later batches contradicted. It also adds an even x4^2 term to class_2, so that large |x4| of either sign favours class_2 when it outweighs about twice |x2*x5|. All terms are clipped to keep the scores numerically stable.",
+  "f_k": "[clip(-2.0*x2*x5, -6.0, 6.0), clip(2.0*x2*x5, -6.0, 6.0), clip(x4**2 - 0.25, -1.0, 6.0)]"
+}

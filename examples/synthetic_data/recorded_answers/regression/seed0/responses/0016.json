@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "An even U-shaped function of x4 is under-fit: |x4| near or above 0.9 yields under-prediction, while |x4| below about 0.7 yields over-prediction.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 (or saturating x4**2/(1+x4**2))",
+  "rationale": "Positive residuals occur at x4 = -1.04, -1.32, +0.87, -0.95, -1.39, whereas negative residuals occur at x4 = +0.17, -0.19, -0.66, -0.50, +0.24. Both signs of x4 appear among the positives and the split is by magnitude, which indicates a missing quadratic-type term in x4."
+}

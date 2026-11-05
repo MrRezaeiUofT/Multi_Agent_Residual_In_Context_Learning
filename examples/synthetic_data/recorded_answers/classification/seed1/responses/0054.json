@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Softening the slope to 2 raised train loss slightly from 0.3202 to 0.3211, so slope 2.5 is near the optimum. The small-|x4| class_2 rows improved a little, but gate-open class_0 and class_1 rows came back (rows 9 and 10, at |x4| of 1.39 and 1.62 with products of 1.13 and 0.84, both following the sign rule), because a softer gate gives class_2 more weight well past the boundary. The rest is the same overlap band plus rows 1 and 2, which look like noise, so the correction appears to have converged.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Revert the gate slope to 2.5, G = sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), which gave the best loss of 0.3202, and keep every other term as in iter 7. Further threshold or slope tweaks are likely to trade one side of the overlap for the other, so treat iter 7 as the final form."
+}

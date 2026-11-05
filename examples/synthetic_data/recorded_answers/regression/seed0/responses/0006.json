@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target has a missing even (U-shaped) dependence on x4, rising with |x4|, so the base model under-predicts for large |x4| and over-predicts for |x4| below about 0.7.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic x4**2 or saturating x4**2/(1+x4**2)",
+  "rationale": "Positive residuals occur at x4 = +0.92, +1.34, -1.82, -1.76, -1.28, while negative residuals occur at x4 = -0.66, +0.27, +0.55, +0.15, +0.37. The separation is by |x4| rather than by the sign of x4, which is the signature of an unmodelled quadratic-type term."
+}

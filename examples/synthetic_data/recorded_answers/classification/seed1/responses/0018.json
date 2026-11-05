@@ -1,0 +1,4 @@
+{
+  "T_k": "A soft gate on x4**2 minus an offset near 1 and a share of abs(x2*x5) decides whether a row belongs to class_2. Where the gate is open, class_2 is boosted and the other classes are suppressed. Where it is closed, a steep tanh of x2*x5 splits class_1 (positive product) from class_0 (negative product) and class_2 is lightly suppressed.",
+  "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5)))) - 2*sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5))), 4*sigmoid(3*(x4**2 - 1 - 0.4*abs(x2*x5))) - 1]"
+}

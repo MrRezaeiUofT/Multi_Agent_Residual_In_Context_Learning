@@ -1,0 +1,5 @@
+{
+  "diagnosis": "Flattening the x4 plateau helped (loss 0.068 to 0.053), and the remaining worst errors now form a symmetric pattern governed by the sign of x2*x5. Six over-predictions at |x4| of 1.47-1.88 all have a moderately negative x2*x5 (-0.30 to -1.21), and four under-predictions near x4 = 0 all have a moderately positive x2*x5 (+0.46 to +0.72). The interaction contributes only about +/-0.05 to 0.14 for products in that +/-1 range, although the earlier stronger version over-shot at extreme products (|x2*x5| of 2-5). This points to an effect that switches on quickly with the sign of x2*x5 and then saturates at a modest level, which a gentle tanh slope cannot represent.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Replace the shallow interaction with a steep, low-cap version that behaves almost like a scaled sign(x2*x5): clip(0.35 * x4**2 / (0.5 + x4**2) - 0.16 + 0.25 * tanh(1.5 * x2 * x5), -0.6, 0.6). This adds about +0.18 at x2*x5 = +0.6 (up from +0.09) and about -0.23 at -1 (up from -0.14), but caps at +/-0.25 for extreme products so the earlier overshoot at |x2*x5| > 2 does not return."
+}

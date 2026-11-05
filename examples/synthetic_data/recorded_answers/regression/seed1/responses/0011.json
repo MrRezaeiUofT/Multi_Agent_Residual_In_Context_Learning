@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a multiplicative interaction between x2 and x5: the target is higher than predicted when x2 and x5 have the same sign and lower when their signs differ.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "bilinear interaction c*x2*x5",
+  "rationale": "All four positive residuals (+0.18 to +0.19) have x2*x5 > 0 (about 0.65, 1.14, 1.87, 0.47), and all six negative residuals (-0.18 to -0.19) have x2*x5 < 0 (about -0.57, -4.57, -0.61, -0.54, -0.59, -1.27). The largest negative product (row 1, x2=-2.83, x5=+1.61) fits this, while x4, which lies in 0.25-0.72 in both groups, does not separate them."
+}

@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The target increases with the gap between x4 and x5 (large when x4 and x5 have opposite signs or |x4| is large) and is overpredicted when both are near zero or move together, an interaction the base model misses.",
+  "implicated_features": [
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "saturating squared difference, e.g. 1 - exp(-(x4 - x5)**2 / 2), equivalent to an even x4 term plus a negative x4*x5 interaction",
+  "rationale": "Three of the four positive residuals have large |x4 - x5| (x4 = -0.50 with x5 = 1.73; x4 = -0.35 with x5 = 1.29; x4 = 2.30 with x5 = -0.34). The negative residuals mostly have x4 and x5 both small or of similar value (e.g. 0.84 and 1.62, -0.47 and -0.38), and the sign flip between idx 3 and idx 5 at similar x5 points to an x4*x5 interaction."
+}

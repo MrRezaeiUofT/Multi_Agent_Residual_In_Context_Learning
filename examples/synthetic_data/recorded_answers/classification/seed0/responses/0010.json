@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The sign of x2*x5 separates class_1 (positive) from class_0 (negative) unless x4^2 is large relative to |x2*x5|, in which case class_2 wins, and the base model captures neither effect.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "delta_class_1 = a*x2*x5; delta_class_0 = -a*x2*x5; delta_class_2 = x4^2 - c, with a around 1.6 to 2 and c around 0.2",
+  "rationale": "Seven of the eight class 0 or 1 errors match the sign of x2*x5 (positive for idx 1, 3, 4, 8, 9 and negative for idx 2, 7). Both class 2 errors (idx 0, 6) have |x4| of about 1.2 to 1.8 and |x2*x5| below 0.2, which fits the relative comparison. Idx 5 contradicts the rule, being class 1 with x2*x5 of about -2.5, and is the first strong counterexample, so it may be label noise or a sign of a smaller unmodelled effect."
+}

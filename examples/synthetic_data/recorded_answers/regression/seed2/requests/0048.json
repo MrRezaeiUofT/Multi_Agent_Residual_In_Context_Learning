@@ -1,0 +1,35 @@
+{
+  "id": "0048",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: The target rises with the magnitude of x4 regardless of its sign (a symmetric, saturating even function of x4), which the base model treats as roughly linear and so underpredicts at large |x4| and overpredicts near x4=0.\nCURRENT_T_k: The main driver is now a saturating x2*x5 interaction with a higher ceiling (up to plus or minus 0.3), which raises predictions when x2 and x5 share a sign and lowers them when the signs differ. A reduced, centred, even x4 term (damped by |x5|) keeps a smaller U-shaped adjustment in x4, so it no longer fights the interaction on the hardest rows.\nCURRENT_f_k: clip(0.2*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.3*tanh(1.5*x2*x5), -0.5, 0.5)\nTRAIN_LOSS: 0.0512\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  +1.204    +1.796    -1.381    +0.266    +0.523    +0.429      +0.835      +0.652      -0.183\n  +1.442    +1.366    -0.306    -0.198    +0.724    -1.034      +0.768      +0.605      -0.163\n  +0.406    +2.190    +0.136    -0.172    +0.827    -0.775      +0.670      +0.508      -0.161\n  +1.909    +1.067    +1.214    -0.244    +0.411    -0.271      +0.666      +0.505      -0.161\n  +0.461    +2.219    -1.699    +0.138    +0.411    -0.985      +0.763      +0.604      -0.159\n  -0.264    -1.090    -1.245    -1.923    +0.209    +0.003      +0.580      +0.737      +0.157\n  -0.127    +1.593    -0.123    -0.351    +1.291    -0.791      +0.671      +0.519      -0.152\n  +1.086    +0.607    +1.242    -1.340    -1.935    -1.573      +0.374      +0.525      +0.152\n  -0.139    -0.723    -1.764    +1.330    +1.067    -1.067      +0.447      +0.597      +0.151\n  +0.530    +0.408    +0.643    -0.232    +1.518    +0.677      +0.608      +0.460      -0.148\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "8b39ec9e9ff33dc184a59b7cfda604bf0b4b736ddc2f4f4f97f2b0d95158bc25"
+}

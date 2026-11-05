@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The base model misses that |x4| above roughly 1 gives class_2 while, below that, the sign of x2*x5 separates class_1 (positive) from class_0 (negative), with an |x4| near 1 behaving as a soft boundary.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "gate = sigmoid(k*(|x4| - 1.1)); delta_class_2 = a*gate; delta_class_1 = (1 - gate)*b*tanh(c*x2*x5); delta_class_0 = -delta_class_1",
+  "rationale": "All seven true class_0 or class_1 rows here follow the x2*x5 sign rule, making 45 of 45. Row 3 has |x4| of 1.04 and is class_0 while earlier rows near 1.02 were class_2, so the boundary is noisy around 1 to 1.1, and the three true class_2 rows here have |x4| of at least 1.6."
+}

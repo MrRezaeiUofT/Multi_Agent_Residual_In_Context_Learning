@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "When |x4| is small the base model over-predicts class_2, but the true label is a sharp XOR of the signs of x2 and x5: class_1 if the signs match and class_0 if they differ.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "gate = sigmoid(k*(1 - |x4|)); delta_class_1 = gate*b*tanh(c*x2*x5) with large c, approaching sign(x2)*sign(x5); delta_class_0 = -delta_class_1; delta_class_2 = -d*gate",
+  "rationale": "All ten rows are predicted class_2 with |x4| below 0.62 and true class_0 or class_1, and all follow the sign rule, making 93 of 93. The rule holds even at tiny products such as about 0.007 in row 7 and 0.039 in row 4, which suggests the boundary depends on the signs rather than the size of x2*x5, so a steep tanh or a sign form may fit better than a linear product."
+}

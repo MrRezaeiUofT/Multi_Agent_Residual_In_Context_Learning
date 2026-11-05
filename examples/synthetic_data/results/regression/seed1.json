@@ -1,0 +1,162 @@
+{
+  "seed": 1,
+  "T": 10,
+  "target_range": [
+    -1.1327849774007182,
+    3.985629483735456
+  ],
+  "fit_seconds": 0.0,
+  "linear": {
+    "r2": 0.39231635287752675,
+    "mae": 0.10665954407693094
+  },
+  "xgboost": {
+    "r2": 0.7411321712855483,
+    "mae": 0.06753838881325029
+  },
+  "oracle": {
+    "r2": 0.9874261220931129,
+    "mae": 0.015355612638585796
+  },
+  "maricl_gated": {
+    "r2": 0.8882739905481057,
+    "mae": 0.04634231634341703
+  },
+  "maricl_ungated": {
+    "r2": 0.9652866418851443,
+    "mae": 0.02491403648271911
+  },
+  "corrections": [
+    {
+      "k": 1,
+      "p_k": 0.8393202196106018,
+      "retained_t": 4,
+      "hypothesis": "The base model misses a symmetric U-shaped (quadratic) effect of x4: target is underpredicted when |x4| is large and overpredicted when x4 is near zero.",
+      "form_guess": "quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || quadratic c*(x4**2 - 1) || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || bilinear interaction a*x2*x5 plus smaller b*x4**2 || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5",
+      "T_k": "Because the deeper Gaussian dip in iteration 3 raised the loss above iteration 2, this version moves partly back. The even x4 effect is a softer dip: about -0.10 at x4 = 0, slightly positive by |x4| = 0.75 and a plateau of about +0.12 for large |x4|. The tanh-bounded x2*x5 interaction (amplitude 0.3) is kept, and the total is capped at -0.35 below so that a near-zero x4 combined with a strongly negative product no longer overshoots.",
+      "f_k": "clip(0.12 - 0.22 * exp(-1.5 * x4**2) + 0.3 * tanh(0.9 * x2 * x5), -0.35, 0.45)",
+      "flags": {
+        "interaction_x2x5": true,
+        "nonlinear_x4": true,
+        "uses_x6": false,
+        "spurious_x1x2": false,
+        "features_used": [
+          "x2",
+          "x4",
+          "x5"
+        ]
+      },
+      "history": [
+        {
+          "t": 0,
+          "f_k": "clip(0.1 * (x4**2 - 1) + 0.1 * x2 * x5, -0.5, 0.5)",
+          "train_mae": 0.07247678412031731
+        },
+        {
+          "t": 1,
+          "f_k": "clip(0.2 * tanh(0.5 * (x4**2 - 1)) + 0.15 * tanh(0.8 * x2 * x5), -0.4, 0.4)",
+          "train_mae": 0.05444469856175391
+        },
+        {
+          "t": 2,
+          "f_k": "clip(0.2 * tanh(0.5 * (x4**2 - 1)) + 0.3 * tanh(0.8 * x2 * x5), -0.5, 0.5)",
+          "train_mae": 0.0417284351796292
+        },
+        {
+          "t": 3,
+          "f_k": "clip(0.1 - 0.25 * exp(-2 * x4**2) + 0.3 * tanh(x2 * x5), -0.5, 0.5)",
+          "train_mae": 0.0450670081211522
+        },
+        {
+          "t": 4,
+          "f_k": "clip(0.12 - 0.22 * exp(-1.5 * x4**2) + 0.3 * tanh(0.9 * x2 * x5), -0.35, 0.45)",
+          "train_mae": 0.03503259542853404
+        }
+      ]
+    },
+    {
+      "k": 2,
+      "p_k": 0.7895655063593084,
+      "retained_t": 0,
+      "hypothesis": "High targets (about 0.7-0.87) occur when x2 and x5 share a sign and |x4| is large, while low targets (about 0.14-0.23) occur when x2 and x5 have opposite signs and x4 is near zero, a combined interaction-plus-quadratic effect the base model flattens.",
+      "form_guess": "bounded additive: sigmoid(a*x2*x5 + b*x4**2 + const), approximated as a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1), possibly inside a sigmoid since targets lie in (0, 1) || a*x2*x5 + b*(x4**2 - 1), possibly saturating via sigmoid || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || bilinear interaction c*x2*x5 || a*x2*x5 + b*(x4**2 - 1) || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || a*x2*x5 + b*(x4**2 - 1) || a*x2*x5 + b*(x4**2 - 1) || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5 || bilinear interaction c*x2*x5",
+      "T_k": "The correction raises predictions when x2 and x5 share a sign and lowers them when they differ, and adds an even x4 term that is negative near x4 = 0 and positive for large |x4|. Both terms are passed through tanh so the correction saturates, matching the bounded (0, 1) targets and the fact that extreme products such as -4.6 produce residuals no larger than moderate ones.",
+      "f_k": "clip(0.15 * tanh(x2 * x5) + 0.12 * tanh(x4**2 - 1), -0.5, 0.5)",
+      "flags": {
+        "interaction_x2x5": true,
+        "nonlinear_x4": true,
+        "uses_x6": false,
+        "spurious_x1x2": false,
+        "features_used": [
+          "x2",
+          "x4",
+          "x5"
+        ]
+      },
+      "history": [
+        {
+          "t": 0,
+          "f_k": "clip(0.15 * tanh(x2 * x5) + 0.12 * tanh(x4**2 - 1), -0.5, 0.5)",
+          "train_mae": 0.047254495354472764
+        }
+      ]
+    }
+  ],
+  "budget_curve": [
+    {
+      "T": 0,
+      "gated": 0.7693768372848638,
+      "ungated": 0.798435051367644
+    },
+    {
+      "T": 1,
+      "gated": 0.7651243041931606,
+      "ungated": 0.8634605466190785
+    },
+    {
+      "T": 2,
+      "gated": 0.8576926762266451,
+      "ungated": 0.9271535338887222
+    },
+    {
+      "T": 3,
+      "gated": 0.8576926762266451,
+      "ungated": 0.9271535338887222
+    },
+    {
+      "T": 4,
+      "gated": 0.8882739905481057,
+      "ungated": 0.9652866418851443
+    },
+    {
+      "T": 5,
+      "gated": 0.8882739905481057,
+      "ungated": 0.9652866418851443
+    },
+    {
+      "T": 6,
+      "gated": 0.8882739905481057,
+      "ungated": 0.9652866418851443
+    },
+    {
+      "T": 7,
+      "gated": 0.8882739905481057,
+      "ungated": 0.9652866418851443
+    },
+    {
+      "T": 8,
+      "gated": 0.8882739905481057,
+      "ungated": 0.9652866418851443
+    },
+    {
+      "T": 9,
+      "gated": 0.8882739905481057,
+      "ungated": 0.9652866418851443
+    },
+    {
+      "T": 10,
+      "gated": 0.8882739905481057,
+      "ungated": 0.9652866418851443
+    }
+  ]
+}

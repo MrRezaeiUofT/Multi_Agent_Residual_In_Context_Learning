@@ -1,0 +1,4 @@
+{
+  "T_k": "The correction keeps the x2*x5 term between class_1 and class_0 and the x4^2 term on class_2 at the current scale, since further scaling gave diminishing returns. It adds one small tentative term to class_1 for samples where x1 is strongly negative and x2 strongly positive, based on only three failures, so it should be dropped unless held-out loss improves. Outputs remain clipped for stability.",
+  "f_k": "[clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5 + 0.3*maximum(-x1*x2 - 1.0, 0.0), -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]"
+}

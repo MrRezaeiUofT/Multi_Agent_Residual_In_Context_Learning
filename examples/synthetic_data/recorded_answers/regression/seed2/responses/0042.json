@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The remaining failures follow the sign of the product x2*x5, which the correction leaves out. All five underpredictions (targets 0.67-0.84) have x2 and x5 of the same sign, with x2 = 1.37 to 2.22 and x5 = 0.41 to 1.29, so x2*x5 is about +0.9 to +2.1. All five overpredictions (targets 0.21-0.47) have opposite signs, with x2*x5 about -1.2 to -2.8. Because the underpredictions have small |x4| and the overpredictions large |x4|, the x4 term makes things worse in both groups: it subtracts about 0.2 from the first and adds about 0.1-0.2 to the second.",
+  "structural_or_coefficient": "structural",
+  "suggested_change": "Add a saturating x2*x5 interaction to the existing x4 term: clip(0.42*(0.58 - exp(-clip(x4**2, 0, 20)))*exp(-0.2*clip(x5**2, 0, 20)) + 0.22*tanh(0.8*x2*x5), -0.5, 0.5). With this term, same-sign x2/x5 rows go up by about 0.15-0.2 and opposite-sign rows go down by a similar amount, which targets the dominant remaining error."
+}

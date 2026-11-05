@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Target class is class_2 when x4^2 - 0.25 exceeds about 1.85*|x2*x5|, and otherwise the sign of x2*x5 gives class_1 (positive) or class_0 (negative).",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 1.85*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "All ten examples fit the rule, with idx 9 only barely, since x4^2 - 0.25 and 1.85*|x2*x5| are both about 0.05 there. The only class 2 sample (idx 1) has x4^2 of about 5.8. Idx 6 and 7 have moderate x4^2 of about 0.65 to 0.84, but their products of about 0.41 and -0.34 are enough to keep them in class 1 and class 0."
+}

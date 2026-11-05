@@ -1,0 +1,4 @@
+{
+  "T_k": "This restores the best form: a soft gate at slope 2.5 on x4**2 minus 1.1 minus 0.7*abs(x2*x5) gives class_2 a boost of 3 times the gate. Below the gate, tanh(4*x2*x5) splits class_1 from class_0, and class_2 takes a partial suppression of 0.5 plus half of abs(tanh(4*x2*x5)).",
+  "f_k": "[-3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*tanh(4*x2*x5)*(1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5)))) - 2*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))), 3*sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))) - (1 - sigmoid(2.5*(x4**2 - 1.1 - 0.7*abs(x2*x5))))*(0.5 + 0.5*abs(tanh(4*x2*x5)))]"
+}

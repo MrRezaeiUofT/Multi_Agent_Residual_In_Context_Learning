@@ -1,0 +1,9 @@
+{
+  "hypothesised_pattern": "The base model misses a bounded x2*x5 interaction: target sits above the prediction when x2 and x5 share a sign and below it when their signs differ.",
+  "implicated_features": [
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "saturating interaction c*tanh(x2*x5) with c around 0.3",
+  "rationale": "All ten rows have residual sign equal to sign(x2*x5): rows 0,1,2,5,6,7,8 have opposite-signed x2 and x5 (products -0.7 to -2.4) and residuals near -0.28, while rows 3,4,9 have same-signed x2,x5 (products +0.87 to +1.15) and residuals near +0.28. Residual magnitudes are almost identical (0.276-0.287) despite very different product sizes, so the effect saturates rather than growing linearly."
+}

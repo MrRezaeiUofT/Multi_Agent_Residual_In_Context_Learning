@@ -1,0 +1,5 @@
+{
+  "diagnosis": "The form is broadly right, because most failures are small-margin cases where the correction is too weak to override the base logits: rows 6 and 9 have |x2*x5| of about 0.1 or less, and rows 2, 3 and 8 are class 2 samples whose x4^2 term loses to the base score. Rows 5 and 7 are a near-identical boundary pair (x4^2 near 2.3, |x2*x5| near 1.1) that a ratio of 2 cannot separate, and it fits a ratio of about 1.8. Rows 1, 4 and 10 are genuine counterexamples to the rule, and row 1 (class 1 at x2*x5 of about -2.5) looks like label noise rather than a form problem.",
+  "structural_or_coefficient": "coefficient",
+  "suggested_change": "Keep the x2*x5 and x4^2 terms, set the ratio to 1.8 with offset 0.3, and double the overall scale so that small margins can overcome the base model: [clip(-3.6*x2*x5, -8.0, 8.0), clip(3.6*x2*x5, -8.0, 8.0), clip(2.0*x4**2 - 0.6, -2.0, 8.0)]. Do not try to fit rows 1, 4 and 10 with extra terms, since that risks fitting noise."
+}

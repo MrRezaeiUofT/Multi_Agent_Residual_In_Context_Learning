@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The sign of x2*x5 fixes class_1 versus class_0 in nine of ten rows, and class_2 applies only when x4^2 is large and |x2*x5| is small.",
+  "implicated_features": [
+    "x4",
+    "x2",
+    "x5"
+  ],
+  "functional_form_guess": "if x4^2 - 0.4*|x2*x5| > 1 then class_2, else if x2*x5 > 0 then class_1, else class_0",
+  "rationale": "Row 3 is the only class_2 row, with x4^2 of 3.49 and a product near 0.02. Rows 0 and 9 have |x4| above 1.3 but products of 3.24 and 1.94 and stay class_1, and the rest have |x4| below 0.9 and follow the sign rule."
+}

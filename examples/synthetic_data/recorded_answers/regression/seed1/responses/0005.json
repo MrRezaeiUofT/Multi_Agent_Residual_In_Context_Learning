@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The base model misses a symmetric quadratic effect of x4: predictions are too low when |x4| is large and too high when x4 is near zero.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "quadratic c*(x4**2 - 1)",
+  "rationale": "All six positive residuals (+0.23 to +0.24) have |x4| of at least 1.03, split evenly between signs (-2.914 and +2.962 both appear). All four negative residuals (about -0.24) have |x4| at most 0.25, so an even function of x4 separates the two groups cleanly."
+}

@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "Class_2 is assigned when x4^2 - 0.25 is greater than about 2*|x2*x5|, and otherwise the sign of x2*x5 picks class_1 or class_0.",
+  "implicated_features": [
+    "x2",
+    "x4",
+    "x5"
+  ],
+  "functional_form_guess": "predict class_2 if x4^2 - 0.25 > 2*|x2*x5|, else class_1 if x2*x5 > 0, else class_0",
+  "rationale": "All ten examples fit the rule. Idx 0 and 4 lie near the boundary, with x4^2 - 0.25 of about 3.1 and 1.6 against 2*|x2*x5| of about 2.9 and 1.4, and both are class 2, which supports a coefficient of no more than about 2.1. Idx 1, 3 and 8 have large positive x2*x5 and are class 1, while idx 2 has negative x2*x5 and is class 0."
+}

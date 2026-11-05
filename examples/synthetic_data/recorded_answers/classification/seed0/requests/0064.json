@@ -1,0 +1,35 @@
+{
+  "id": "0064",
+  "schema": "Critique",
+  "role": "base",
+  "json_schema": {
+    "description": "Textual gradient g_k^(t).",
+    "properties": {
+      "diagnosis": {
+        "description": "Why does the current correction fail on these examples?",
+        "title": "Diagnosis",
+        "type": "string"
+      },
+      "structural_or_coefficient": {
+        "description": "'structural' if the functional form is wrong, 'coefficient' if scale.",
+        "title": "Structural Or Coefficient",
+        "type": "string"
+      },
+      "suggested_change": {
+        "description": "Concrete refinement that addresses the dominant failure mode.",
+        "title": "Suggested Change",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diagnosis",
+      "structural_or_coefficient",
+      "suggested_change"
+    ],
+    "title": "Critique",
+    "type": "object"
+  },
+  "system": "You diagnose why a candidate correction fails on the hardest remaining examples.\nFor REGRESSION: 'target' and 'pred' are numeric values; 'error' = pred - target.\nFor CLASSIFICATION: 'target' is the TRUE class label (integer 0/1/2/...); 'pred' is the base model's max-class confidence (not the predicted class); 'error' = 1 - P(true class) \u2014 higher means the model is more wrong. Focus on which feature values correspond to systematic misclassification of specific classes.\nDistinguish structural mismatch (wrong functional form) from coefficient mismatch (right form, wrong scale). Propose a concrete refinement to f_k using only the allowed feature names and arithmetic.",
+  "user": "HYPOTHESIS: A sample maps to class_2 when x4^2 is large relative to |x2*x5|, and otherwise to class_0 when x2*x5 is negative or class_1 when it is positive.\nCURRENT_T_k: The final correction is unchanged: class_1 and class_0 get +4.5*x2*x5 and -4.5*x2*x5, and class_2 gets 2.5*x4^2 - 0.75, which reproduces the class_2 versus sign-of-product rule. The loss has held at 0.3102 and the remaining errors look like noise. Outputs are clipped for stability.\nCURRENT_f_k: [clip(-4.5*x2*x5, -8.0, 8.0), clip(4.5*x2*x5, -8.0, 8.0), clip(2.5*x4**2 - 0.75, -2.0, 8.0)]\nTRAIN_LOSS: 0.3102\n\nWORST REMAINING FAILURES (input, target, current_prediction, error):\n      x1        x2        x3        x4        x5        x6      target        pred       error\n  -0.624    +1.235    -1.840    +1.639    -2.025    -0.041      +1.000      +0.704      +0.866\n  -0.371    +0.538    -0.592    +0.460    +0.086    -0.160      +2.000      +0.389      +0.762\n  -0.473    +0.308    +0.613    -1.479    -0.533    -0.405      +0.000      +0.583      +0.754\n  -1.189    -0.904    +0.873    -0.947    -0.625    -1.117      +0.000      +0.592      +0.748\n  -2.018    +1.956    +0.630    -1.394    +0.115    -1.129      +1.000      +0.427      +0.747\n  -0.487    +0.898    +0.265    -0.978    +0.255    -0.635      +0.000      +0.397      +0.741\n  -2.207    +0.547    -0.465    -1.271    +0.359    -1.105      +1.000      +0.450      +0.734\n  -1.558    +2.044    +0.616    +1.320    +0.007    +1.490      +1.000      +0.364      +0.725\n  +0.773    -1.111    -0.867    +1.537    -1.046    -0.656      +1.000      +0.580      +0.716\n  +0.487    -0.062    +0.873    +0.697    +1.378    +0.478      +2.000      +0.383      +0.714\n\nDiagnose the failure mode and suggest a concrete refinement to f_k.",
+  "sha256": "48a2738d4748393b782d00c8caa782da7795ac4a55edb3c195fc97c0240f7f07"
+}

@@ -1,0 +1,10 @@
+{
+  "hypothesised_pattern": "The split between class_0 and class_1 is an XOR-style interaction of x2 and x5 that the base model misses: class_1 when x2*x5 > 0 and class_0 when x2*x5 < 0, while separately large |x4| drives class_2.",
+  "implicated_features": [
+    "x2",
+    "x5",
+    "x4"
+  ],
+  "functional_form_guess": "delta_class_1 = +a*tanh(x2*x5); delta_class_0 = -a*tanh(x2*x5); delta_class_2 = b*(x4^2 - 1)",
+  "rationale": "Across the last three batches, all 13 true class_0 or class_1 errors obey the sign rule: the 7 class_0 rows have x2*x5 < 0 and the 6 class_1 rows have x2*x5 > 0, and this replaces my earlier x5-only reading, which row 1 here contradicts. This batch adds four rows consistent with it, and the five true class_2 rows here all have |x4| >= 1.03, continuing the even x4 effect."
+}

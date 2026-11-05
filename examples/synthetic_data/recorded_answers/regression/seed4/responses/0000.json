@@ -1,0 +1,8 @@
+{
+  "hypothesised_pattern": "The target depends on the magnitude of x4 symmetrically and with saturation: large |x4| pushes the target toward ~0.9 while x4 near zero pulls it toward ~0.05-0.2, and the base model largely ignores this even, saturating effect.",
+  "implicated_features": [
+    "x4"
+  ],
+  "functional_form_guess": "saturating even function, e.g. x4**2/(1+x4**2) or 1-exp(-x4**2)",
+  "rationale": "All seven positive residuals (+0.32 to +0.36) occur at |x4| >= 1.4 regardless of sign (x4 = -2.0, -2.3, +2.3, +3.2, -1.5, -1.6, -1.4), with targets clustered at 0.71-0.91, while the three negative residuals occur at |x4| < 0.25 with targets 0.04-0.20. The base predictions stay flat near 0.4-0.56, so it misses a symmetric (sign-independent) dependence on x4 that levels off at large magnitudes, as with x4**2/(1+x4**2)."
+}
